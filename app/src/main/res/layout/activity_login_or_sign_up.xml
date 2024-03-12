@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/xam_vang"
+    tools:context=".Activitys.LoginOrSignUp">
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_centerHorizontal="true"
+
+        android:scaleType="fitXY"
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
+        android:id="@+id/ngay_dep_troi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ngày đẹp trời để "
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/imageView"
+        android:layout_marginTop="20dp"
+        />
+    <TextView
+        android:id="@+id/uong_coffe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Uống cà phê"
+        android:textSize="25dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/ngay_dep_troi"
+        android:textColor="@color/btn_color"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/signBtn"
+        android:layout_width="153dp"
+        android:layout_height="50dp"
+        android:background="@drawable/sign_up"
+        android:text="Đăng Ký"
+        android:textSize="20dp"
+        android:textAllCaps="false"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="180dp"
+        android:textColor="@color/white"
+        android:layout_marginStart="30dp"
+        android:elevation="0dp"
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/loginBtn"
+        android:layout_width="153dp"
+        android:layout_height="50dp"
+        android:background="@drawable/login"
+        android:text="Đăng Nhập"
+        android:textSize="20dp"
+        android:textAllCaps="false"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="180dp"
+        android:layout_marginEnd="30dp"
+        android:elevation="0dp"
+        android:textColor="@color/btn_color"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/googleBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="100dp"
+        android:background="@drawable/google_btn"
+        android:drawableStart="@drawable/google"
+        android:drawablePadding="10dp"
+        android:paddingStart="30dp"
+        android:text="Đăng nhập bằng Google"
+        android:textAllCaps="false"
+        android:textColor="#EA4335"
+        android:paddingEnd="30dp"
+        android:textSize="20dp" />
+
+</RelativeLayout>

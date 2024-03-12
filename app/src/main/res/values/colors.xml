@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="splash">#FF8D4D</color>
+    <color name="xam_vang">#E6D8C3</color>
+    <color name="btn_color">#B98875</color>
+    <color name="backgroup">#F9F9F9</color>
+    <color name="vien">#CCC9C9</color>
+    <color name="hint">#878585</color>
+    <color name="blue">#3478F5</color>
+    <color name="login">#BD1C1C</color>
+    <color name="text_cam">#F87C47</color>
+    <color name="bkgr_dialog">#FFF9F2</color>
+    <color name="vang_nhe">#FFF3E3</color>
+    <color name="toolbar">#B5634A</color>
+    <color name="nau_dam">#692100</color>
+    <color name="nau_nhat">#97471B</color>
+</resources>

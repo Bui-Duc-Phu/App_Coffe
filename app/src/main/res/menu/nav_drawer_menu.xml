@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn = "navigation_view">
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/changePassword"
+            android:icon="@drawable/passwrod"
+
+            android:title="Đổi mật khẩu"/>
+        <item
+            android:id="@+id/setLanguage"
+            android:icon="@drawable/set_language"
+
+            android:title="Ngôn ngữ"/>
+        <item
+            android:id="@+id/lightMode"
+            android:icon="@drawable/nightlight_round"
+            android:title="Chế độ tối"/>
+        <item
+            android:id="@+id/privacyPolicy"
+            android:icon="@drawable/privacy_policy"
+            android:title="Chính sách bảo mật"/>
+        <item
+            android:id="@+id/notification"
+            android:icon="@drawable/notification"
+            android:title="Cài đặt thông báo"/>
+    </group>
+    <item
+        android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/logout_icon"
+                android:title="Logout"/>
+        </menu>
+    </item>
+</menu>
