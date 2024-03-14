@@ -1,8 +1,4 @@
 package com.example.giuaky1.Models
-
-import android.os.Parcel
-import android.os.Parcelable
-
 class CartModel{
     var name: String? = null
     var imageUrl: String? = null

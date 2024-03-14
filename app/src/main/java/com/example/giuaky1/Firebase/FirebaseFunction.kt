@@ -4,11 +4,8 @@ import android.annotation.SuppressLint
 import android.util.Log
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.giuaky1.Adapters.MyCartAdapter
-import com.example.giuaky1.Adapters.ProductAdapter
 import com.example.giuaky1.Models.CartModel
 import com.example.giuaky1.Models.Order
 import com.example.giuaky1.Models.Order_product

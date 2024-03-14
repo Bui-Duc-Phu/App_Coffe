@@ -1,6 +1,5 @@
 package com.example.giuaky1.Adapters
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Handler
 import android.view.LayoutInflater
