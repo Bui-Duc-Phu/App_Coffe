@@ -1,0 +1,45 @@
+<!-- res/layout/item_product.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/rounded_rectangle"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_gravity="center">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageProduct"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#FFFFFF"
+        android:src="@drawable/cart"/>
+    <TextView
+        android:id="@+id/textProductName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="name"
+        android:layout_marginStart="10dp"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/textProductPrice"
+        android:layout_width="match_parent"
+        android:hint="price"
+        android:layout_marginStart="10dp"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:text="Thêm vào giỏ hàng"
+        android:textColor="#E94B64"
+        android:layout_gravity="center"
+        android:background="@drawable/btn_add_product"
+        />
+</LinearLayout>
