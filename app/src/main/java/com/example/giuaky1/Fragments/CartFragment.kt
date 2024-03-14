@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.giuaky1.Adapters.MyCartAdapter
 import com.example.giuaky1.Firebase.FirebaseFunction
@@ -30,7 +31,7 @@ class CartFragment : Fragment() {
         databaseReference = FirebaseDatabase.getInstance().getReference("Carts")
         val view = inflater.inflate(R.layout.fragment_cart, container, false)
         setControl(view)
-        recyclerView.layoutManager = GridLayoutManager(activity, 2)
+        recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = myCartAdapter
         FirebaseFunction.fetchDataForCart(recyclerView, txtEmptyCart, txtTotalPrice, llBuy)
         btnBuy.setOnClickListener {

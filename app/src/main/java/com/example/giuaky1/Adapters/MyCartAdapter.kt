@@ -18,7 +18,7 @@ import com.squareup.picasso.Picasso
 import java.text.NumberFormat
 import java.util.*
 
-class MyCartAdapter(private val cartModelList: List<CartModel>) :
+class MyCartAdapter(private val cartModelList: MutableList<CartModel>) :
     RecyclerView.Adapter<MyCartAdapter.MyCartViewHolder>() {
     val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val firebaseUser = auth.currentUser
@@ -107,7 +107,12 @@ class MyCartAdapter(private val cartModelList: List<CartModel>) :
     override fun getItemCount(): Int {
         return cartModelList.size
     }
-
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateData(newList: MutableList<CartModel>) {
+        cartModelList.clear()
+        cartModelList.addAll(newList)
+        notifyDataSetChanged()
+    }
     class MyCartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val btnMinus: ImageView = itemView.findViewById(R.id.btnMinus)
         val btnPlus: ImageView = itemView.findViewById(R.id.btnPlus)

@@ -181,7 +181,7 @@ class FirebaseFunction {
         ) {
             val auth: FirebaseAuth = FirebaseAuth.getInstance()
             val firebaseUser = auth.currentUser
-            val id=firebaseUser?.uid ?: ""
+            val id = firebaseUser?.uid ?: ""
             val databaseReference = FirebaseDatabase.getInstance().getReference("Carts")
             databaseReference.child(id)
                 .addValueEventListener(object : ValueEventListener {
@@ -198,9 +198,8 @@ class FirebaseFunction {
                             llBuy.visibility = View.VISIBLE
                             recyclerView.visibility = View.VISIBLE
                             txtEmptyCart.visibility = View.GONE
-                            recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
-                            val adapter = MyCartAdapter(cartModelArrayList)
-                            recyclerView.adapter = adapter
+                            val adapter = recyclerView.adapter as? MyCartAdapter
+                            adapter?.updateData(cartModelArrayList)
                         } else {
                             recyclerView.visibility = View.GONE
                             txtEmptyCart.visibility = View.VISIBLE
