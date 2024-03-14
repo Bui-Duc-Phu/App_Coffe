@@ -1,18 +1,27 @@
 package com.example.giuaky1.Firebase
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.View
+import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.giuaky1.Adapters.MyCartAdapter
 import com.example.giuaky1.Adapters.ProductAdapter
+import com.example.giuaky1.Models.CartModel
 import com.example.giuaky1.Models.Order
 import com.example.giuaky1.Models.Order_product
 import com.example.giuaky1.Models.ProductModel
 import com.example.giuaky1.Models.Shipper
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.text.NumberFormat
+import java.util.Locale
 
 class FirebaseFunction {
 
@@ -125,6 +134,90 @@ class FirebaseFunction {
             productData["name"]=name
             productData["price"]=price
             db1.setValue(productData).addOnSuccessListener { Log.d("succesproduct","Upload thành công") }
+        }
+        fun addToCart(productModel: ProductModel){
+            var auth: FirebaseAuth
+            auth = FirebaseAuth.getInstance()
+            val firebaseUser = auth.currentUser
+            val id=firebaseUser?.uid ?: ""
+            val productID = productModel.name
+            val cartReference = FirebaseDatabase.getInstance().getReference("Carts").child(id)
+            cartReference.child(productID)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: com.google.firebase.database.DataSnapshot) {
+                        if (snapshot.exists()) {
+                            val cartModel: CartModel? = snapshot.getValue(CartModel::class.java)
+                            cartModel?.let {
+                                it.quantity = it.quantity + 1
+                                val updateData: MutableMap<String, Any> = HashMap()
+                                updateData["quantity"] = it.quantity
+                                updateData["totalPrice"] = it.quantity * it.price
+                                cartReference.child(productID)
+                                    .updateChildren(updateData)
+                            }
+                        } else {
+                            val cartModel = CartModel(
+                                productModel.name,
+                                productModel.imageUrl,
+                                productModel.price,
+                                1,
+                                productModel.price
+                            )
+                            cartReference.child(productModel.name)
+                                .setValue(cartModel)
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.e("CartHandler", "addToCart onCancelled: " + error.message)
+                    }
+                })
+        }
+        fun fetchDataForCart(
+            recyclerView: RecyclerView,
+            txtEmptyCart: TextView,
+            txtTotalPrice: TextView,
+            llBuy: View
+        ) {
+            val auth: FirebaseAuth = FirebaseAuth.getInstance()
+            val firebaseUser = auth.currentUser
+            val id=firebaseUser?.uid ?: ""
+            val databaseReference = FirebaseDatabase.getInstance().getReference("Carts")
+            databaseReference.child(id)
+                .addValueEventListener(object : ValueEventListener {
+                    @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        val cartModelArrayList = ArrayList<CartModel>()
+                        if (dataSnapshot.exists()) {
+                            for (snapshot in dataSnapshot.children) {
+                                val cartModel = snapshot.getValue(CartModel::class.java)
+                                cartModel?.let {
+                                    cartModelArrayList.add(it)
+                                }
+                            }
+                            llBuy.visibility = View.VISIBLE
+                            recyclerView.visibility = View.VISIBLE
+                            txtEmptyCart.visibility = View.GONE
+                            recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
+                            val adapter = MyCartAdapter(cartModelArrayList)
+                            recyclerView.adapter = adapter
+                        } else {
+                            recyclerView.visibility = View.GONE
+                            txtEmptyCart.visibility = View.VISIBLE
+                            llBuy.visibility = View.GONE
+                        }
+                        var totalPrice = 0.0
+                        for (cartModel in cartModelArrayList) {
+                            totalPrice += cartModel.totalPrice
+                        }
+                        val vndFormat = NumberFormat.getNumberInstance(Locale.getDefault())
+                        txtTotalPrice.text = "${vndFormat.format(totalPrice)}đ"
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.e("CartFragment", "onCancelled: ${databaseError.message}")
+                    }
+                })
         }
 
     }
