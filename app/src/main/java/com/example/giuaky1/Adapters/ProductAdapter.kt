@@ -1,23 +1,22 @@
 package com.example.giuaky1.Adapters
 
-import android.util.Log
+import android.app.AlertDialog
+import android.app.Dialog
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.giuaky1.Firebase.FirebaseFunction
-import com.example.giuaky1.Models.CartModel
 import com.example.giuaky1.Models.ProductModel
 import com.example.giuaky1.R
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.saadahmedsoft.popupdialog.PopupDialog
+import com.saadahmedsoft.popupdialog.Styles
+import com.saadahmedsoft.popupdialog.listener.OnDialogButtonClickListener
 import com.squareup.picasso.Picasso
-import org.apache.harmony.awt.datatransfer.DataSnapshot
 
 class ProductAdapter(private val productList: List<ProductModel>) :
     RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
@@ -42,6 +41,16 @@ class ProductAdapter(private val productList: List<ProductModel>) :
         Picasso.get().load(product.imageUrl).into(holder.productImage)
         holder.btn_add.setOnClickListener {
             FirebaseFunction.addToCart(productList[position])
+            val dialog: PopupDialog = PopupDialog.getInstance(holder.itemView.context)
+            dialog.setStyle(Styles.SUCCESS)
+                .setHeading("Thành công")
+                .setDescription("Thêm sản phẩm vào giỏ hàng thành công!")
+                .showDialog(object : OnDialogButtonClickListener() {
+                    override fun onDismissClicked(dialog: Dialog?) {
+                        super.onDismissClicked(dialog)
+                    }
+                })
+            Handler().postDelayed({ dialog.dismissDialog() }, 1500)
         }
     }
 

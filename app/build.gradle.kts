@@ -66,7 +66,7 @@ dependencies {
     implementation("com.squareup.picasso:picasso:2.8")
     implementation ("io.github.chaosleung:pinview:1.4.4")
     implementation ("de.hdodenhof:circleimageview:3.1.0")
- 
+    implementation ("com.saadahmedev.popup-dialog:popup-dialog:1.0.5")
 
 
 }

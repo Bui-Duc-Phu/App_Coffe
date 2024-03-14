@@ -21,7 +21,7 @@ import java.util.*
 class MyCartAdapter(private val cartModelList: List<CartModel>) :
     RecyclerView.Adapter<MyCartAdapter.MyCartViewHolder>() {
     val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    val firebaseUser = auth.currentUser
+    private val firebaseUser = auth.currentUser
     val id=firebaseUser?.uid ?: ""
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyCartViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_cart, parent, false)

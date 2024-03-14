@@ -159,8 +159,8 @@ class FirebaseFunction {
                             val cartModel = CartModel(
                                 productModel.name,
                                 productModel.imageUrl,
-                                productModel.price,
                                 1,
+                                productModel.price,
                                 productModel.price
                             )
                             cartReference.child(productModel.name)
