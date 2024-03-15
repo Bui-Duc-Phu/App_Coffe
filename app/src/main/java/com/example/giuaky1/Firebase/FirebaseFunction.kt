@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.giuaky1.Adapters.MyCartAdapter
 import com.example.giuaky1.Models.CartModel
 import com.example.giuaky1.Models.Order
+import com.example.giuaky1.Models.OrderModel
 import com.example.giuaky1.Models.Order_product
 import com.example.giuaky1.Models.ProductModel
 import com.example.giuaky1.Models.Shipper
@@ -23,6 +24,26 @@ import java.util.Locale
 class FirebaseFunction {
 
     companion object{
+        var orderModelArrayList: ArrayList<CartModel> = ArrayList()
+        fun getOMAL(): ArrayList<CartModel> {
+            return orderModelArrayList
+        }
+        fun addToOrder(
+            orderId: String?,
+            orderTotalPrice: TextView,
+            dateTime: String?,
+            s: ArrayList<CartModel>
+        ) {
+            val ordersRef = FirebaseDatabase.getInstance().getReference("Order-confirm")
+            val orderKey = ordersRef.push().key
+            val orderModel = OrderModel()
+            orderModel.orderId=orderId
+            orderModel.totalPrice=orderTotalPrice.text.toString()
+            orderModel.dateTime=dateTime
+            orderModel.orderDetails=s
+            Log.d("addToOrder", "orderId: $orderId, totalPrice: ${orderTotalPrice.text}, dateTime: $dateTime, orderDetails: $s")
+            ordersRef.child(orderKey!!).setValue(orderModel)
+        }
          fun readOrdersCompleted(uid:String,callback: (List<Order>) -> Unit) {
             val ref = FirebaseDatabase
                 .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
@@ -141,7 +162,7 @@ class FirebaseFunction {
             val cartReference = FirebaseDatabase.getInstance().getReference("Carts").child(id)
             cartReference.child(productID)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(snapshot: com.google.firebase.database.DataSnapshot) {
+                    override fun onDataChange(snapshot: DataSnapshot) {
                         if (snapshot.exists()) {
                             val cartModel: CartModel? = snapshot.getValue(CartModel::class.java)
                             cartModel?.let {
@@ -191,6 +212,7 @@ class FirebaseFunction {
                                 cartModel?.let {
                                     cartModelArrayList.add(it)
                                 }
+                                orderModelArrayList = cartModelArrayList
                             }
                             llBuy.visibility = View.VISIBLE
                             recyclerView.visibility = View.VISIBLE

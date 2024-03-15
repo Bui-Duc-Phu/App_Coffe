@@ -1,0 +1,6 @@
+<resources>
+    <string-array name="payment_methods">
+        <item>Thanh toán khi nhận hàng</item>
+        <item>Quét mã QR</item>
+    </string-array>
+</resources>

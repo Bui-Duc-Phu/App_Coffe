@@ -15,6 +15,9 @@
         android:theme="@style/Theme.GiuaKy1"
         tools:targetApi="31">
         <activity
+            android:name=".Activitys.OrderConfirm"
+            android:exported="false" />
+        <activity
             android:name=".Data.PustData"
             android:exported="false" />
         <activity

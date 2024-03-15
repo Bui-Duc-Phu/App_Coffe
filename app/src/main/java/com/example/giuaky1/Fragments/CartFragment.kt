@@ -1,4 +1,5 @@
 package com.example.giuaky1.Fragments
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.giuaky1.Activitys.OrderConfirm
 import com.example.giuaky1.Adapters.MyCartAdapter
 import com.example.giuaky1.Firebase.FirebaseFunction
 import com.example.giuaky1.R
@@ -33,8 +35,8 @@ class CartFragment : Fragment() {
         recyclerView.adapter = myCartAdapter
         FirebaseFunction.fetchDataForCart(recyclerView, txtEmptyCart, txtTotalPrice, llBuy)
         btnBuy.setOnClickListener {
-            /*val intent = Intent(activity, OrderActivity::class.java)
-            startActivity(intent)*/
+            val intent = Intent(activity, OrderConfirm::class.java)
+            startActivity(intent)
         }
         return view
     }
