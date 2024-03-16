@@ -126,7 +126,7 @@ class OrderConfirm : AppCompatActivity(), OnTaskCompleted {
                     if (alertDialog.isShowing) {
                         alertDialog.dismiss()
                     }
-                    FirebaseFunction.addToOrder(orderId, orderTotalPrice, dateTime, orderModelArrayList)
+                    FirebaseFunction.addToOrder(orderId, orderTotalPrice, dateTime, orderModelArrayList,"QR")
                     finish()
                 } else {
                     Toast.makeText(this@OrderConfirm, "Không tồn tại giao dịch", Toast.LENGTH_SHORT).show()
@@ -147,13 +147,13 @@ class OrderConfirm : AppCompatActivity(), OnTaskCompleted {
             }.start()
         } else {
             Toast.makeText(this, "Đơn hàng đã được tạo", Toast.LENGTH_SHORT).show()
-            FirebaseFunction.addToOrder(orderId, orderTotalPrice, dateTime, orderModelArrayList)
+            FirebaseFunction.addToOrder(orderId, orderTotalPrice, dateTime, orderModelArrayList,"delivery")
             clearCart()
             finish()
         }
     }
 
-    fun payment_methods(view: View) {
+    fun paymsent_methods() {
         val paymentMethods = resources.getStringArray(R.array.payment_methods)
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Chọn phương thức thanh toán")

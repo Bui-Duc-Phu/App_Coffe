@@ -32,7 +32,8 @@ class FirebaseFunction {
             orderId: String?,
             orderTotalPrice: TextView,
             dateTime: String?,
-            s: ArrayList<CartModel>
+            s: ArrayList<CartModel>,
+            method:String
         ) {
             val ordersRef = FirebaseDatabase.getInstance().getReference("Order-confirm")
             val orderKey = ordersRef.push().key
@@ -43,6 +44,7 @@ class FirebaseFunction {
             orderModel.orderDetails=s
             Log.d("addToOrder", "orderId: $orderId, totalPrice: ${orderTotalPrice.text}, dateTime: $dateTime, orderDetails: $s")
             ordersRef.child(orderKey!!).setValue(orderModel)
+            ordersRef.child(orderKey!!).child("method").setValue(method)
         }
          fun readOrdersCompleted(uid:String,callback: (List<Order>) -> Unit) {
             val ref = FirebaseDatabase
