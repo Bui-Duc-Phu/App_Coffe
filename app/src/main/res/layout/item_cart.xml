@@ -1,0 +1,106 @@
+<!-- res/layout/item_cart.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/rounded_rectangle"
+    android:padding="16dp"
+    android:layout_margin="2dp">
+    <ImageView
+        android:id="@+id/btnDelete"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="right"
+        android:background="@drawable/rounded_circle"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/btn_exit"
+        android:contentDescription="TODO" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageView"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/btn_exit"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#FFFFFF" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/rounded_rectangle"
+            android:backgroundTint="#D88989"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="name"
+                android:textSize="18sp"
+                android:layout_marginStart="10dp"
+                android:textColor="#0063EC"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/txtPrice"
+                android:layout_width="match_parent"
+                android:hint="price"
+                android:layout_marginStart="10dp"
+                android:textColor="#0063EC"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/txtSize"
+                android:layout_width="match_parent"
+                android:layout_marginStart="10dp"
+                android:textColor="#0063EC"
+                android:text="Size : S"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/txtSugar"
+                android:layout_width="match_parent"
+                android:text="Sugar : 50%"
+                android:layout_marginStart="10dp"
+                android:textColor="#0063EC"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="right"
+        >
+        <ImageView
+            android:id="@+id/btnMinus"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/btn_minus"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:layout_marginStart="20dp"
+            android:id="@+id/txtQuantity"
+            android:textSize="20sp"/>
+
+        <ImageView
+            android:id="@+id/btnPlus"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/btn_plus_cart" />
+
+    </LinearLayout>
+</LinearLayout>
