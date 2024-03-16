@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.giuaky1.Firebase.FirebaseFunction
 import com.example.giuaky1.Models.CartModel
 import com.example.giuaky1.R
 import com.google.firebase.auth.FirebaseAuth
@@ -19,9 +20,7 @@ import java.util.*
 
 class MyCartAdapter(private val cartModelList: MutableList<CartModel>) :
     RecyclerView.Adapter<MyCartAdapter.MyCartViewHolder>() {
-    val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val firebaseUser = auth.currentUser
-    val id=firebaseUser?.uid ?: ""
+    val id=FirebaseFunction.getID()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyCartViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_cart, parent, false)
         return MyCartViewHolder(view)

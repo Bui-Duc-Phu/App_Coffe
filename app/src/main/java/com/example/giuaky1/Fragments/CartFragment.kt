@@ -24,7 +24,6 @@ class CartFragment : Fragment() {
     private lateinit var llBuy: LinearLayout
     private lateinit var recyclerView: RecyclerView
     private lateinit var btnBuy: Button
-    private var totalPrice = 0
     private val myCartAdapter = MyCartAdapter(ArrayList())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

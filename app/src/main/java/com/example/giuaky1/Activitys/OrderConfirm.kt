@@ -13,6 +13,7 @@ import com.example.giuaky1.Models.CartModel
 import com.example.giuaky1.OnTaskCompleted
 import com.example.giuaky1.Paid.GoogleSheetsTask
 import com.example.giuaky1.R
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import org.json.JSONException
 import java.text.SimpleDateFormat
@@ -83,7 +84,7 @@ class OrderConfirm : AppCompatActivity(), OnTaskCompleted {
 
     companion object {
         fun clearCart() {
-            val userCart = FirebaseDatabase.getInstance().getReference("Cart").child("UNIQUE_USER_ID")
+            val userCart = FirebaseDatabase.getInstance().getReference("Carts").child(FirebaseFunction.getID())
             userCart.removeValue()
         }
     }
