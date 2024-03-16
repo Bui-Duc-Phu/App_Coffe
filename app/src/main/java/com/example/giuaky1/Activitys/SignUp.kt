@@ -67,9 +67,9 @@ class SignUp : AppCompatActivity() {
                 if(it){
                     progressDialog!!.dismiss()
                     Toast.makeText(applicationContext, "tên đăng nhập đã tồn tại", Toast.LENGTH_SHORT).show()
+                    System.out.println("11111")
 
-                }
-                else{
+                }else{
                     when {
                         TextUtils.isEmpty(userName) ->{ progressDialog!!.dismiss()
                             Toast.makeText(this, "Bạn chưa nhập tên đăng nhập", Toast.LENGTH_SHORT).show()}
@@ -93,7 +93,6 @@ class SignUp : AppCompatActivity() {
     private fun Register(userName:String,email:String,password:String){
 
         auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener {
-
             if(it.isSuccessful){
                 val user: FirebaseUser?  = auth.currentUser
                 val userid: String = user!!.uid
@@ -141,7 +140,7 @@ class SignUp : AppCompatActivity() {
         val ref = FirebaseDatabase
             .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
             .getReference("Users")
-            .addValueEventListener(object : ValueEventListener{
+            .addListenerForSingleValueEvent(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     var isEmailExists = false
                     for (snapshot in snapshot.children) {
@@ -151,6 +150,7 @@ class SignUp : AppCompatActivity() {
                         }
                     }
                     callback(isEmailExists)
+
                 }
                 override fun onCancelled(error: DatabaseError) {
                     Toast.makeText(applicationContext, "checkUsername connect to firebase false : "+error.message , Toast.LENGTH_SHORT).show()

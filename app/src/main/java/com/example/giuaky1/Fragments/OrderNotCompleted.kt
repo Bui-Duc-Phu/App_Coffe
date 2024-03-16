@@ -48,12 +48,6 @@ class OrderNotCompleted : Fragment() {
         FirebaseFunction.readOrdersNotCompleted(auth.currentUser!!.uid) { list->
             val adapter  = OrderNotCompletedAdapter(requireContext(),list)
             binding.orderRecylerview.adapter = adapter
-
-            val a = 23
-
-
-
-
         }
     }
 

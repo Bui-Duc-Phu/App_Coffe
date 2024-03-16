@@ -40,6 +40,7 @@ class PustData : AppCompatActivity() {
             .getReference("Orders").child(orderId)
         val order = Order(
             state = "2",
+            checkout = "1",
             uID = auth.currentUser!!.uid.toString(),
             orderID = orderId,
             pay = "COD",
@@ -49,11 +50,14 @@ class PustData : AppCompatActivity() {
             products = listOf(
                 Order_product("cafe1", "M", "10", "20000", orderId),
                 Order_product("cafe2", "L", "20", "5000", orderId),
+                Order_product("cafe2", "L", "20", "5000", orderId),
+                Order_product("cafe2", "L", "20", "5000", orderId),
 
             )
         )
         val orderMap = mapOf(
             "state" to order.state,
+            "checkout" to order.checkout,
             "uID" to order.uID,
             "orderID" to order.orderID,
             "pay" to order.pay,

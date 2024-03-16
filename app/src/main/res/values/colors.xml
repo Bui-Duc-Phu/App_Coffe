@@ -16,4 +16,7 @@
     <color name="toolbar">#B5634A</color>
     <color name="nau_dam">#692100</color>
     <color name="nau_nhat">#97471B</color>
+    <color name="Xanhla">#06FA10</color>
+    <color name="Xanhduong">#28B6F6</color>
+    <color name="red_delete">#FD1616</color>
 </resources>

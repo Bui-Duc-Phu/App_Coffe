@@ -8,7 +8,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+
 import com.bumptech.glide.Glide
+import com.example.giuaky1.Administrator.Activitys.MainAdmin
+import com.example.giuaky1.Administrator.Controller
 import com.example.giuaky1.Data.PustData
 import com.example.giuaky1.Models.Users
 import com.example.giuaky1.R
@@ -68,12 +71,14 @@ class LoginOrSignUp : AppCompatActivity() {
             loginBtn.setOnClickListener {
                 startActivity(Intent(this@LoginOrSignUp, Login::class.java))
 
+
             }
             googleBtn.setOnClickListener {
                 signInGoogle()
             }
             uongCoffe.setOnClickListener {
                 startActivity(Intent(this@LoginOrSignUp,PustData::class.java))
+
             }
         }
         Glide.with(this).asGif().load(R.drawable.logo).into(binding.imageView)
@@ -159,8 +164,16 @@ class LoginOrSignUp : AppCompatActivity() {
                                 }
                             }
                         } else {
-                            startActivity(Intent(this@LoginOrSignUp, Main::class.java))
-                            finish()
+                            Controller.permission(applicationContext,account.email.toString()){
+                                if(it){
+                                    startActivity(Intent(this@LoginOrSignUp,MainAdmin::class.java))
+                                    finish()
+                                }else {
+                                    startActivity(Intent(this@LoginOrSignUp, Main::class.java))
+                                    finish()
+                                }
+                            }
+
                         }
                     }
 

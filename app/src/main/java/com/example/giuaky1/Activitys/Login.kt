@@ -11,6 +11,8 @@ import android.text.TextUtils
 import android.util.Patterns
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import com.example.giuaky1.Administrator.Activitys.MainAdmin
+import com.example.giuaky1.Administrator.Controller
 import com.example.giuaky1.Models.Users
 import com.example.giuaky1.R
 import com.example.giuaky1.databinding.ActivityLoginBinding
@@ -128,9 +130,18 @@ class Login : AppCompatActivity() {
                     binding.emailEdt.setText("")
                     binding.passwordEdt.setText("")
                     progressDialog!!.dismiss()
-                    val intent = Intent(this, Main::class.java)
-                    startActivity(intent)
-                    finish()
+                    Controller.permission(applicationContext,email){userOrAdmin->
+                        System.out.println(userOrAdmin)
+                        if(userOrAdmin){
+                            startActivity(Intent(this@Login,MainAdmin::class.java))
+                            finish()
+                        }else{
+                            val intent = Intent(this, Main::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                    }
+
                 }else{
                     progressDialog!!.dismiss()
                     Toast.makeText(this, "email or password is incorrect", Toast.LENGTH_SHORT).show()
