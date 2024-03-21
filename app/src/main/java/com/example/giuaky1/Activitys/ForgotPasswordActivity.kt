@@ -9,10 +9,7 @@ import android.os.Handler
 import android.text.TextUtils
 import android.widget.Toast
 import com.example.giuaky1.Models.Users
-import com.example.giuaky1.R
 import com.example.giuaky1.databinding.ActivityForgotPasswordBinding
-import com.example.giuaky1.databinding.ActivitySignUpBinding
-import com.example.giuaky1.databinding.DialogCustomBinding
 import com.example.giuaky1.databinding.DialogCustomForgotPasswordTrueBinding
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth

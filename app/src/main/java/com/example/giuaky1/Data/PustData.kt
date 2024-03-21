@@ -39,7 +39,7 @@ class PustData : AppCompatActivity() {
             .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
             .getReference("Orders").child(orderId)
         val order = Order(
-            state = "2",
+            state = "1",
             checkout = "1",
             uID = auth.currentUser!!.uid.toString(),
             orderID = orderId,
@@ -47,6 +47,8 @@ class PustData : AppCompatActivity() {
             day = "10/03/2024",
             time = "09:00",
             shipper = Shipper("bui duc phu", "0947945596"),
+            receiverPhone = "0947945596",
+            receiverLocation = "97man thien quan 9 hcm",
             products = listOf(
                 Order_product("cafe1", "M", "10", "20000", orderId),
                 Order_product("cafe2", "L", "20", "5000", orderId),
@@ -67,6 +69,8 @@ class PustData : AppCompatActivity() {
                 "name" to order.shipper.name,
                 "sDT" to order.shipper.sDT
             ),
+            "receiverPhone" to order.receiverPhone,
+            "receiverLocation" to order.receiverLocation,
             "products" to order.products.map { product ->
                 mapOf(
                     "productName" to product.productName,

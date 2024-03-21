@@ -10,10 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.giuaky1.Firebase.FirebaseFunction
 import com.example.giuaky1.Models.CartModel
-import com.example.giuaky1.OnTaskCompleted
+import com.example.giuaky1.Interfaces.OnTaskCompleted
 import com.example.giuaky1.Paid.GoogleSheetsTask
 import com.example.giuaky1.R
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import org.json.JSONException
 import java.text.SimpleDateFormat

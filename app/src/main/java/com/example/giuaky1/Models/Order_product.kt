@@ -1,12 +1,14 @@
 package com.example.giuaky1.Models
 
+import java.io.Serializable
+
 data class Order_product(
     var productName:String="",
     var size:String="",
     var quantity :String="",
     var price:String="",
     var orderID:String=""
-    ) {
+    ): Serializable {
 
 //    private var _productName: String = productName
 //        get() = field

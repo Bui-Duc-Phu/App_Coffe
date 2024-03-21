@@ -37,25 +37,7 @@ class CustomString {
             val second = calendar.get(Calendar.SECOND)
             return "$hour:$minute"
         }
-        fun readOrdersFromFirebase(callback: (List<Order>) -> Unit) {
-            val ordersRef = FirebaseDatabase.getInstance().getReference("orders")
-            ordersRef.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val ordersList = mutableListOf<Order>()
-                    for (snapshot in dataSnapshot.children) {
-                        // Chuyển đổi dữ liệu từ DataSnapshot thành đối tượng Order
-                        val order = snapshot.getValue(Order::class.java)
-                        order?.let {
-                            ordersList.add(order)
-                        }
-                    }
-                    callback(ordersList)
-                }
-                override fun onCancelled(databaseError: DatabaseError) {
-                    println("readOrdersFromFirebase: onCancelled ${databaseError.toException()}")
-                }
-            })
-        }
+
 
 
     }

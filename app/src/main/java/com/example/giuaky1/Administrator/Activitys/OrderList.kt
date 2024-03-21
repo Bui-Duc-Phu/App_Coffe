@@ -2,23 +2,18 @@ package com.example.giuaky1.Administrator.Activitys
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
-import com.bumptech.glide.Glide
+import androidx.core.util.size
 import com.example.giuaky1.Administrator.Adapters.OrderListAdapter
 import com.example.giuaky1.Firebase.FirebaseFunction
-import com.example.giuaky1.R
+import com.example.giuaky1.Firebase.FirebaseUpdate
 import com.example.giuaky1.databinding.ActivityOrderListBinding
-import com.google.firebase.Firebase
 
 class OrderList : AppCompatActivity() {
     private val binding : ActivityOrderListBinding by lazy {
         ActivityOrderListBinding.inflate(layoutInflater)
     }
-
-
-    private var mainMenu:Menu?=null
+    lateinit var  adapter : OrderListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -33,18 +28,47 @@ class OrderList : AppCompatActivity() {
         binding.backBtn.setOnClickListener {
             onBackPressed()
         }
+        binding.trash.setOnClickListener {
+            var list =  adapter.getList()
+            if(adapter.getSelectedItems().size > 0){
+                adapter.getSelectedItemsPositions().forEach{position->
+                    FirebaseUpdate.DeleteChidl(list[position].orderID){}
+                }
+            }
+            adapter.notifyDataSetChanged()
+            showIconToolbarMenu(false)
+        }
+        binding.selectAll.setOnClickListener {
+
+            adapter.selectAllItems(binding.selectAll.isChecked)
+
+        }
+        binding.checkout.setOnClickListener {
+            var list =  adapter.getList()
+            if(adapter.getSelectedItems().size > 0){
+                adapter.getSelectedItemsPositions().forEach{position->
+                    FirebaseUpdate.apply {
+                        updateOrderCheckout(applicationContext,list[position].orderID)
+                        updateOrderState(applicationContext,list[position].orderID,"0")
+                    }
+                }
+            }
+            adapter.notifyDataSetChanged()
+            showIconToolbarMenu(false)
+        }
 
     }
 
     private fun recylerviewListOrder() {
       FirebaseFunction.readAllOrdersList(){orderList->
-          val adapter = OrderListAdapter(this,orderList){show->showIconToolbarMenu(show)}
+       adapter = OrderListAdapter(this,orderList){show->showIconToolbarMenu(show)}
           binding.recylerview.adapter = adapter
           adapter.notifyDataSetChanged()
         }
     }
 
     private fun showIconToolbarMenu(show:Boolean){
+        System.out.println(show)
         if(show){
             binding.checkout.visibility = View.VISIBLE
             binding.trash.visibility = View.VISIBLE
@@ -59,9 +83,6 @@ class OrderList : AppCompatActivity() {
             binding.title.visibility=View.VISIBLE
         }
     }
-
-
-
 
 
 

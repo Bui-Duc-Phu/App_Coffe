@@ -1,7 +1,8 @@
 package com.example.giuaky1.Administrator.Adapters
 
 import android.content.Context
-import android.opengl.Visibility
+import android.content.Intent
+import android.telecom.Call.Details
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,12 @@ import com.example.giuaky1.Models.Order
 import com.example.giuaky1.R
 import com.example.giuaky1.databinding.ItemOrderManagerAdminBinding
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.core.util.isEmpty
+import androidx.core.util.size
+import com.example.giuaky1.Administrator.Activitys.DetailOrder
+import com.example.giuaky1.Firebase.FirebaseUpdate
+import com.example.giuaky1.Interfaces.PassData
 
 class OrderListAdapter (
    private val context:Context,
@@ -22,6 +28,8 @@ class OrderListAdapter (
 
 ):RecyclerView.Adapter<OrderListAdapter.viewholer>(){
     lateinit var binding: ItemOrderManagerAdminBinding
+    private var sendData: PassData? =null
+
 
 
 
@@ -31,6 +39,7 @@ class OrderListAdapter (
        binding= ItemOrderManagerAdminBinding.inflate(LayoutInflater.from(parent.context),parent,false )
         return viewholer(binding.root)
     }
+
 
 
     override fun onBindViewHolder(holder: viewholer, position: Int) {
@@ -45,7 +54,7 @@ class OrderListAdapter (
                     holder.status.setTextColor(ContextCompat.getColor(context, R.color.red_delete))
                 }
                 Glide.with(context).load(R.drawable.checkout_list).into(holder.iconStatus)
-                holder.status.text = "Đơn hàng chưa xác thực !"
+                holder.status.text = "Đơn chưa xác thực"
                 holder.status.setTextColor(ContextCompat.getColor(context, R.color.black))
             }
             else ->{
@@ -72,13 +81,8 @@ class OrderListAdapter (
             }
         }
         holder.category.setOnClickListener {
-            showPopupMenu(holder.category)
+            showPopupMenu(holder.category,position)
         }
-
-
-
-
-
         holder.itemView.setOnLongClickListener {
             selectItem(holder,model,position)
             true
@@ -97,14 +101,60 @@ class OrderListAdapter (
                 selectItem(holder,model,position)
             }
         }
+        if(selectedItems.get(position,false)){
+            holder.checkBox.visibility =View.VISIBLE
+            holder.checkBox.isChecked =true
+        }
 
+        if(selectedItems.size == 0){
+            holder.checkBox.visibility =View.GONE
+            holder.checkBox.isChecked =false
 
-
-
+        }
 
 
 
     }
+
+    fun getList() : List<Order>{
+        return  list
+    }
+    fun getSelectedItemCount():Int{
+        return selectedItems.size
+    }
+    fun getSelectedItems():SparseBooleanArray{
+        return selectedItems
+    }
+    fun getSelectedItemsPositions(): List<Int> {
+        val selectedPositions = mutableListOf<Int>()
+        for (i in 0 until selectedItems.size()) {
+            selectedPositions.add(selectedItems.keyAt(i))
+        }
+        return selectedPositions
+    }
+
+
+
+
+    fun selectAllItems(selectAll: Boolean) {
+        isEnable = false // Đặt lại trạng thái enable
+        selectedItems.clear() // Xóa tất cả các mục đã chọn trước đó
+
+
+        if (selectAll) {
+            for (i in list.indices) {
+                selectedItems.put(i, true)
+            }
+        }else{
+            selectedItems.clear()
+          showIconToolbarMenu(false)
+
+        }
+
+
+        notifyDataSetChanged()
+    }
+
 
 
 
@@ -122,20 +172,27 @@ class OrderListAdapter (
        return  list.size
     }
 
-    private fun showPopupMenu(view: View) {
+    private fun showPopupMenu(view: View, position: Int) {
         val popupMenu = PopupMenu(context, view)
         popupMenu.inflate(R.menu.category_list_order_item)
         popupMenu.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.menu_delete -> {
+                    FirebaseUpdate.DeleteChidl(list[position].orderID){}
+                    notifyDataSetChanged()
                     true
                 }
                 R.id.menu_checkout -> {
-                    // Xử lý khi người dùng chọn Edit
+                    FirebaseUpdate.updateOrderCheckout(context,list[position].orderID)
+                    FirebaseUpdate.updateOrderState(context, list[position].orderID, "0")
+                    notifyDataSetChanged()
                     true
                 }
                 R.id.menu_details -> {
-                    // Xử lý khi người dùng chọn Chi tiết
+                    val intent = Intent(context,DetailOrder::class.java)
+                    intent.putExtra("uID",list[position].uID)
+                    intent.putExtra("orderID",list[position].orderID)
+                    context.startActivity(intent)
                     true
                 }
                 else -> false
@@ -143,6 +200,13 @@ class OrderListAdapter (
         }
         popupMenu.show()
     }
+
+
+
+
+
+
+
 
 
     inner class viewholer(view: View) : RecyclerView.ViewHolder(view){

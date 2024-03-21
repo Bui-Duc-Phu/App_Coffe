@@ -1,6 +1,8 @@
 package com.example.giuaky1.Models
 
-    data  class Order(
+import java.io.Serializable
+
+data  class Order(
         var state: String ="",
         var checkout: String ="",
         var uID:String ="",
@@ -9,6 +11,9 @@ package com.example.giuaky1.Models
         var day:String = "",
         var time:String = "",
         var shipper: Shipper,
+        var receiverPhone: String,
+        var receiverLocation: String,
         var products:List<Order_product>
-    ) {
+    ): Serializable {
+
     }

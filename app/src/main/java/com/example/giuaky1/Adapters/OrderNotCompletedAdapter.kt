@@ -7,10 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.giuaky1.Models.Order
-import com.example.giuaky1.Models.Users
 import com.example.giuaky1.Ultils.CustomString
-import com.example.giuaky1.databinding.FragmentHistoryBinding
-import com.example.giuaky1.databinding.OrderCustomItemBinding
+import com.example.giuaky1.Ultils.MyCategory
 import com.example.giuaky1.databinding.OrderNotCustomItemBinding
 
 class OrderNotCompletedAdapter(private val context: Context,
@@ -32,7 +30,7 @@ class OrderNotCompletedAdapter(private val context: Context,
             date.text = "Ngày : ${model.day}"
             time.text="Thời gian : ${model.time}"
             shipper.text= CustomString.shipper(model.shipper.name,model.shipper.sDT)
-            sumPrice.text = "Tổng : 40,00000"
+            sumPrice.text = "Tổng : ${MyCategory.calculateTotalPriceFormatted(model.products)}"
 
             val layoutManager = LinearLayoutManager(context)
             layoutManager.setInitialPrefetchItemCount(model.products.size)

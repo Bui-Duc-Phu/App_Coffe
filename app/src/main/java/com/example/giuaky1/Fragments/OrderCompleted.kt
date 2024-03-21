@@ -8,14 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.giuaky1.Adapters.OrderCompletedAdapter
 import com.example.giuaky1.Firebase.FirebaseFunction
-import com.example.giuaky1.Models.Order
-import com.example.giuaky1.Models.Order_product
-import com.example.giuaky1.Models.Shipper
-import com.example.giuaky1.R
-import com.example.giuaky1.Ultils.CustomString
 import com.example.giuaky1.databinding.FragmentOrderCompletedBinding
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.flow.combine
+
 
 
 class OrderCompleted : Fragment() {

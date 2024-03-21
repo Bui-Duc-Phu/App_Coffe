@@ -5,13 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.giuaky1.Models.Order
 import com.example.giuaky1.Models.Order_product
-import com.example.giuaky1.Models.Users
-import com.example.giuaky1.Ultils.CustomString
 import com.example.giuaky1.Ultils.MyCategory
-import com.example.giuaky1.databinding.FragmentHistoryBinding
-import com.example.giuaky1.databinding.OrderCustomItemBinding
 import com.example.giuaky1.databinding.ProductInOrderItemBinding
 
 class ProductInOrderItemAdapter(private val context: Context,

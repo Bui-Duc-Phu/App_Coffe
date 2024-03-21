@@ -2,7 +2,7 @@ package com.example.giuaky1.Paid
 
 import android.os.AsyncTask
 import android.util.Log
-import com.example.giuaky1.OnTaskCompleted
+import com.example.giuaky1.Interfaces.OnTaskCompleted
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.BufferedReader

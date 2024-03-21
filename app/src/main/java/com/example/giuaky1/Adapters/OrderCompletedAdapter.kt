@@ -8,11 +8,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.giuaky1.Models.Order
 import com.example.giuaky1.Ultils.CustomString
+import com.example.giuaky1.Ultils.MyCategory
 import com.example.giuaky1.databinding.OrderCustomItemBinding
+import java.util.Locale.Category
+
 class OrderCompletedAdapter(private val context: Context,
                             private var list: List<Order>,
-
-
 )
     : RecyclerView.Adapter<OrderCompletedAdapter.viewholer>(){
         lateinit var binding: OrderCustomItemBinding
@@ -32,7 +33,7 @@ class OrderCompletedAdapter(private val context: Context,
         holder.date.text = "Ngày : ${model.day}"
         holder.time.text="Thời gian : ${model.time}"
         holder.shipper.text= CustomString.shipper(model.shipper.name,model.shipper.sDT)
-        holder.sumPrice.text = "Tổng : 40,00000"
+        holder.sumPrice.text = "Tổng : ${MyCategory.calculateTotalPriceFormatted(model.products)}"
         val layoutManager = LinearLayoutManager(context)
         layoutManager.setInitialPrefetchItemCount(model.products.size)
         holder.recylerview.layoutManager = layoutManager

@@ -60,20 +60,11 @@ class HistoryFragment : Fragment() {
 
        }})
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
-
            override fun onPageSelected(position: Int) {
                super.onPageSelected(position)
                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(position))
            }
         })
-
-
-
-
-
-
-
-
     }
 
 
