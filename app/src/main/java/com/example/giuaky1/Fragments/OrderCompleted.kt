@@ -22,6 +22,8 @@ class OrderCompleted : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
 
+
+
         }
     }
 

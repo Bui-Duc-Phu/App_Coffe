@@ -55,7 +55,7 @@ class InputEmailActivity : AppCompatActivity() {
         progressDialog = ProgressDialog.show(this@InputEmailActivity, "App", "Loading...", true)
         val stringSenderEmail = "firebase683@gmail.com"
         val stringReceiverEmail = receiver
-        val stringPasswordSenderEmail = "fbpx bpkb exaa acgv"
+        val stringPasswordSenderEmail = "pmei knlr idbd nkgy"
         val stringHost = "smtp.gmail.com"
         val properties = Properties()
         properties["mail.smtp.host"] = stringHost
@@ -84,6 +84,7 @@ class InputEmailActivity : AppCompatActivity() {
                 val intent = Intent(this, otpsendActivity::class.java)
                 intent.putExtra("OTP",otp)
                 intent.putExtra("receiver",receiver)
+                intent.putExtra("CallActivity","InputEmailActivity")
                 progressDialog!!.dismiss()
                 startActivity(intent)
                 finish()

@@ -40,7 +40,6 @@
         android:paddingStart="20dp"
         android:layout_below="@id/lauout_tiltle"
         android:layout_marginTop="20dp"
-
         android:orientation="horizontal">
 
         <TextView

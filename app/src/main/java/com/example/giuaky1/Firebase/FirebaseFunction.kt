@@ -79,8 +79,8 @@ class FirebaseFunction {
                         val time = orderSnapshot.child("time").value.toString()
                         val shipperName = orderSnapshot.child("shipper").child("name").value.toString()
                         val shipperSDT = orderSnapshot.child("shipper").child("sDT").value.toString()
-                        val receiverPhone = ""
-                        val receiverLocation = " "
+                        val receiverPhone = orderSnapshot.child("receiverPhone").value.toString()
+                        val receiverLocation = orderSnapshot.child("receiverLocation").value.toString()
 
                         val productsList = mutableListOf<Order_product>()
                         for (productSnapshot in orderSnapshot.child("products").children) {
@@ -121,8 +121,8 @@ class FirebaseFunction {
                         val time = orderSnapshot.child("time").value.toString()
                         val shipperName = orderSnapshot.child("shipper").child("name").value.toString()
                         val shipperSDT = orderSnapshot.child("shipper").child("sDT").value.toString()
-                        val receiverPhone = ""
-                        val receiverLocation = " "
+                        val receiverPhone = orderSnapshot.child("receiverPhone").value.toString()
+                        val receiverLocation = orderSnapshot.child("receiverLocation").value.toString()
 
                         val productsList = mutableListOf<Order_product>()
                         for (productSnapshot in orderSnapshot.child("products").children) {
@@ -166,8 +166,8 @@ class FirebaseFunction {
                         val time = orderSnapshot.child("time").value.toString()
                         val shipperName = orderSnapshot.child("shipper").child("name").value.toString()
                         val shipperSDT = orderSnapshot.child("shipper").child("sDT").value.toString()
-                        val receiverPhone = ""
-                        val receiverLocation = " "
+                        val receiverPhone = orderSnapshot.child("receiverPhone").value.toString()
+                        val receiverLocation = orderSnapshot.child("receiverLocation").value.toString()
 
                         val productsList = mutableListOf<Order_product>()
                         for (productSnapshot in orderSnapshot.child("products").children) {
@@ -213,8 +213,8 @@ class FirebaseFunction {
                         val time = orderSnapshot.child("time").value.toString()
                         val shipperName = orderSnapshot.child("shipper").child("name").value.toString()
                         val shipperSDT = orderSnapshot.child("shipper").child("sDT").value.toString()
-                        val receiverPhone = ""
-                        val receiverLocation = " "
+                        val receiverPhone = orderSnapshot.child("receiverPhone").value.toString()
+                        val receiverLocation = orderSnapshot.child("receiverLocation").value.toString()
 
                         val productsList = mutableListOf<Order_product>()
                         for (productSnapshot in orderSnapshot.child("products").children) {

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.giuaky1.Interfaces.OTPEven
 import com.example.giuaky1.databinding.ActivityOtpsendBinding
 import java.util.Properties
 import javax.mail.Authenticator
@@ -21,17 +22,22 @@ import kotlin.random.Random
 class otpsendActivity : AppCompatActivity() {
 
     var progressDialog: ProgressDialog? = null
+
+
     private val binding: ActivityOtpsendBinding by lazy {
         ActivityOtpsendBinding.inflate(layoutInflater)
     }
     lateinit var OTP: String
     lateinit var receiver: String
+    lateinit var callActivity:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         OTP  = intent.getStringExtra("OTP").toString()
         receiver = intent.getStringExtra("receiver").toString()
+        callActivity = intent.getStringExtra("CallActivity").toString()
+
         init_()
     }
 
@@ -47,10 +53,9 @@ class otpsendActivity : AppCompatActivity() {
            binding.pinview.setError("bạn chưa nhập mã OTP")
         }else{
             if(otp.equals(OTP)){
-                startActivity(
-                    Intent(this@otpsendActivity, ForgotPasswordActivity::class.java)
-                        .putExtra("receiver",receiver)
-                )
+               startActivity(
+                Intent(this@otpsendActivity, ForgotPasswordActivity::class.java)
+                    .putExtra("receiver",receiver))
             }else{
                 binding.pinview.setText("")
                 Toast.makeText(applicationContext, "OTP không chính xác", Toast.LENGTH_SHORT).show()

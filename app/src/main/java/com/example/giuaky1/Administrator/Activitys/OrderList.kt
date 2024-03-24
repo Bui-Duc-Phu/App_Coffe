@@ -39,7 +39,6 @@ class OrderList : AppCompatActivity() {
             showIconToolbarMenu(false)
         }
         binding.selectAll.setOnClickListener {
-
             adapter.selectAllItems(binding.selectAll.isChecked)
 
         }

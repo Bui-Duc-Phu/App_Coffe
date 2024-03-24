@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.giuaky1.Adapters.ProductInOrderItemAdapter
 import com.example.giuaky1.Firebase.FirebaseFunction
-import com.example.giuaky1.Interfaces.PassData
-import com.example.giuaky1.Models.Order
 import com.example.giuaky1.Ultils.CustomString
 import com.example.giuaky1.Ultils.MyCategory
 import com.example.giuaky1.databinding.ActivityDetailOrderBinding
