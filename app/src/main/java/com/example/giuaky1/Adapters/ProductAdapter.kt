@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.giuaky1.Firebase.FirebaseFunction
 import com.example.giuaky1.Models.ProductModel
@@ -38,6 +39,10 @@ class ProductAdapter(private var productList: List<ProductModel>) :
         holder.productName.text = product.name
         holder.productPrice.text = product.price.toString()
         Picasso.get().load(product.imageUrl).into(holder.productImage)
+        holder.itemView.setOnClickListener {
+        val dialog = SizeDialogFragment.newInstance(product.name)
+        dialog.show((it.context as FragmentActivity).supportFragmentManager, "SizeDialogFragment")
+    }
         holder.btn_add.setOnClickListener {
             FirebaseFunction.addToCart(productList[position])
             val dialog: PopupDialog = PopupDialog.getInstance(holder.itemView.context)
