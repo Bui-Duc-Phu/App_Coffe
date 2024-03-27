@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,11 +17,15 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.util.Locale
 
 class HomeFragment : Fragment() {
     var productModelList: ArrayList<ProductModel> = ArrayList()
+    var searchModelList: ArrayList<ProductModel> = ArrayList()
+    lateinit var searchView: SearchView
     lateinit var adapter: ProductAdapter
     private lateinit var recyclerView: RecyclerView
+    val categories = ArrayList<String>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
@@ -29,6 +34,19 @@ class HomeFragment : Fragment() {
         adapter = ProductAdapter(productModelList)
         recyclerView.adapter = adapter
         fetchDataFromFirebase()
+        searchView = view.findViewById(R.id.svCoffees)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                val filteredList = filter(searchModelList, newText)
+                adapter.updateList(filteredList)
+                recyclerView.adapter = adapter
+                return true
+            }
+        })
         return view
     }
     private fun fetchDataFromFirebase() {
@@ -40,6 +58,7 @@ class HomeFragment : Fragment() {
                     val productModel: ProductModel? = snapshot.getValue(ProductModel::class.java)
                     if (productModel != null) {
                         productModelList.add(productModel)
+                        searchModelList.add(productModel)
                     }
                 }
                 adapter.notifyDataSetChanged()
@@ -49,6 +68,40 @@ class HomeFragment : Fragment() {
                 Log.d("productsfb", "Fetch data cancelled: ${databaseError.message}")
             }
         })
-    }
+        val databaseReference1 = FirebaseDatabase.getInstance().getReference("Category")
+        databaseReference1.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // Xóa dữ liệu cũ
+                categories.clear()
 
+                // Thêm dữ liệu mới từ Firebase vào ArrayList
+                for (snapshot in dataSnapshot.children) {
+                    val category = snapshot.getValue(String::class.java)
+                    if (category != null) {
+                        categories.add(category)
+                    }
+                }
+
+                // Cập nhật ArrayAdapter
+                adapter.notifyDataSetChanged()
+                Log.d("categories", categories.size.toString())
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.d("categoriesfb", "Fetch data cancelled: ${databaseError.message}")
+            }
+        })
+    }
+    fun filter(models: List<ProductModel>, query: String): List<ProductModel> {
+        var query = query
+        query = query.lowercase(Locale.getDefault())
+        val filteredList: MutableList<ProductModel> = java.util.ArrayList()
+        for (model in models) {
+            val text: String = model.name.lowercase(Locale.getDefault())
+            if (text.contains(query)) {
+                filteredList.add(model)
+            }
+        }
+        return filteredList
+    }
 }

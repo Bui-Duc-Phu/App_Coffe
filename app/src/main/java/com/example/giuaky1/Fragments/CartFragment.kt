@@ -21,6 +21,7 @@ class CartFragment : Fragment() {
     private lateinit var databaseReference: DatabaseReference
     private lateinit var txtEmptyCart: TextView
     private lateinit var txtTotalPrice: TextView
+    private lateinit var tvGiaTien: TextView
     private lateinit var llBuy: LinearLayout
     private lateinit var recyclerView: RecyclerView
     private lateinit var btnBuy: Button
@@ -32,7 +33,7 @@ class CartFragment : Fragment() {
         setControl(view)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = myCartAdapter
-        FirebaseFunction.fetchDataForCart(recyclerView, txtEmptyCart, txtTotalPrice, llBuy)
+        FirebaseFunction.fetchDataForCart(recyclerView, txtEmptyCart, txtTotalPrice, llBuy, tvGiaTien)
         btnBuy.setOnClickListener {
             val intent = Intent(activity, OrderConfirm::class.java)
             startActivity(intent)
@@ -46,5 +47,6 @@ class CartFragment : Fragment() {
         txtTotalPrice = view.findViewById(R.id.txtTotalPrice)
         btnBuy = view.findViewById(R.id.btnBuy)
         llBuy = view.findViewById(R.id.llBuy)
+        tvGiaTien = view.findViewById(R.id.textView4)
     }
 }

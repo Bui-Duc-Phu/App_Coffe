@@ -17,7 +17,7 @@ import com.saadahmedsoft.popupdialog.Styles
 import com.saadahmedsoft.popupdialog.listener.OnDialogButtonClickListener
 import com.squareup.picasso.Picasso
 
-class ProductAdapter(private val productList: List<ProductModel>) :
+class ProductAdapter(private var productList: List<ProductModel>) :
     RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     inner class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -56,4 +56,10 @@ class ProductAdapter(private val productList: List<ProductModel>) :
     override fun getItemCount(): Int {
         return productList.size
     }
+
+    fun updateList(filteredList: List<ProductModel>) {
+        productList = filteredList
+    }
+
+
 }
