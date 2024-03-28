@@ -25,6 +25,9 @@ class CartFragment : Fragment() {
     private lateinit var llBuy: LinearLayout
     private lateinit var recyclerView: RecyclerView
     private lateinit var btnBuy: Button
+    private lateinit var tvPhiGiaoHang: TextView
+    private lateinit var tvTotalPrice: TextView
+
     private val myCartAdapter = MyCartAdapter(ArrayList())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -33,7 +36,7 @@ class CartFragment : Fragment() {
         setControl(view)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = myCartAdapter
-        FirebaseFunction.fetchDataForCart(recyclerView, txtEmptyCart, txtTotalPrice, llBuy, tvGiaTien)
+        FirebaseFunction.fetchDataForCart(recyclerView, txtEmptyCart, txtTotalPrice, llBuy, tvGiaTien,tvPhiGiaoHang,tvTotalPrice)
         btnBuy.setOnClickListener {
             val intent = Intent(activity, OrderConfirm::class.java)
             startActivity(intent)
@@ -47,6 +50,8 @@ class CartFragment : Fragment() {
         txtTotalPrice = view.findViewById(R.id.txtTotalPrice)
         btnBuy = view.findViewById(R.id.btnBuy)
         llBuy = view.findViewById(R.id.llBuy)
-        tvGiaTien = view.findViewById(R.id.textView4)
+        tvGiaTien = view.findViewById(R.id.tvGiaTien)
+        tvPhiGiaoHang= view.findViewById(R.id.tvPhiGiaoHang)
+        tvTotalPrice = view.findViewById(R.id.tvTotalPrice)
     }
 }

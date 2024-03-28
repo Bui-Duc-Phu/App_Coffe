@@ -251,7 +251,9 @@ class FirebaseFunction {
             txtEmptyCart: TextView,
             txtTotalPrice: TextView,
             llBuy: View,
-            tvGiaTien: TextView
+            tvGiaTien: TextView,
+            tvPhiGiaoHang: TextView,
+            tvTotalPrice: TextView
         ) {
             val auth: FirebaseAuth = FirebaseAuth.getInstance()
             val firebaseUser = auth.currentUser
@@ -285,8 +287,10 @@ class FirebaseFunction {
                             totalPrice += cartModel.totalPrice
                         }
                         val vndFormat = NumberFormat.getNumberInstance(Locale.getDefault())
-                        txtTotalPrice.text = "${vndFormat.format(totalPrice)}đ"
                         tvGiaTien.text = "${vndFormat.format(totalPrice)}đ"
+                        totalPrice+=tvPhiGiaoHang.text.toString().toDouble()
+                        txtTotalPrice.text = "${vndFormat.format(totalPrice)}đ"
+                        tvTotalPrice.text= "${vndFormat.format(totalPrice)}đ"
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
