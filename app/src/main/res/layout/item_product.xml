@@ -31,15 +31,4 @@
         android:layout_marginStart="10dp"
         android:layout_height="wrap_content"
         android:textSize="14sp"/>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_add_product_to_cart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="2dp"
-        android:text="Thêm vào giỏ hàng"
-        android:textColor="#E94B64"
-        android:layout_gravity="center"
-        android:background="@drawable/btn_add_product"
-        />
 </LinearLayout>

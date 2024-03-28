@@ -37,8 +37,9 @@ class MyCartAdapter(private val cartModelList: MutableList<CartModel>) :
 
         holder.txtName.text = cartModel.name
         val vndFormat = NumberFormat.getNumberInstance(Locale.getDefault())
-        holder.txtPrice.text = "${vndFormat.format(cartModel.price)}đ"
+        holder.txtPrice.text ="Giá : "+ "${vndFormat.format(cartModel.price)}đ"
         holder.txtQuantity.text = cartModel.quantity.toString()
+        holder.txtSize.text = "Size : "+cartModel.size
         holder.btnMinus.setOnClickListener {
             minusCartItem(holder, cartModelList[position])
         }
@@ -52,18 +53,18 @@ class MyCartAdapter(private val cartModelList: MutableList<CartModel>) :
 
     private fun plusCartItem(holder: MyCartViewHolder, cartModel: CartModel) {
         cartModel.quantity++
-        cartModel.totalPrice = cartModel.quantity * cartModel.price
+        cartModel.totalPrice = cartModel.quantity * (cartModel.price + cartModel.sizePrice) // update total price
         holder.txtQuantity.text = cartModel.quantity.toString()
-        updateFirebase(cartModel)
+        updateFirebase(cartModel, holder)
     }
 
     @SuppressLint("SuspiciousIndentation")
     private fun minusCartItem(holder: MyCartViewHolder, cartModel: CartModel) {
         if (cartModel.quantity > 1) {
             cartModel.quantity--
-            cartModel.totalPrice = cartModel.quantity * cartModel.price
+            cartModel.totalPrice = cartModel.quantity * (cartModel.price + cartModel.sizePrice) // update total price
             holder.txtQuantity.text = cartModel.quantity.toString()
-            updateFirebase(cartModel)
+            updateFirebase(cartModel, holder)
         } else {
             val builder = AlertDialog.Builder(holder.itemView.context)
             builder.setTitle("Xóa sản phẩm khỏi giỏ hàng")
@@ -79,28 +80,27 @@ class MyCartAdapter(private val cartModelList: MutableList<CartModel>) :
         }
     }
 
-    private fun deleteCartItem(context: Context, cartModelList: List<CartModel>, position: Int) {
+    private fun updateFirebase(cartModel: CartModel, holder: MyCartViewHolder) {
+        val productID = cartModel.name + "_" + cartModel.size // use both name and size to identify a unique product
+        FirebaseDatabase.getInstance().getReference("Carts")
+            .child(id)
+            .child(productID)
+            .setValue(cartModel)
+    }
+
+    private fun deleteCartItem(context: Context, cartModelList: MutableList<CartModel>, position: Int) {
         if (position >= 0 && position < cartModelList.size) {
             val cartModel = cartModelList[position]
-            cartModel.name?.let {
-                FirebaseDatabase.getInstance().getReference("Carts")
-                    .child(id)
-                    .child(it)
-                    .removeValue()
-            }
+            val productID = cartModel.name + "_" + cartModel.size // use both name and size to identify a unique product
+            FirebaseDatabase.getInstance().getReference("Carts")
+                .child(id)
+                .child(productID)
+                .removeValue()
+            cartModelList.removeAt(position)
             notifyItemRemoved(position)
-            cartModelList.toMutableList().removeAt(position)
         }
     }
 
-    private fun updateFirebase(cartModel: CartModel) {
-        cartModel.name?.let {
-            FirebaseDatabase.getInstance().getReference("Carts")
-                .child(id)
-                .child(it)
-                .setValue(cartModel)
-        }
-    }
 
     override fun getItemCount(): Int {
         return cartModelList.size
@@ -119,5 +119,6 @@ class MyCartAdapter(private val cartModelList: MutableList<CartModel>) :
         val txtPrice: TextView = itemView.findViewById(R.id.txtPrice)
         val txtQuantity: TextView = itemView.findViewById(R.id.txtQuantity)
         val btnDel: ImageView = itemView.findViewById(R.id.btnDelete)
+        val txtSize: TextView = itemView.findViewById(R.id.txtSize)
     }
 }

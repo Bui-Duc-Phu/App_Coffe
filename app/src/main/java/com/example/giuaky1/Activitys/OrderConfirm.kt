@@ -13,7 +13,6 @@ import com.example.giuaky1.Models.CartModel
 import com.example.giuaky1.OnTaskCompleted
 import com.example.giuaky1.Paid.GoogleSheetsTask
 import com.example.giuaky1.R
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import org.json.JSONException
 import java.text.SimpleDateFormat
@@ -153,7 +152,7 @@ class OrderConfirm : AppCompatActivity(), OnTaskCompleted {
         }
     }
 
-    fun paymsent_methods() {
+    fun payment_methods(view: View) {
         val paymentMethods = resources.getStringArray(R.array.payment_methods)
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Chọn phương thức thanh toán")

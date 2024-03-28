@@ -14,6 +14,7 @@ import com.example.giuaky1.Models.OrderModel
 import com.example.giuaky1.Models.Order_product
 import com.example.giuaky1.Models.ProductModel
 import com.example.giuaky1.Models.Shipper
+import com.example.giuaky1.Models.SizeModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -205,12 +206,11 @@ class FirebaseFunction {
             productData["price"]=price
             db1.setValue(productData).addOnSuccessListener { Log.d("succesproduct","Upload thành công") }
         }
-        fun addToCart(productModel: ProductModel){
-            var auth: FirebaseAuth
-            auth = FirebaseAuth.getInstance()
+        fun addToCart(productModel: ProductModel, selectedSize: SizeModel){
+            val auth: FirebaseAuth = FirebaseAuth.getInstance()
             val firebaseUser = auth.currentUser
             val id=firebaseUser?.uid ?: ""
-            val productID = productModel.name
+            val productID = productModel.name + "_" + selectedSize.size // use both name and size to identify a unique product
             val cartReference = FirebaseDatabase.getInstance().getReference("Carts").child(id)
             cartReference.child(productID)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -221,7 +221,8 @@ class FirebaseFunction {
                                 it.quantity = it.quantity + 1
                                 val updateData: MutableMap<String, Any> = HashMap()
                                 updateData["quantity"] = it.quantity
-                                updateData["totalPrice"] = it.quantity * it.price
+                                updateData["totalPrice"] = it.quantity * (it.price + selectedSize.price) // add the price of the size to the product price
+                                updateData["sizePrice"] = selectedSize.price // update size price
                                 cartReference.child(productID)
                                     .updateChildren(updateData)
                             }
@@ -230,10 +231,12 @@ class FirebaseFunction {
                                 productModel.name,
                                 productModel.imageUrl,
                                 1,
-                                productModel.price,
-                                productModel.price
+                                productModel.price + selectedSize.price, // add the price of the size to the product price
+                                productModel.price + selectedSize.price, // add the price of the size to the product price
+                                selectedSize.size, // pass the selected size here
+                                selectedSize.price // pass the price of the selected size here
                             )
-                            cartReference.child(productModel.name)
+                            cartReference.child(productID)
                                 .setValue(cartModel)
                         }
                     }

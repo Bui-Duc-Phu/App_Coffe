@@ -29,6 +29,9 @@
             android:name=".Activitys.InputEmailActivity"
             android:exported="false" />
         <activity
+            android:name=".Activitys.OrderConfirm"
+            android:exported="false" />
+        <activity
             android:name=".Activitys.otpsendActivity"
             android:exported="false" />
         <activity

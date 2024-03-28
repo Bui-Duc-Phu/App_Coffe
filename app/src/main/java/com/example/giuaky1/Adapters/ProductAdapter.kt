@@ -25,7 +25,7 @@ class ProductAdapter(private var productList: List<ProductModel>) :
         val productName: TextView = itemView.findViewById(R.id.textProductName)
         val productPrice: TextView = itemView.findViewById(R.id.textProductPrice)
         val productImage: ImageView = itemView.findViewById(R.id.imageProduct)
-        val btn_add: Button = itemView.findViewById(R.id.btn_add_product_to_cart)
+       // val btn_add: Button = itemView.findViewById(R.id.btn_add_product_to_cart)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
@@ -40,22 +40,10 @@ class ProductAdapter(private var productList: List<ProductModel>) :
         holder.productPrice.text = product.price.toString()
         Picasso.get().load(product.imageUrl).into(holder.productImage)
         holder.itemView.setOnClickListener {
-        val dialog = SizeDialogFragment.newInstance(product.name)
+        val dialog = SizeDialogFragment.newInstance(productList[position])
         dialog.show((it.context as FragmentActivity).supportFragmentManager, "SizeDialogFragment")
-    }
-        holder.btn_add.setOnClickListener {
-            FirebaseFunction.addToCart(productList[position])
-            val dialog: PopupDialog = PopupDialog.getInstance(holder.itemView.context)
-            dialog.setStyle(Styles.SUCCESS)
-                .setHeading("Thành công")
-                .setDescription("Thêm sản phẩm vào giỏ hàng thành công!")
-                .showDialog(object : OnDialogButtonClickListener() {
-                    override fun onDismissClicked(dialog: Dialog?) {
-                        super.onDismissClicked(dialog)
-                    }
-                })
-            Handler().postDelayed({ dialog.dismissDialog() }, 1500)
         }
+
     }
 
     override fun getItemCount(): Int {

@@ -20,9 +20,5 @@
         android:layout_weight="1"
         android:text="size"
         android:textSize="16sp" />
-    <RadioButton
-        android:id="@+id/radioSize"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
 </LinearLayout>
