@@ -37,7 +37,7 @@ class OrderConfirm : AppCompatActivity(), OnTaskCompleted {
         val listView: ListView = findViewById(R.id.list_product_order)
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_activated_1)
         for (cartModel in orderModelArrayList) {
-            val orderDetail = "${cartModel.name} - ${cartModel.quantity} ly - ${cartModel.quantity * cartModel.price}"
+            val orderDetail = "${cartModel.name} - ${cartModel.quantity} ly  - Size ${cartModel.size} - ${cartModel.quantity * cartModel.price.toInt()}đ"
             adapter.add(orderDetail)
         }
         listView.adapter = adapter
@@ -52,7 +52,8 @@ class OrderConfirm : AppCompatActivity(), OnTaskCompleted {
         for (cartModel in orderModelArrayList) {
             totalPrice += cartModel.totalPrice
         }
-        orderTotalPrice.text = totalPrice.toString()
+        totalPrice+= 20000
+        orderTotalPrice.text = totalPrice.toInt().toString() + "đ"
     }
 
     private fun generateOrderId(): String {
