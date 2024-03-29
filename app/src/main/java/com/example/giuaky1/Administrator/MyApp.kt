@@ -43,6 +43,9 @@ class MyApp : Application() {
         if (count == 0) {
             // Bảng chưa tồn tại, tạo mới
             data.onCreate(db)
+            data.addName("1","dark")
+            data.addName("2","vi")
+
         }
         db.close()
     }
