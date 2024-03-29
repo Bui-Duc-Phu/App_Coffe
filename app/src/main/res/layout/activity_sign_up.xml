@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     android:background="@color/xam_vang"
     tools:context=".Activitys.SignUp">
+
+
+
+
     <ImageView
         android:id="@+id/backBtn"
         android:layout_width="wrap_content"
@@ -18,7 +22,7 @@
         android:layout_width="wrap_content"
         android:textColor="@color/black"
         android:layout_height="wrap_content"
-        android:text="Đăng Ký"
+        android:text="@string/signup_text_dang_ky"
         android:textSize="32dp"
         android:layout_centerHorizontal="true"
         android:textStyle="bold"
@@ -28,7 +32,7 @@
         android:id="@+id/chao_mung_ban"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Chào mừng bạn !"
+        android:text="@string/signup_text_chao_mung"
         android:textSize="24dp"
         android:layout_marginStart="30dp"
         android:textColor="@color/text_cam"
@@ -40,7 +44,7 @@
         android:id="@+id/dang_ky_tiep_tuc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Đăng ký để tiếp tục nha"
+        android:text="@string/signup_text_dang_ky_tiep_tuc"
         android:textColor="@color/black"
         android:textSize="18dp"
         android:layout_marginStart="30dp"
@@ -48,6 +52,7 @@
         android:layout_marginTop="10dp"
         android:layout_below="@id/chao_mung_ban"
         />
+
     <LinearLayout
         android:id="@+id/tenDangNhapLayout"
         android:layout_width="match_parent"
@@ -55,35 +60,39 @@
         android:layout_below="@id/dang_ky_tiep_tuc"
         android:layout_marginTop="20dp"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/black"
             android:layout_marginStart="40dp"
-            android:text="Tên đăng nhập"
-            android:textSize="18dp"/>
+            android:text="@string/signup_ten_dang_nhap"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textStyle="bold" />
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
             app:boxCornerRadiusTopStart="15sp"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_marginTop="10dp"
             app:boxCornerRadiusTopEnd="15sp"
             app:boxCornerRadiusBottomStart="15sp"
-            app:boxStrokeColor="#787777"
-            app:hintTextColor="@color/black"
-            app:boxStrokeWidth="2dp"
+            app:boxStrokeColor="@color/hint"
+            app:boxStrokeWidth="3dp"
+            app:hintTextColor="@color/hint"
+            app:hintEnabled="true"
             app:boxCornerRadiusBottomEnd="15sp">
             <EditText
                 android:id="@+id/nameEdt"
-                android:paddingStart="30dp"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/signup_hint_ten_dang_nhap"
+                android:paddingStart="30dp"
                 android:textColor="@color/black"
-                android:layout_height="match_parent"
                 android:textColorHint="@color/hint"
-                android:hint="Nhập tên đăng nhập" />
+                tools:ignore="TouchTargetSizeCheck" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
     <LinearLayout
@@ -98,7 +107,7 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:layout_marginStart="40dp"
-            android:text="Email"
+            android:text="@string/signup_text_email"
             android:textColor="@color/black"
             android:textSize="18dp"/>
         <com.google.android.material.textfield.TextInputLayout
@@ -112,16 +121,19 @@
             app:boxCornerRadiusBottomStart="15sp"
             app:boxStrokeColor="#787777"
             app:hintTextColor="@color/black"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             app:boxStrokeWidth="2dp"
             app:boxCornerRadiusBottomEnd="15sp">
+
             <EditText
                 android:id="@+id/emailEdt"
-                android:paddingStart="30dp"
-                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:hint="@string/signup_hint_email"
+                android:paddingStart="30dp"
+                android:textColor="@color/black"
                 android:textColorHint="@color/hint"
-                android:hint="Nhập email" />
+                tools:ignore="TouchTargetSizeCheck" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
@@ -135,9 +147,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_marginStart="40dp"
-            android:text="Mật khẩu"
+            android:text="@string/signup_text_mat_khau"
             android:textSize="18dp"/>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -152,16 +165,20 @@
             app:passwordToggleTint="@color/black"
             app:boxStrokeColor="#787777"
             app:hintTextColor="@color/black"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             app:passwordToggleEnabled="true"
+
             app:boxCornerRadiusBottomEnd="15sp">
+
             <EditText
                 android:id="@+id/passwordEdt"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Nhập mật khẩu"
+                android:layout_height="wrap_content"
+                android:hint="@string/signup_hint_mat_khau"
+                android:inputType="textPassword"
+                android:minHeight="48dp"
                 android:paddingStart="30dp"
                 android:textColor="@color/black"
-                android:inputType="textPassword"
                 android:textColorHint="@color/hint" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
@@ -171,13 +188,13 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/sign_up"
-        android:text="Đăng Ký"
+        android:text="@string/signup_text_dang_ky"
         android:textSize="20dp"
         android:textAllCaps="false"
         android:layout_marginEnd="30dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="140dp"
-        android:textColor="@color/white"
+        android:textColor="@color/textcoler_Btn"
         android:layout_marginStart="30dp"
         android:elevation="0dp"
         />
@@ -194,18 +211,20 @@
             android:layout_height="wrap_content"
             android:textColor="@color/blue"
             android:textStyle="bold"
-            android:text="Bạn đã có tài khoản? "
+            android:text="@string/signup_text_ban_da_co_tai_khoan"
             />
         <TextView
             android:id="@+id/dangNhapTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:textSize="15sp"
             android:textStyle="bold"
             android:textColor="@color/login"
             android:text="Đăng nhập"
             />
     </LinearLayout>
+
 
 
 

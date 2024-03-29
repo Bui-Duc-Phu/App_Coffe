@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.giuaky1.Models.Order
+import com.example.giuaky1.R
 import com.example.giuaky1.Ultils.CustomString
 import com.example.giuaky1.Ultils.MyCategory
 import com.example.giuaky1.databinding.OrderNotCustomItemBinding
+import kotlin.math.roundToInt
 
 class OrderNotCompletedAdapter(private val context: Context,
                                private var list: List<Order>)
@@ -25,12 +27,18 @@ class OrderNotCompletedAdapter(private val context: Context,
     override fun onBindViewHolder(holder: viewholer, position: Int) {
         holder.apply {
             val model  = list[position]
+
+            if (position == 0) {
+                val layoutParams = holder.itemView.layoutParams as RecyclerView.LayoutParams
+                layoutParams.topMargin = 100.dpToPx(holder.itemView.context)
+                holder.itemView.layoutParams = layoutParams
+            }
             id.text = "ID : #${model.orderID}"
             pay.text = model.pay
-            date.text = "Ngày : ${model.day}"
-            time.text="Thời gian : ${model.time}"
+            date.text = context.getString(R.string.day)+" ${model.day}"
+            time.text= context.getString(R.string.time) + " ${model.time}"
             shipper.text= CustomString.shipper(model.shipper.name,model.shipper.sDT)
-            sumPrice.text = "Tổng : ${MyCategory.calculateTotalPriceFormatted(model.products)}"
+            sumPrice.text =context.getString(R.string.sum)+" ${MyCategory.calculateTotalPriceFormatted(model.products)}"
 
             val layoutManager = LinearLayoutManager(context)
             layoutManager.setInitialPrefetchItemCount(model.products.size)
@@ -44,6 +52,10 @@ class OrderNotCompletedAdapter(private val context: Context,
 
     override fun getItemCount(): Int {
         return list.size
+    }
+    private fun Int.dpToPx(context: Context): Int {
+        val density = context.resources.displayMetrics.density
+        return (this * density).roundToInt()
     }
 
     inner class viewholer(view: View): RecyclerView.ViewHolder(view){

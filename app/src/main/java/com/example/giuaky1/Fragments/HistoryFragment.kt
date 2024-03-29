@@ -42,8 +42,8 @@ class HistoryFragment : Fragment() {
     }
 
     private fun init_() {
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(" Hoàn thành "))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(" Đang chờ "))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.frag_history_hoan_thanh))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.frag_history_dang_cho) )
         val adapter = FragmentAdapter(childFragmentManager, lifecycle)
         binding.viewPager.adapter = adapter
 

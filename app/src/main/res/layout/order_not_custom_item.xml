@@ -21,17 +21,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/icon_not_completed"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="2dp"
             />
+
         <TextView
             android:id="@+id/tiltleTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Đơn hàng chưa hoàn thành"
-            android:textSize="20dp"
-            android:textStyle="bold"
+            android:layout_marginStart="30dp"
+            android:text="@string/order_not_custom_item"
             android:textColor="@color/nau_dam"
-            android:layout_marginStart="10dp"/>
+            android:textSize="20dp"
+            android:textStyle="bold" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/id_pay_layout"

@@ -1,8 +1,10 @@
 package com.example.giuaky1.Activitys
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
+import android.content.res.Resources
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +14,7 @@ import android.widget.Toast
 import com.example.giuaky1.Administrator.Activitys.MainAdmin
 import com.example.giuaky1.Administrator.Controller
 import com.example.giuaky1.Models.Users
+import com.example.giuaky1.R
 import com.example.giuaky1.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -31,6 +34,11 @@ class Login : AppCompatActivity() {
     lateinit var firebaseUser: FirebaseUser
     private var progressDialog: ProgressDialog? = null
 
+    private var progressDialog2 : Dialog? = null
+
+
+
+
     private val binding: ActivityLoginBinding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
     }
@@ -42,8 +50,18 @@ class Login : AppCompatActivity() {
 
 
 
+
+
+
+
+
+
         init_()
     }
+
+
+
+
     private fun init_() {
         binding.apply {
             backBtn.setOnClickListener{
@@ -139,6 +157,11 @@ class Login : AppCompatActivity() {
                 }
             }
     }
+
+
+
+
+
 
 
 

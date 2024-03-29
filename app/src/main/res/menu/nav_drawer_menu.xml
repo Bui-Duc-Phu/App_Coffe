@@ -9,24 +9,24 @@
             android:id="@+id/changePassword"
             android:icon="@drawable/passwrod"
 
-            android:title="Đổi mật khẩu"/>
+            android:title="@string/menu_drawer_change_pas" />
         <item
             android:id="@+id/setLanguage"
             android:icon="@drawable/set_language"
 
-            android:title="Ngôn ngữ"/>
+            android:title="@string/menu_drawer_change_language" />
         <item
             android:id="@+id/lightMode"
-            android:icon="@drawable/nightlight_round"
+            android:icon="@drawable/moon"
             android:title="Chế độ tối"/>
         <item
             android:id="@+id/privacyPolicy"
             android:icon="@drawable/privacy_policy"
-            android:title="Chính sách bảo mật"/>
+            android:title="@string/menu_drawer_privecy_policy" />
         <item
             android:id="@+id/notification"
             android:icon="@drawable/notification"
-            android:title="Cài đặt thông báo"/>
+            android:title="@string/menu_drawer_notification" />
     </group>
     <item
         android:title="">
@@ -34,7 +34,7 @@
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/logout_icon"
-                android:title="Logout"/>
+                android:title="@string/menu_drawer_logout" />
         </menu>
     </item>
 </menu>

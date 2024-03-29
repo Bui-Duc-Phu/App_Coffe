@@ -2,6 +2,30 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="buton_text">#FFFFFFFF</color>
+    <color name="buton_google">#FFFFFFFF</color>
+    <color name="textcoler_Btn">#FFFFFFFF</color>
+    <color name="botton_icon_text">#97471B</color>
+    <color name="center_colr">#FFFFFFFF</color>
+    <color name="navi_drawer_sta">#638b95</color>
+    <color name="navi_drawer_end">#f4711f</color>
+    <color name="navi_drawer_tint">#FFFFFFFF</color>
+    <color name="back_order_item">#FFFFFFFF</color>
+
+    <color name="fra_history_sta">#9C644E</color>
+    <color name="fra_history_end">#9C644E</color>
+    <color name="fra_history_cen">#9C644E</color>
+
+    <color name="tablayout_text">#97471B</color>
+    <color name="tablayout_back">#FFFFFFFF</color>
+    <color name="tablayout_text_select">#FFFFFFFF</color>
+    <color name="tablayout_back_select">#97471B</color>
+
+
+
+
+
+
     <color name="splash">#FF8D4D</color>
     <color name="xam_vang">#E6D8C3</color>
     <color name="btn_color">#B98875</color>
@@ -19,4 +43,5 @@
     <color name="Xanhla">#06FA10</color>
     <color name="Xanhduong">#28B6F6</color>
     <color name="red_delete">#FD1616</color>
+    <color name="purple_black">#390063</color>
 </resources>

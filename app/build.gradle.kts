@@ -69,6 +69,8 @@ dependencies {
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.saadahmedev.popup-dialog:popup-dialog:1.0.5")
 
+    implementation ("com.airbnb.android:lottie:6.0.0")
+
 
 
 

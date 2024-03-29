@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     android:gravity="center_horizontal"
     tools:context=".Activitys.otpsendActivity">
 
@@ -26,22 +27,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Xác minh"
-            android:textSize="25sp"
-            android:textStyle="bold"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="12dp"
-            />
+            android:text="@string/otpsend_xac_minh"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nhập mã xác nhận"
-        android:textSize="30sp"
-        android:textStyle="bold"
         android:layout_marginTop="50dp"
-        />
+        android:text="@string/otpsend_Nhap_ma"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold" />
     <com.chaos.view.PinView
         android:id="@+id/pinview"
         style="@style/PinWidget.PinView"
@@ -66,20 +67,22 @@
         android:gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:text="Không nhân được mã?"
-            />
+            android:text="@string/otpsend_k_nhan_dk_ma"
+            android:textColor="@color/black"
+            android:textSize="18dp" />
+
         <TextView
             android:id="@+id/guiLaiTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" Gửi lại"
-            android:textStyle="bold"
+            android:text="@string/otpsend_gui_lai"
+            android:textColor="@color/black"
             android:textSize="20dp"
-            />
+            android:textStyle="bold" />
 
 
 
@@ -90,14 +93,14 @@
         android:id="@+id/xacNhanOTPBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Xác nhận"
-        android:textSize="25dp"
-        android:textColor="@color/white"
-        android:layout_marginTop="40dp"
         android:layout_marginStart="30dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="30dp"
+        android:textAllCaps="false"
         android:backgroundTint="#B98875"
-        />
+        android:text="@string/otpsend_xac_nhan"
+        android:textColor="@color/white"
+        android:textSize="25dp" />
 
 
 </LinearLayout>

@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_delete"
-        android:title="Xoá"/>
+        android:title="@string/menu_categori_delete" />
     <item
         android:id="@+id/menu_checkout"
         android:title="Checkout"/>
     <item
         android:id="@+id/menu_details"
-        android:title="Chi tiết"/>
+        android:title="@string/nenu_category_detail" />
 </menu>

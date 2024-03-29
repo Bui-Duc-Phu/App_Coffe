@@ -5,8 +5,21 @@
     </style>
 
     <style name="MyCustomTabText" parent="TextAppearance.Design.Tab">
-        <item name="android:textColor">@color/nau_nhat</item>
+        <item name="android:textColor">@color/tablayout_back_select</item>
         <item name="android:textStyle">bold</item>
 
     </style>
+
+    <style name="MyTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/black</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="boxCornerRadiusTopStart">15dp</item>
+        <item name="boxCornerRadiusTopEnd">15dp</item>
+        <item name="boxCornerRadiusBottomStart">15dp</item>
+        <item name="boxCornerRadiusBottomEnd">15dp</item>
+    </style>
+
+
+
+
 </resources>

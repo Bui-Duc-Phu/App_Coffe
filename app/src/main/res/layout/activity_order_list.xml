@@ -27,17 +27,17 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/baseline_arrow_back_24"
                 />
+
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Quản Lý Đơn Hàng"
+                android:layout_centerInParent="true"
                 android:layout_marginStart="20dp"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
+                android:text="@string/order_list_quanl_donhang"
+                android:textColor="@color/black"
                 android:textSize="20dp"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
             <CheckBox
                 android:id="@+id/selectAll"
                 android:layout_width="wrap_content"

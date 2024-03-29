@@ -1,20 +1,22 @@
 package com.example.giuaky1.Activitys
 
 import android.app.Activity
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 
-import com.bumptech.glide.Glide
 import com.example.giuaky1.Administrator.Activitys.MainAdmin
 import com.example.giuaky1.Administrator.Controller
-import com.example.giuaky1.Data.PustData
 import com.example.giuaky1.Models.Users
 import com.example.giuaky1.R
+import com.example.giuaky1.Ultils.CommonUtils
 import com.example.giuaky1.databinding.ActivityLoginOrSignUpBinding
+import com.example.sqlite.DBHelper
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -38,14 +40,28 @@ class LoginOrSignUp : AppCompatActivity() {
     lateinit var databaseReference:DatabaseReference
     private var progressDialog: ProgressDialog? = null
     lateinit var gso: GoogleSignInOptions
+    lateinit var data  : DBHelper
+
+
+    private var progressDialog2 : Dialog? = null
+
 
 
     private val binding: ActivityLoginOrSignUpBinding by lazy {
         ActivityLoginOrSignUpBinding.inflate(layoutInflater)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
+        showProgress()
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        data = DBHelper(this,null)
+
+        Handler().postDelayed({
+         hideProgress()
+        }, 1000)
+
+
+
         auth = FirebaseAuth.getInstance()
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -58,6 +74,11 @@ class LoginOrSignUp : AppCompatActivity() {
 
 
         init_()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        hideProgress()
     }
 
     private fun init_() {
@@ -73,16 +94,30 @@ class LoginOrSignUp : AppCompatActivity() {
             }
             googleBtn.setOnClickListener {
                 signInGoogle()
+
+
+
             }
             uongCoffe.setOnClickListener {
-                startActivity(Intent(this@LoginOrSignUp,PustData::class.java))
+             //   startActivity(Intent(this@LoginOrSignUp,PustData::class.java))
+                showProgress()
+                Handler().postDelayed({
+                    hideProgress()
 
+                }, 5000)
             }
         }
-        Glide.with(this).asGif().load(R.drawable.logo).into(binding.imageView)
 
 
 
+
+    }
+    private fun showProgress(){
+        hideProgress()
+        progressDialog2 = CommonUtils.showLoadingDialog(this);
+    }
+    private fun hideProgress(){
+        progressDialog2?.let { if(it.isShowing)it.cancel() }
     }
 
 

@@ -9,7 +9,7 @@
         <item
             android:id="@+id/orderManager"
             android:icon="@drawable/list_icon"
-            android:title="OrderManager"/>
+            android:title="@string/menu_drawer_admin_orderlist" />
 
 
     </group>
@@ -19,7 +19,7 @@
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/logout_icon"
-                android:title="Logout"/>
+                android:title="@string/menu_drawer_logout" />
         </menu>
     </item>
 </menu>

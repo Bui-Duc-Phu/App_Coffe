@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/login"
+    android:background="@android:color/transparent"
     tools:context=".Fragments.OrderNotCompleted">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/order_recylerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/btn_color"
+        android:background="@android:color/transparent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/order_not_custom_item"
         />

@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/btn_color"
+    android:background="@color/fra_history_end"
     android:orientation="vertical"
     tools:context=".Fragments.HistoryFragment">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/back_viewpaper"
+
+        android:contentDescription="@string/app_name" />
+
     <com.google.android.material.tabs.TabLayout
+        android:layout_marginTop="10dp"
         android:paddingBottom="4dp"
         android:paddingTop="4dp"
         android:paddingStart="6dp"
@@ -21,8 +31,8 @@
         android:contentDescription="@string/app_name"
         app:tabMode="fixed"
         app:tabIndicatorGravity="stretch"
-        app:tabSelectedTextColor="@color/white"
-        app:tabTextColor="@color/nau_nhat"
+        app:tabSelectedTextColor="@color/tablayout_text_select"
+        app:tabTextColor="@color/tablayout_text"
         app:tabGravity="fill"
         app:tabIndicatorColor="@null"
         app:tabIndicatorAnimationMode="elastic"
@@ -31,11 +41,6 @@
         app:tabTextAppearance="@style/MyCustomTabText"
         app:tabIndicatorFullWidth="true"
          />
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/btn_color"
-        android:contentDescription="@string/app_name" />
 
-</LinearLayout>
+
+</RelativeLayout>

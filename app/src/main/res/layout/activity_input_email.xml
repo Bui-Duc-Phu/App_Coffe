@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     android:gravity="center_horizontal"
     tools:context=".Activitys.InputEmailActivity"
     >
@@ -21,11 +22,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Quên mật khẩu"
-        android:textSize="30sp"
-        android:textStyle="bold"
         android:layout_marginTop="50dp"
-        />
+        android:text="@string/input_email_QuenMK"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold" />
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,12 +37,15 @@
         app:boxCornerRadiusBottomStart="15sp"
         app:boxCornerRadiusTopEnd="15sp"
         app:boxCornerRadiusTopStart="15sp">
+
         <EditText
             android:id="@+id/emailEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nhập email của bạn"
-            />
+            android:hint="@string/input_email"
+            android:textColorHint="@color/hint"
+            android:paddingStart="10dp"
+            tools:ignore="TouchTargetSizeCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -49,15 +53,14 @@
         android:id="@+id/sendOTP"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Gửi mã OTP"
-        android:textSize="20dp"
-        android:textColor="@color/white"
         android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
         android:layout_marginTop="40dp"
+        android:layout_marginEnd="30dp"
+        android:text="@string/input_email_sendotp"
+        android:textColor="@color/white"
         android:textColorHint="@color/hint"
-        app:backgroundTint="#B98875"
-        />
+        android:textSize="20dp"
+        app:backgroundTint="#B98875" />
 
 
 
