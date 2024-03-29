@@ -19,6 +19,7 @@ class MyApp : Application() {
 
     lateinit var data  : DBHelper
     override fun onCreate() {
+        createDatabaseIfNotExists()
         super.onCreate()
 
         data = DBHelper(this,null)
@@ -29,6 +30,21 @@ class MyApp : Application() {
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
+    }
+
+    private fun createDatabaseIfNotExists() {
+        data = DBHelper(this, null)
+        val db = data.writableDatabase
+        // Kiểm tra xem bảng đã tồn tại chưa
+        val cursor = db.rawQuery("SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name = '${DBHelper.TABLE_NAME}'", null)
+        cursor.moveToFirst()
+        val count = cursor.getInt(0)
+        cursor.close()
+        if (count == 0) {
+            // Bảng chưa tồn tại, tạo mới
+            data.onCreate(db)
+        }
+        db.close()
     }
 
 

@@ -18,6 +18,8 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 		db.execSQL(query)
 	}
 
+
+
 	override fun onUpgrade(db: SQLiteDatabase, p1: Int, p2: Int) {
 
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME)
