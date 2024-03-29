@@ -1,0 +1,114 @@
+<resources>
+    <string name="app_name">GiuaKy1</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="gui">guiBtn</string>
+    <string name="default_web_client_id">837032553365-1hpvf8nr4jp3568vr4rfn42l8fmqcj33.apps.googleusercontent.com</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
+    <!-- login_or_signup -->
+    <string name="dang_ky">Đăng ký</string>
+    <string name="dang_nhap">Đăng nhập</string>
+    <string name="google_btn">Đăng nhập bằng google</string>
+
+    <!-- login -->
+    <string name="login_text_dang_nhap">Đăng Nhập</string>
+    <string name="login_text_chao_mung">Chào mừng bạn !</string>
+    <string name="login_text_dang_nhap_tiep_tuc">Đăng Nhập để tiếp tục nha</string>
+    <string name="login_hint_email">Nhập email hoặc tên đăng nhập</string>
+    <string name="login_text_mat_khau">Mật khẩu</string>
+    <string name="login_hint_password">Nhập mật khẩu</string>
+    <string name="login_text_quen_mat_khau">Quên mật khẩu ?</string>
+    <string name="login_text_dang_nhap_button">Đăng Nhập</string>
+    <string name="login_text_ban_da_co_tai_khoan">Bạn chưa có tài khoản? </string>
+    <string name="login_text_dang_ky"> Đăng ký</string>
+    <string name="login_email_hoạc_name">Email hoạc tên đăng nhập</string>
+
+    <!-- sign up -->
+    <string name="signup_text_dang_ky">Đăng Ký</string>
+    <string name="signup_text_chao_mung">Chào mừng bạn !</string>
+    <string name="signup_text_dang_ky_tiep_tuc">Đăng ký để tiếp tục nha</string>
+    <string name="signup_hint_ten_dang_nhap">Nhập tên đăng nhập</string>
+    <string name="signup_text_email">Email</string>
+    <string name="signup_hint_email">Nhập email</string>
+    <string name="signup_text_mat_khau">Mật khẩu</string>
+    <string name="signup_hint_mat_khau">Nhập mật khẩu</string>
+    <string name="signup_text_dang_ky_button">Đăng Ký</string>
+    <string name="signup_text_ban_da_co_tai_khoan">Bạn đã có tài khoản? </string>
+    <string name="signup_text_dang_nhap">Đăng nhập</string>
+    <string name="signup_ten_dang_nhap">Tên đăng nhập</string>
+
+    <!-- forgot password -->
+
+    <string name="forgot_new_password">Mật khẩu mới</string>
+    <string name="forgot_enter_password">Mật khẩu</string>
+    <string name="forgot_enter_new_password">Nhập mật khẩu mới</string>
+    <string name="forgot_confirm_password">Xác nhận mật khẩu</string>
+    <string name="forgot_retype_password">Nhập lại mật khẩu</string>
+    <string name="forgot_send">Gửi</string>
+
+
+    <!-- activity_input_email -->
+    <string name="input_email_QuenMK" >Quên Mật Khẩu</string>
+    <string name="input_email">Nhập email</string>
+    <string name="input_email_sendotp">Gửi OTP</string>
+
+    <!-- Order List -->
+    <string name="order_list_quanl_donhang" >Quản Lý Đơn Hàng</string>
+
+    <!-- otpSend -->
+    <string name="otpsend_xac_minh">Xác Minh</string>
+    <string name="otpsend_Nhap_ma">Nhập mã xác nhận</string>
+    <string name="otpsend_k_nhan_dk_ma">Không nhận được mã</string>
+    <string name="otpsend_gui_lai">Gửi lại</string>
+    <string name="otpsend_xac_nhan">Xác nhận</string>
+
+    <!-- dialog_custom -->
+    <string name="dialog_cus_comple_register">Đăng ký thành công ! </string>
+
+    <!-- dialog_forgot_password -->
+    <string name="dialog_fogot_pass_true">Đổi mật khẩu thành công</string>
+
+
+    <!-- dialog_otp -->
+    <string name="dialog_otp">Hãy nhập mã OTP</string>
+    <string name="dialig_otp_xac_thuc">Xác thực</string>
+
+    <!-- menu_admin_botton -->
+    <string name="menu_admin_botton_home">Trang chủ</string>
+    <string name="menu_admin_botton_addP_prodct">Thêm mới</string>
+    <string name="menu_admin_botton_setting">Cài đặt</string>
+
+    <!-- menu_categoty -->
+    <string name="menu_categori_delete">Xoá</string>
+    <string name="nenu_category_detail">Chi tiết</string>
+
+    <!--menu1 -->
+    <string name="menu1_home">Trang chủ</string>
+    <string name="menu1_history">Lịch sử</string>
+    <string name="menu1_cart">Giỏ hàng</string>
+    <string name="menu1_profile">Profile</string>
+
+    <!-- menu_drawer -->
+    <string name="menu_drawer_change_pas">Đổi mật khẩu</string>
+    <string name="menu_drawer_change_language">Ngôn ngữ</string>
+    <string name="menu_drawer_privecy_policy">Chính sách bảo mật</string>
+    <string name="menu_drawer_notification">Cài đặt thông báo</string>
+    <string name="menu_drawer_logout">Đăng xuất</string>
+
+    <!-- menu_drawer_admin -->
+    <string name="menu_drawer_admin_orderlist">Danh sách đơn hàng</string>
+
+    <!-- fragmentHistory -->
+    <string name="frag_history_hoan_thanh">Hoàn Thành</string>
+    <string name="frag_history_dang_cho">Đang Chờ</string>
+    <string name="order_custom_item_tiltle">Đơn hàng đã hoàn thành</string>
+    <string name="order_not_custom_item">Đơn hàng chưa hoàn thành</string>
+    
+    <string name="day">Ngày : </string>
+    <string name="time">"Thời gian :  "</string>
+    <string name="sum">Tổng : </string>
+
+
+</resources>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FF000000</color>
+    <color name="black">#FFFFFFFF</color>
+    <color name="buton_text">#FFFFFFFF</color>
+    <color name="buton_google">#2EA1FB</color>
+    <color name="textcoler_Btn">#FFFFFFFF</color>
+    <color name="botton_icon_text">#FFFFFFFF</color>
+
+    <color name="center_colr">#CFCACA</color>
+    <color name="navi_drawer_sta">#30c5d2</color>
+    <color name="navi_drawer_end">#471069</color>
+
+
+    <color name="navi_drawer_tint">#FFFFFFFF</color>
+
+    <color name="splash">#252c4b</color>
+    <color name="xam_vang">#6273C2</color>
+    <color name="btn_color">#252c4b</color>
+    <color name="backgroup">#252c4b</color>
+    <color name="vien">#CCC9C9</color>
+    <color name="hint">#CCC9C9</color>
+    <color name="back_order_item">#60FFFFFF</color>
+
+    <color name="fra_history_sta">#172E80</color>
+    <color name="fra_history_end">#471069</color>
+    <color name="fra_history_cen">#A7A4A4</color>
+
+    <color name="tablayout_text">#3B3D4A</color>
+    <color name="tablayout_back">#9C9898</color>
+    <color name="tablayout_text_select">#FFFFFFFF</color>
+    <color name="tablayout_back_select">#432081</color>
+
+    <color name="blue">#FFFFFFFF</color>
+    <color name="login">#F31111</color>
+    <color name="text_cam">#E00852</color>
+    <color name="bkgr_dialog">#FFF9F2</color>
+    <color name="vang_nhe">#6273C2</color>
+    <color name="toolbar">#6273C2</color>navigation
+    <color name="nau_dam">#D428F1</color>
+    <color name="nau_nhat">#F6ECE6</color>
+    <color name="Xanhla">#06FA10</color>
+    <color name="Xanhduong">#28B6F6</color>
+    <color name="red_delete">#FD1616</color>
+    <color name="purple_black">#390063</color>
+</resources>

@@ -1,0 +1,118 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">GiuaKy1</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="gui">guiBtn</string>
+    <string name="default_web_client_id">837032553365-1hpvf8nr4jp3568vr4rfn42l8fmqcj33.apps.googleusercontent.com</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
+    <!-- login_or_signup -->
+    <string name="dang_ky">Register</string>
+    <string name="dang_nhap">Login</string>
+    <string name="google_btn">Sign in with Google</string>
+
+    <!-- login -->
+    <string name="login_text_dang_nhap">Login</string>
+    <string name="login_text_chao_mung">Welcome!</string>
+    <string name="login_text_dang_nhap_tiep_tuc">Login to continue</string>
+    <string name="login_hint_email">Enter email or username</string>
+    <string name="login_text_mat_khau">Password</string>
+    <string name="login_hint_password">Enter password</string>
+    <string name="login_text_quen_mat_khau">Forgot password?</string>
+    <string name="login_text_dang_nhap_button">Login</string>
+    <string name="login_text_ban_da_co_tai_khoan">Don\'t have an account yet? </string>
+    <string name="login_text_dang_ky"> Register</string>
+    <string name="login_email_hoạc_name">Email or username</string>
+
+    <!-- sign up -->
+    <string name="signup_text_dang_ky">Register</string>
+    <string name="signup_text_chao_mung">Welcome!</string>
+    <string name="signup_text_dang_ky_tiep_tuc">Register to continue</string>
+    <string name="signup_hint_ten_dang_nhap">Enter username</string>
+    <string name="signup_text_email">Email</string>
+    <string name="signup_hint_email">Enter email</string>
+    <string name="signup_text_mat_khau">Password</string>
+    <string name="signup_hint_mat_khau">Enter password</string>
+    <string name="signup_text_dang_ky_button">Register</string>
+    <string name="signup_text_ban_da_co_tai_khoan">Already have an account? </string>
+    <string name="signup_text_dang_nhap">Login</string>
+    <string name="signup_ten_dang_nhap">Username</string>
+
+
+    <!-- forgot password -->
+
+    <string name="forgot_new_password">New password</string>
+    <string name="forgot_enter_password">Password</string>
+    <string name="forgot_enter_new_password">Enter new password</string>
+    <string name="forgot_confirm_password">Confirm password</string>
+    <string name="forgot_retype_password">Retype password</string>
+    <string name="forgot_send">Send</string>
+
+
+    <!-- activity_input_email -->
+    <string name="input_email_QuenMK" >Forgot Password</string>
+    <string name="input_email">Enter email</string>
+    <string name="input_email_sendotp">Send OTP</string>
+
+    <!-- Order List -->
+    <string name="order_list_quanl_donhang" >Manage Orders</string>
+
+    <!-- otpSend -->
+    <string name="otpsend_xac_minh">Verify</string>
+    <string name="otpsend_Nhap_ma">Enter verification code</string>
+    <string name="otpsend_k_nhan_dk_ma">Did not receive the code</string>
+    <string name="otpsend_gui_lai">Resend</string>
+    <string name="otpsend_xac_nhan">Confirm</string>
+
+    <!-- dialog_custom -->
+    <string name="dialog_cus_comple_register">Registration successful! </string>
+
+    <!-- dialog_forgot_password -->
+    <string name="dialog_fogot_pass_true">Password changed successfully</string>
+
+
+    <!-- dialog_otp -->
+    <string name="dialog_otp">Please enter OTP code</string>
+    <string name="dialig_otp_xac_thuc">Verify</string>
+
+    <!-- menu_admin_botton -->
+    <string name="menu_admin_botton_home">Home</string>
+    <string name="menu_admin_botton_addP_prodct">Add new</string>
+    <string name="menu_admin_botton_setting">Settings</string>
+
+    <!-- menu_categoty -->
+    <string name="menu_categori_delete">Delete</string>
+    <string name="nenu_category_detail">Detail</string>
+
+    <!--menu1 -->
+    <string name="menu1_home">Home</string>
+    <string name="menu1_history">History</string>
+    <string name="menu1_cart">Cart</string>
+    <string name="menu1_profile">Profile</string>
+
+    <!-- menu_drawer -->
+    <string name="menu_drawer_change_pas">Change password</string>
+    <string name="menu_drawer_change_language">Language</string>
+    <string name="menu_drawer_privecy_policy">Privacy Policy</string>
+    <string name="menu_drawer_notification">Notification settings</string>
+    <string name="menu_drawer_logout">Logout</string>
+
+    <!-- menu_drawer_admin -->
+    <string name="menu_drawer_admin_orderlist">Order list</string>
+
+    <!-- fragmentHistory -->
+    <string name="frag_history_hoan_thanh">Completed</string>
+    <string name="frag_history_dang_cho">Waiting</string>
+
+    <!-- order item -->
+    <string name="order_custom_item_tiltle">Completed Orders</string>
+    <string name="order_not_custom_item">Pending Orders</string>
+
+
+    <string name="day">Day : </string>
+    <string name="time">Time : </string>
+    <string name="sum">Total : </string>
+
+
+</resources>
