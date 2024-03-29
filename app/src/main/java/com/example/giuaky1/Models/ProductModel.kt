@@ -1,13 +1,14 @@
 package com.example.giuaky1.Models
+import java.io.Serializable
 
-class ProductModel {
+class ProductModel : Serializable {
     var name: String = ""
-    var price: Int = 0
+    var price: Double = 0.0
     var imageUrl: String = ""
 
-    constructor() // Constructor không có đối số để Firebase có thể tạo đối tượng từ dữ liệu
+    constructor()
 
-    constructor(name: String, price: Int, imageUrl: String) {
+    constructor(name: String, price: Double, imageUrl: String) {
         this.name = name
         this.price = price
         this.imageUrl = imageUrl

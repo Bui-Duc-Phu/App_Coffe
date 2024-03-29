@@ -1,0 +1,18 @@
+<!-- grey_background.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Grey background -->
+    <item android:id="@+id/grey_background_shape">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/colorWhite"/> <!-- Màu xám -->
+            <corners android:radius="20dp"/> <!-- Góc cong 20dp -->
+        </shape>
+    </item>
+    <!-- Green border -->
+    <item android:id="@+id/green_border_shape">
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent"/> <!-- Màu trong suốt -->
+            <stroke android:width="2dp" android:color="#00FF00"/> <!-- Màu xanh, độ dày 2dp -->
+            <corners android:radius="20dp"/> <!-- Góc cong 20dp -->
+        </shape>
+    </item>
+</layer-list>

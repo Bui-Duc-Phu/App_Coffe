@@ -1,19 +1,22 @@
 package com.example.giuaky1.Models
-class CartModel{
-    var name: String? = null
-    var imageUrl: String? = null
-    var price = 0
-    var totalPrice = 0
-    var quantity = 0
-
-    constructor(name1:String,imageUrl1: String,quantity1: Int,price1: Int,totalPrice1: Int) {
-        name=name1
-        imageUrl=imageUrl1
-        quantity=quantity1
-        price=price1
-        totalPrice=totalPrice1
-    }
+class CartModel {
+    var name: String = ""
+    var imageUrl: String = ""
+    var quantity: Int = 0
+    var price: Double = 0.0
+    var totalPrice: Double = 0.0
+    var size: String = ""
+    var sizePrice: Double = 0.0 // new attribute for size price
 
     constructor()
 
+    constructor(name: String, imageUrl: String, quantity: Int, price: Double, totalPrice: Double, size: String, sizePrice: Double) {
+        this.name = name
+        this.imageUrl = imageUrl
+        this.quantity = quantity
+        this.price = price
+        this.totalPrice = totalPrice
+        this.size = size
+        this.sizePrice = sizePrice
+    }
 }
