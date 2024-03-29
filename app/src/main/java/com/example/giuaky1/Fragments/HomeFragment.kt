@@ -43,6 +43,8 @@ class HomeFragment : Fragment() {
         databaseReference.addValueEventListener(object : ValueEventListener {
             @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                productModelList.clear()
+                searchModelList.clear()
                 for (snapshot in dataSnapshot.children) {
                     val productModel: ProductModel? = snapshot.getValue(ProductModel::class.java)
                     if (productModel != null) {
