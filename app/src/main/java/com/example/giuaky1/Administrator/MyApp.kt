@@ -24,7 +24,6 @@ class MyApp : Application() {
 
         data = DBHelper(this,null)
         val mode = data.getModeList()[0]
-        
         if (mode.equals(ModeTheme.dark.toString())) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {
