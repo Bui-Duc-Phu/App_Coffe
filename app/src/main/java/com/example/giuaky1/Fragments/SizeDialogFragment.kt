@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.giuaky1.Adapters.SizeAdapter
 import com.example.giuaky1.Firebase.FirebaseFunction
@@ -38,7 +39,7 @@ class SizeDialogFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         sizeAdapter = SizeAdapter(sizeList1)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+        recyclerView.layoutManager = GridLayoutManager(activity, 2)
         recyclerView.adapter = sizeAdapter
         val product = arguments?.getSerializable("product") as ProductModel
         val productId = product.name

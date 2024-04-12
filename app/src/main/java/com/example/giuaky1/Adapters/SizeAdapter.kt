@@ -19,6 +19,7 @@ class SizeAdapter(private val sizeList: ArrayList<SizeModel>) : RecyclerView.Ada
         return ViewHolder(view)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val sizeModel = sizeList[position]
         holder.size.text = sizeModel.size
@@ -30,10 +31,8 @@ class SizeAdapter(private val sizeList: ArrayList<SizeModel>) : RecyclerView.Ada
         }
 
         if (selectedSize == sizeModel) {
-            // Highlight the selected size
             holder.itemView.setBackgroundColor(Color.GREEN)
         } else {
-            // Unhighlight the unselected size
             holder.itemView.setBackgroundColor(Color.WHITE)
         }
     }
