@@ -75,14 +75,15 @@
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
             app:boxCornerRadiusTopStart="15sp"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginTop="10dp"
             app:boxCornerRadiusTopEnd="15sp"
             app:boxCornerRadiusBottomStart="15sp"
-            app:boxStrokeColor="@color/hint"
+            app:boxStrokeColor="@color/black"
             app:boxStrokeWidth="3dp"
-            app:hintTextColor="@color/hint"
+            app:hintTextColor="@color/black"
             app:hintEnabled="true"
+            app:boxBackgroundMode="outline"
             app:boxCornerRadiusBottomEnd="15sp">
             <EditText
                 android:id="@+id/nameEdt"
@@ -119,9 +120,9 @@
             app:boxCornerRadiusTopStart="15sp"
             app:boxCornerRadiusTopEnd="15sp"
             app:boxCornerRadiusBottomStart="15sp"
-            app:boxStrokeColor="#787777"
+            app:boxStrokeColor="@color/black"
             app:hintTextColor="@color/black"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxStrokeWidth="2dp"
             app:boxCornerRadiusBottomEnd="15sp">
 
@@ -163,9 +164,9 @@
             app:boxCornerRadiusBottomStart="15sp"
             app:boxStrokeWidth="2dp"
             app:passwordToggleTint="@color/black"
-            app:boxStrokeColor="#787777"
+            app:boxStrokeColor="@color/black"
             app:hintTextColor="@color/black"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:passwordToggleEnabled="true"
 
             app:boxCornerRadiusBottomEnd="15sp">

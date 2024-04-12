@@ -2,9 +2,11 @@ package com.example.giuaky1.Firebase
 
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.giuaky1.Adapters.MyCartAdapter
 import com.example.giuaky1.Models.CartModel
@@ -20,6 +22,7 @@ import com.example.giuaky1.Models.Users
 import com.example.giuaky1.Models.SizeModel
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -53,6 +56,37 @@ class FirebaseFunction {
             ordersRef.child(orderKey!!).setValue(orderModel)
             ordersRef.child(orderKey!!).child("method").setValue(method)
         }
+
+
+
+        fun getPhoneProfile(context: Context,callback: (String) -> Unit,callback2: (String) -> Unit,callback3: (String) -> Unit)  {
+            val firebaseUser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+            val databaseReference = FirebaseDatabase.getInstance()
+                .getReference("ProfileUser")
+                .child(firebaseUser.uid)
+
+                databaseReference
+                .addValueEventListener(object :ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val phone:String = snapshot.child("phoneNumber").value.toString()
+                        val location  = snapshot.child("location").value.toString()
+                        val date = snapshot.child("dateOfBirth").value.toString()
+                        callback(phone!!)
+                        callback2(location!!)
+                        callback3(date!!)
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(context, "false get data form getPhoneProfile", Toast.LENGTH_SHORT).show()
+
+                    }
+                })
+
+        }
+
+
+
+
         fun getUserDataWithUid(uid : String,callback: (Users)->Unit){
             val ref = FirebaseDatabase
                 .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")

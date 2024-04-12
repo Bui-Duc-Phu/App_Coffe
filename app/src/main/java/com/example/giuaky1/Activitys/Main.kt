@@ -57,12 +57,14 @@ class Main : AppCompatActivity(){
 
 
 
-        init_()
+
     }
 
     private fun init_() {
-       navigationDrawer()
+        navigationDrawer()
         buttonNavigation()
+        setSupportActionBar(binding.toolbar)
+
 
     }
 

@@ -50,6 +50,12 @@ class MyApp : Application() {
         db.close()
     }
 
+    fun updatesql(){
+        val  data  : DBHelper = DBHelper(this,null)
+        data.addName("1","dark")
+        data.addName("2","vi")
+    }
+
 
 
 
