@@ -25,8 +25,6 @@ class SplashScreem : AppCompatActivity() {
 
 
 
-        data = DBHelper(this,null)
-        changeLang(this,data.getModeList()[1])
 
 
         Handler().postDelayed({

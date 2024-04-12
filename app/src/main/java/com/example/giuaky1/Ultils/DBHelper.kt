@@ -16,7 +16,11 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 				MODE + " TEXT" + ")")
 
 		db.execSQL(query)
+
+
 	}
+
+
 
 
 
@@ -32,21 +36,11 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 		values.put(ID_COL, id)
 		values.put(MODE, mode)
 		val db = this.writableDatabase
-
-
 		db.insert(TABLE_NAME, null, values)
-
-
 		db.close()
 	}
 
 
-	fun getMode(): Cursor? {
-		val db = this.readableDatabase
-
-		return db.rawQuery("SELECT * FROM " + TABLE_NAME, null)
-
-	}
 
 	fun getModeList(): List<String> {
 		val modeList = mutableListOf<String>()

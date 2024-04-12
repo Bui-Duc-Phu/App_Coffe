@@ -17,39 +17,31 @@ class MyApp : Application() {
 
 
 
+    lateinit var mode : String
     lateinit var data  : DBHelper
     override fun onCreate() {
-        createDatabaseIfNotExists()
+
         super.onCreate()
 
         data = DBHelper(this,null)
-        val mode = data.getModeList()[0]
-        if (mode.equals(ModeTheme.dark.toString())) {
+        val modeList = data.getModeList()
+
+        if (modeList.isEmpty()) {
+            createValue()
+            mode = ModeTheme.dark.toString() // Thiết lập mode mặc định nếu danh sách rỗng
+        } else {
+            mode = modeList[0] // Lấy mode từ danh sách nếu có
+        }
+
+        if (mode == ModeTheme.dark.toString()) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
 
-    private fun createDatabaseIfNotExists() {
-        data = DBHelper(this, null)
-        val db = data.writableDatabase
-        // Kiểm tra xem bảng đã tồn tại chưa
-        val cursor = db.rawQuery("SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name = '${DBHelper.TABLE_NAME}'", null)
-        cursor.moveToFirst()
-        val count = cursor.getInt(0)
-        cursor.close()
-        if (count == 0) {
-            // Bảng chưa tồn tại, tạo mới
-            data.onCreate(db)
-            data.addName("1","dark")
-            data.addName("2","vi")
 
-        }
-        db.close()
-    }
-
-    fun updatesql(){
+    fun createValue(){
         val  data  : DBHelper = DBHelper(this,null)
         data.addName("1","dark")
         data.addName("2","vi")
