@@ -2,7 +2,9 @@ package com.example.giuaky1.Activitys
 
 import android.app.ProgressDialog
 import android.content.Intent
+import android.database.Observable
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.text.TextUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -19,9 +21,10 @@ import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeMessage
 import kotlin.random.Random
 
-class otpsendActivity : AppCompatActivity() {
+class otpsendActivity : AppCompatActivity(){
 
     var progressDialog: ProgressDialog? = null
+    lateinit var countDownTimer: CountDownTimer
 
 
     private val binding: ActivityOtpsendBinding by lazy {
@@ -29,14 +32,15 @@ class otpsendActivity : AppCompatActivity() {
     }
     lateinit var OTP: String
     lateinit var receiver: String
-    lateinit var callActivity:String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         OTP  = intent.getStringExtra("OTP").toString()
         receiver = intent.getStringExtra("receiver").toString()
-        callActivity = intent.getStringExtra("CallActivity").toString()
+
+
 
         init_()
     }
@@ -44,6 +48,7 @@ class otpsendActivity : AppCompatActivity() {
     private fun init_() {
        binding.xacNhanOTPBtn.setOnClickListener { oTPProcessing() }
        binding.guiLaiTv.setOnClickListener {  creatOtp(receiver)}
+        if(OTP.isNotEmpty()) countDownTime()
     }
 
 
@@ -68,7 +73,7 @@ class otpsendActivity : AppCompatActivity() {
     private fun creatOtp(receiver: String){
         progressDialog = ProgressDialog.show(this@otpsendActivity, "App", "Loading...", true)
         val randomDigits = (1..6).map { Random.nextInt(0, 10) }.joinToString("")
-        sendOTP(receiver,randomDigits.toString())
+        sendOTP(receiver,randomDigits)
     }
 
 
@@ -76,7 +81,7 @@ class otpsendActivity : AppCompatActivity() {
     private fun sendOTP(receiver:String,otp:String) {
         val stringSenderEmail = "firebase683@gmail.com"
         val stringReceiverEmail = receiver
-        val stringPasswordSenderEmail = "fbpx bpkb exaa acgv"
+        val stringPasswordSenderEmail = "pmei knlr idbd nkgy"
         val stringHost = "smtp.gmail.com"
         val properties = Properties()
         properties["mail.smtp.host"] = stringHost
@@ -96,6 +101,7 @@ class otpsendActivity : AppCompatActivity() {
             mimeMessage.setRecipient(Message.RecipientType.TO, InternetAddress(stringReceiverEmail))
             mimeMessage.subject = "send otp:"
             mimeMessage.setText("OTP : "+ otp)
+            mimeMessage.setFrom(InternetAddress(stringSenderEmail, "APP COFFE PTIT"))
         } catch (e: MessagingException) {
             e.printStackTrace()
         }
@@ -107,6 +113,9 @@ class otpsendActivity : AppCompatActivity() {
                 intent.putExtra("OTP",otp)
                 progressDialog!!.dismiss()
                 startActivity(intent)
+                countDownTime()
+
+
             } catch (e: MessagingException) {
                 e.printStackTrace()
             }
@@ -115,4 +124,25 @@ class otpsendActivity : AppCompatActivity() {
 
 
     }
+
+    private fun countDownTime() {
+        runOnUiThread {
+            val countdownMillis: Long = 60000
+            countDownTimer = object : CountDownTimer(countdownMillis, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    binding.countdownTextview.text = "Thời gian còn lại: ${millisUntilFinished / 1000} giây"
+                }
+
+                override fun onFinish() {
+                    binding.countdownTextview.text = "Hoàn thành!"
+                }
+            }
+            countDownTimer.start()
+        }
+    }
+
+
+
 }
+
+

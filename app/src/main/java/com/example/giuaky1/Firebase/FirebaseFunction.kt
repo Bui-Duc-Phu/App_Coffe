@@ -59,7 +59,8 @@ class FirebaseFunction {
 
 
 
-        fun getPhoneProfile(context: Context,callback: (String) -> Unit,callback2: (String) -> Unit,callback3: (String) -> Unit)  {
+        @SuppressLint("SuspiciousIndentation")
+        fun getPhoneProfile(context: Context, callback: (String) -> Unit, callback2: (String) -> Unit, callback3: (String) -> Unit)  {
             val firebaseUser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
             val databaseReference = FirebaseDatabase.getInstance()
                 .getReference("ProfileUser")

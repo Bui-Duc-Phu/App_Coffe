@@ -134,35 +134,34 @@ class ProfileFragment : Fragment() {
                 val r = Rect()
                 binding.mainLayout.getWindowVisibleDisplayFrame(r)
                 val screenHeight = binding.mainLayout.rootView.height
-
-                // r.bottom is the position above soft keypad or device button.
-                // if keypad is shown, the r.bottom is smaller than that before.
                 val keypadHeight = screenHeight - r.bottom
-
-                // 0.15 ratio is perhaps enough to determine keypad height.
                 if (keypadHeight > screenHeight * 0.15) {
-                    // keyboard is opened
                 } else {
-                    // keyboard is closed
+
                     binding.phoneEdt.isEnabled = false
                     binding.locationEdt.isEnabled = false
                     binding.dateEdt.isEnabled = false
-                    binding.save.visibility=View.GONE
+                    binding.save.visibility = View.GONE
+
                     binding.mainLayout.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 }
+
             }
         })
     }
 
 
     fun openKeyboardAndSetCursorPosition(context: Context, editText: EditText) {
-
-        editText.requestFocus()
+        editText.requestFocus() // Focus vào EditText
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
+        imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT) // Hiển thị bàn phím
 
-
+        // Lưu ý rằng đoạn code sau sẽ không được thực hiện ngay lập tức, vì vậy cần sử dụng postDelayed
+        editText.postDelayed({
+            editText.setSelection(editText.text.length) // Di chuyển con trỏ đến cuối văn bản trong EditText
+        }, 200) // Đợi 200ms trước khi thực hiện
     }
+
 
     fun checked(){
         var phone = binding.phoneEdt.text.toString().trim()

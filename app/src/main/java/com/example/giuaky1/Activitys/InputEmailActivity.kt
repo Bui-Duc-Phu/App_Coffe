@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.giuaky1.Interfaces.OTPEven
 import com.example.giuaky1.databinding.ActivityInputEmailBinding
 import java.util.Properties
 import javax.mail.Authenticator
@@ -19,7 +20,7 @@ import kotlin.random.Random
 
 class InputEmailActivity : AppCompatActivity() {
     var progressDialog: ProgressDialog ? = null
-    lateinit var uri : String
+
     private val binding: ActivityInputEmailBinding by lazy {
         ActivityInputEmailBinding.inflate(layoutInflater)
     }
@@ -46,7 +47,7 @@ class InputEmailActivity : AppCompatActivity() {
 
     private fun creatOtp(receiver: String){
         val randomDigits = (1..6).map { Random.nextInt(0, 10) }.joinToString("")
-        sendOTP(receiver,randomDigits.toString())
+       sendOTP(receiver,randomDigits.toString())
     }
 
 
@@ -75,6 +76,7 @@ class InputEmailActivity : AppCompatActivity() {
             mimeMessage.setRecipient(Message.RecipientType.TO, InternetAddress(stringReceiverEmail))
             mimeMessage.subject = "send otp:"
             mimeMessage.setText("OTP : "+ otp)
+            mimeMessage.setFrom(InternetAddress(stringSenderEmail, "APP COFFE PTIT"))
         } catch (e: MessagingException) {
             e.printStackTrace()
         }
@@ -84,10 +86,12 @@ class InputEmailActivity : AppCompatActivity() {
                 val intent = Intent(this, otpsendActivity::class.java)
                 intent.putExtra("OTP",otp)
                 intent.putExtra("receiver",receiver)
-                intent.putExtra("CallActivity","InputEmailActivity")
+                intent.putExtra("receiver",receiver)
                 progressDialog!!.dismiss()
                 startActivity(intent)
                 finish()
+
+
             } catch (e: MessagingException) {
                 e.printStackTrace()
             }

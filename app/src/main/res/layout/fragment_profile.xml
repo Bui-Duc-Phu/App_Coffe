@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/mainLayout"
-    android:background="#F8F6F6"
+    android:background="#938383"
     tools:context=".Fragments.ProfileFragment">
 
     <RelativeLayout
@@ -115,6 +115,7 @@
                 android:layout_toEndOf="@id/icon_phone"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
+                android:gravity="center"
                 android:textColorHint="@android:color/transparent"
                 android:textColorHighlight="@android:color/transparent"
                 android:text="0947945596"
@@ -183,6 +184,7 @@
                 android:minHeight="48dp"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
+                android:gravity="center"
                 android:text="97 Man Thiện/Quân 9/hcm"
                 android:textColor="#000000"
                 android:textColorHighlight="@android:color/transparent"

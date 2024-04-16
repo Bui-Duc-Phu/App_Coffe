@@ -96,6 +96,8 @@
     <string name="menu_drawer_privecy_policy">Chính sách bảo mật</string>
     <string name="menu_drawer_notification">Cài đặt thông báo</string>
     <string name="menu_drawer_logout">Đăng xuất</string>
+    <string name="dark_mode">Chế độ tối</string>
+    <string name="light_mode">Chế độ sáng</string>
 
     <!-- menu_drawer_admin -->
     <string name="menu_drawer_admin_orderlist">Danh sách đơn hàng</string>

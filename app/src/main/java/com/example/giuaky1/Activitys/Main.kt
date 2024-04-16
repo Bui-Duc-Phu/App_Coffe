@@ -77,14 +77,19 @@ class Main : AppCompatActivity(){
 
     @RequiresApi(Build.VERSION_CODES.S)
     private fun navigationDrawer(){
-        val menuItem = binding.navView.menu.findItem(R.id.lightMode)
+        val themeItem = binding.navView.menu.findItem(R.id.lightMode)
         if (isDarkMode()) {
-            menuItem.title = "Chế độ sáng"
-            menuItem.setIcon(R.drawable.sun)
+            themeItem.title = getString(R.string.light_mode)
+            themeItem.setIcon(R.drawable.sun)
         } else {
-            menuItem.title = "Chế độ tối"
-            menuItem.setIcon(R.drawable.moon)
+            themeItem.title = getString(R.string.dark_mode)
+            themeItem.setIcon(R.drawable.moon)
         }
+
+        val languageItem  = binding.navView.menu.findItem(R.id.setLanguage)
+
+
+
         setSupportActionBar(binding.toolbar)
         toggle = ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close)
         binding.drawerLayout.addDrawerListener(toggle)
@@ -193,18 +198,16 @@ class Main : AppCompatActivity(){
 
 
     fun changeLang(context: Context, lang: String) {
-
         val myLocale = Locale(lang)
         Locale.setDefault(myLocale)
-        val config = Configuration()
-        config.locale = myLocale
-        context.resources.updateConfiguration(config, context.resources.displayMetrics)
+        val configuration = Configuration(context.resources.configuration)
+        configuration.setLocale(myLocale)
+        context.resources.updateConfiguration(configuration, context.resources.displayMetrics)
+
 
         val dbHelper = DBHelper(this,null)
         if( lang == "vi") dbHelper.updateMode("2", "vi")
         else dbHelper.updateMode("2", "en")
-
-
     }
 
     fun isVietnameseLanguage(context: Context): Boolean {

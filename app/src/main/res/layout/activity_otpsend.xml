@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/input_email_back"
     android:gravity="center_horizontal"
     tools:context=".Activitys.otpsendActivity">
 
@@ -43,23 +43,34 @@
         android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/countdownTextview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Thời gian xác OTP ->  "
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
     <com.chaos.view.PinView
         android:id="@+id/pinview"
         style="@style/PinWidget.PinView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="30dp"
         android:cursorVisible="true"
         android:gravity="center"
         android:hint="@string/app_name"
         android:inputType="number"
-        android:itemBackground="@color/white"
+        android:itemBackground="@color/backItem_pinview"
         app:hideLineWhenFilled="false"
         app:itemCount="6"
         app:itemHeight="50dp"
         app:itemRadius="10dp"
         app:itemWidth="50dp"
+        android:textColor="@color/black"
         />
     <LinearLayout
         android:layout_width="match_parent"
@@ -81,6 +92,7 @@
             android:layout_height="wrap_content"
             android:text="@string/otpsend_gui_lai"
             android:textColor="@color/black"
+            android:layout_marginStart="5dp"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -99,7 +111,7 @@
         android:textAllCaps="false"
         android:backgroundTint="#B98875"
         android:text="@string/otpsend_xac_nhan"
-        android:textColor="@color/white"
+        android:textColor="@color/buton_text"
         android:textSize="25dp" />
 
 

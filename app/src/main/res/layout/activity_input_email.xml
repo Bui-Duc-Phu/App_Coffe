@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/input_email_back"
     android:gravity="center_horizontal"
     tools:context=".Activitys.InputEmailActivity"
     >
@@ -33,10 +33,14 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginTop="30dp"
-        app:boxCornerRadiusBottomEnd="15sp"
-        app:boxCornerRadiusBottomStart="15sp"
+        app:boxCornerRadiusTopStart="15sp"
         app:boxCornerRadiusTopEnd="15sp"
-        app:boxCornerRadiusTopStart="15sp">
+        app:boxStrokeColor="@color/black"
+        app:hintTextColor="@color/black"
+        app:boxCornerRadiusBottomStart="15sp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeWidth="2dp"
+        app:boxCornerRadiusBottomEnd="15sp">
 
         <EditText
             android:id="@+id/emailEdt"
@@ -57,7 +61,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="30dp"
         android:text="@string/input_email_sendotp"
-        android:textColor="@color/white"
+        android:textColor="@color/buton_text"
         android:textColorHint="@color/hint"
         android:textSize="20dp"
         app:backgroundTint="#B98875" />

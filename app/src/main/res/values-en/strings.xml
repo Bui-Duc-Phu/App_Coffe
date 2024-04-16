@@ -97,6 +97,9 @@
     <string name="menu_drawer_privecy_policy">Privacy Policy</string>
     <string name="menu_drawer_notification">Notification settings</string>
     <string name="menu_drawer_logout">Logout</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="light_mode">Light mode</string>
+
 
     <!-- menu_drawer_admin -->
     <string name="menu_drawer_admin_orderlist">Order list</string>

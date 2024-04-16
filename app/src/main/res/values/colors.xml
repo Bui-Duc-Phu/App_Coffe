@@ -21,6 +21,11 @@
     <color name="tablayout_text_select">#FFFFFFFF</color>
     <color name="tablayout_back_select">#97471B</color>
 
+    <color name="input_email_back">#ffffff</color>
+    <color name="backItem_pinview">#ffffff</color>
+
+
+
 
 
 
