@@ -50,12 +50,12 @@
 
 
     <!-- activity_input_email -->
-    <string name="input_email_QuenMK" >Quên Mật Khẩu</string>
+    <string name="input_email_QuenMK">Quên Mật Khẩu</string>
     <string name="input_email">Nhập email</string>
     <string name="input_email_sendotp">Gửi OTP</string>
 
     <!-- Order List -->
-    <string name="order_list_quanl_donhang" >Quản Lý Đơn Hàng</string>
+    <string name="order_list_quanl_donhang">Quản Lý Đơn Hàng</string>
 
     <!-- otpSend -->
     <string name="otpsend_xac_minh">Xác Minh</string>
@@ -105,10 +105,19 @@
     <string name="frag_history_dang_cho">Đang Chờ</string>
     <string name="order_custom_item_tiltle">Đơn hàng đã hoàn thành</string>
     <string name="order_not_custom_item">Đơn hàng chưa hoàn thành</string>
-    
+
     <string name="day">Ngày : </string>
     <string name="time">"Thời gian :  "</string>
     <string name="sum">Tổng : </string>
+    <string name="frag_TK_month">Tháng</string>
+    <string name="frag_TK_label">Thống Kê</string>
+    <string name="frag_TK_DH_label">Thống Kê Đơn Hàng</string>
+    <string name="frag_TK_DT_label">Thống Kê Doanh Thu</string>
+    <string name="frag_TK_SP_label">Thống Kê Sản Phẩm</string>
+    <string name="frag_TK_DH_TabItem">Đơn Hàng</string>
+    <string name="frag_TK_DT_TabItem">Doanh Thu</string>
+    <string name="frag_TK_SP_TabItem">Sản Phẩm</string>
+    <string name="frag_TK_week">Tuần</string>
 
 
 </resources>
