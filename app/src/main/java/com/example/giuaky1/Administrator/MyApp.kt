@@ -2,6 +2,7 @@ package com.example.giuaky1.Administrator
 
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatDelegate
@@ -20,36 +21,30 @@ class MyApp : Application() {
     lateinit var lang: String
     lateinit var data: DBHelper
     override fun onCreate() {
-
         super.onCreate()
+        mode = ModeTheme.light.toString() // Gán giá trị mặc định cho mode
+        lang = "vi"
 
         data = DBHelper(this, null)
 
         val modeList = data.getModeList()
 
         if (modeList.isEmpty()) {
-            mode = ModeTheme.dark.toString() // Thiết lập mode mặc định nếu danh sách rỗng
+            createValue()
+
         } else {
-            mode = modeList[0] // Lấy mode từ danh sách nếu có
+            mode = modeList[0]
             lang = modeList[1]
         }
 
         if (mode == ModeTheme.dark.toString()) {
-
-            val mode = data.getModeList()[0]
-
             if (mode.equals(ModeTheme.dark.toString())) {
-
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         }
         changeLang(applicationContext,lang)
-
-
-
-
     }
 
 
@@ -57,7 +52,9 @@ class MyApp : Application() {
         val data: DBHelper = DBHelper(this, null)
         data.addName("1", "light")
         data.addName("2", "vi")
+
     }
+
 
     fun changeLang(context: Context, lang: String) {
         val myLocale = Locale(lang)
