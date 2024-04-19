@@ -113,11 +113,11 @@
     <string name="time">"Thời gian :  "</string>
     <string name="sum">Tổng : </string>
 
-<<<<<<< HEAD
+
     <string name="Edit"><![CDATA[<u>underline</u>.]]></string>
     <string name="don_hang_da_dat">Đơn hàng đã đặt</string>
 
-=======
+
     <!-- fragmenThongKe -->
     <string name="frag_TK_month">Tháng</string>
     <string name="frag_TK_week">Tuần</string>

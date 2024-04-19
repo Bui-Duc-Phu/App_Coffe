@@ -16,20 +16,18 @@ import java.util.Locale
 class MyApp : Application() {
 
 
-
-    lateinit var mode : String
-    lateinit var lang : String
-    lateinit var data  : DBHelper
+    lateinit var mode: String
+    lateinit var lang: String
+    lateinit var data: DBHelper
     override fun onCreate() {
 
         super.onCreate()
 
-        data = DBHelper(this,null)
-<<<<<<< HEAD
+        data = DBHelper(this, null)
+
         val modeList = data.getModeList()
 
         if (modeList.isEmpty()) {
-            createValue()
             mode = ModeTheme.dark.toString() // Thiết lập mode mặc định nếu danh sách rỗng
         } else {
             mode = modeList[0] // Lấy mode từ danh sách nếu có
@@ -37,25 +35,28 @@ class MyApp : Application() {
         }
 
         if (mode == ModeTheme.dark.toString()) {
-=======
-        val mode = data.getModeList()[0]
 
-        if (mode.equals(ModeTheme.dark.toString())) {
->>>>>>> origin/phong
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            val mode = data.getModeList()[0]
+
+            if (mode.equals(ModeTheme.dark.toString())) {
+
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
         }
-        changeLang(applicationContext, lang)
+        changeLang(applicationContext,lang)
+
+
 
 
     }
 
 
-    fun createValue(){
-        val  data  : DBHelper = DBHelper(this,null)
-        data.addName("1","light")
-        data.addName("2","vi")
+    fun createValue() {
+        val data: DBHelper = DBHelper(this, null)
+        data.addName("1", "light")
+        data.addName("2", "vi")
     }
 
     fun changeLang(context: Context, lang: String) {
@@ -65,9 +66,10 @@ class MyApp : Application() {
         configuration.setLocale(myLocale)
         context.resources.updateConfiguration(configuration, context.resources.displayMetrics)
     }
-
-
-
-
-
 }
+
+
+
+
+
+
