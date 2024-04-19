@@ -25,6 +25,7 @@ class MyApp : Application() {
         super.onCreate()
 
         data = DBHelper(this,null)
+<<<<<<< HEAD
         val modeList = data.getModeList()
 
         if (modeList.isEmpty()) {
@@ -36,6 +37,11 @@ class MyApp : Application() {
         }
 
         if (mode == ModeTheme.dark.toString()) {
+=======
+        val mode = data.getModeList()[0]
+
+        if (mode.equals(ModeTheme.dark.toString())) {
+>>>>>>> origin/phong
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)

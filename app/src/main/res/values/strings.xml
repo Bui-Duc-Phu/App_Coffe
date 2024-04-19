@@ -113,6 +113,15 @@
     <string name="day">Ngày : </string>
     <string name="time">"Thời gian :  "</string>
     <string name="sum">Tổng : </string>
+    <string name="frag_TK_month">Tháng</string>
+    <string name="frag_TK_label">Thống Kê</string>
+    <string name="frag_TK_DH_label">Thống Kê Đơn Hàng</string>
+    <string name="frag_TK_DT_label">Thống Kê Doanh Thu</string>
+    <string name="frag_TK_SP_label">Thống Kê Sản Phẩm</string>
+    <string name="frag_TK_DH_TabItem">Đơn Hàng</string>
+    <string name="frag_TK_DT_TabItem">Doanh Thu</string>
+    <string name="frag_TK_SP_TabItem">Sản Phẩm</string>
+    <string name="frag_TK_week">Tuần</string>
 
 
     <string name="Edit"><![CDATA[<u>Edit</u>.]]></string>

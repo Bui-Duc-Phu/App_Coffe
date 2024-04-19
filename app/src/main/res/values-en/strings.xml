@@ -118,8 +118,21 @@
     <string name="time">Time : </string>
     <string name="sum">Total : </string>
 
+<<<<<<< HEAD
     <string name="Edit"><![CDATA[<u>underline</u>.]]></string>
     <string name="don_hang_da_dat">Order Placed</string>
+=======
+    <!-- fragmenThongKe -->
+    <string name="frag_TK_month">Month</string>
+    <string name="frag_TK_label">Statistics</string>
+    <string name="frag_TK_DH_label">Order statistics</string>
+    <string name="frag_TK_DT_label">Revenue statistics</string>
+    <string name="frag_TK_SP_label">Product statistics</string>
+    <string name="frag_TK_DH_TabItem">Order</string>
+    <string name="frag_TK_DT_TabItem">Revenue</string>
+    <string name="frag_TK_SP_TabItem">Product</string>
+    <string name="frag_TK_week">Week</string>
+>>>>>>> origin/phong
 
 
 </resources>
