@@ -62,6 +62,7 @@ dependencies {
     implementation(files("libs/activation.jar"))
     implementation(files("libs/mail.jar"))
     implementation(files("libs/additionnal.jar"))
+    implementation("androidx.activity:activity:1.8.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -76,6 +77,9 @@ dependencies {
 
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation ("androidx.core:core-ktx:1.12.0")
+
+    implementation ("io.reactivex.rxjava2:rxjava:2.0.0")
+
 
 
 

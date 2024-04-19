@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".Administrator.MyApp"
@@ -19,58 +18,50 @@
         android:theme="@style/Base.Theme.Light"
         tools:targetApi="31">
         <activity
+            android:name=".Administrator.Activitys.UserOrderList"
+            android:exported="false" />
+        <activity
             android:name=".Administrator.Activitys.DetailOrder"
-
             android:exported="false" />
         <activity
             android:name=".Administrator.Activitys.OrderList"
-
             android:exported="false" />
         <activity
             android:name=".Administrator.Activitys.MainAdmin"
-
             android:exported="false" />
         <activity
             android:name=".Data.PustData"
-
             android:exported="false" />
         <activity
             android:name=".Activitys.ForgotPasswordActivity"
-
             android:exported="false" />
         <activity
             android:name=".Activitys.InputEmailActivity"
-
             android:exported="false" />
         <activity
             android:name=".Activitys.OrderConfirm"
             android:exported="false" />
         <activity
             android:name=".Activitys.otpsendActivity"
-
             android:exported="false" />
         <activity
             android:name=".Activitys.Main"
-
             android:exported="false" />
         <activity
             android:name=".Activitys.Login"
-
             android:exported="false" />
         <activity
             android:name=".Activitys.SignUp"
-
             android:exported="false" />
         <activity
             android:name=".Activitys.LoginOrSignUp"
-
             android:exported="false" />
         <activity
             android:name=".Activitys.SplashScreem"
-
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -9,7 +9,14 @@
         <item
             android:id="@+id/orderManager"
             android:icon="@drawable/list_icon"
+            android:actionLayout="@layout/spinner_layout"
             android:title="@string/menu_drawer_admin_orderlist" />
+
+        <item
+            android:id="@+id/orderManager_Users"
+            android:icon="@drawable/list_icon"
+            android:actionLayout="@layout/spinner_layout"
+            android:title="@string/menu_drawer_admin_orderlist_user" />
 
 
     </group>

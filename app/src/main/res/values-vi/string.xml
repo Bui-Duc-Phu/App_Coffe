@@ -56,6 +56,7 @@
 
     <!-- Order List -->
     <string name="order_list_quanl_donhang" >Quản Lý Đơn Hàng</string>
+    <string name="menu_drawer_admin_orderlist_user">Đơn hàng theo người dùng</string>
 
     <!-- otpSend -->
     <string name="otpsend_xac_minh">Xác Minh</string>

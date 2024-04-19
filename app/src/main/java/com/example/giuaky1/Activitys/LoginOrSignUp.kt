@@ -93,19 +93,9 @@ class LoginOrSignUp : AppCompatActivity() {
 
             }
             googleBtn.setOnClickListener {
-                signInGoogle()
-
-
-
+               signInGoogle()
             }
-            uongCoffe.setOnClickListener {
-             //   startActivity(Intent(this@LoginOrSignUp,PustData::class.java))
-                showProgress()
-                Handler().postDelayed({
-                    hideProgress()
 
-                }, 5000)
-            }
         }
 
 

@@ -57,6 +57,7 @@
 
     <!-- Order List -->
     <string name="order_list_quanl_donhang" >Manage Orders</string>
+    <string name="menu_drawer_admin_orderlist_user">Manage User_Orders</string>
 
     <!-- otpSend -->
     <string name="otpsend_xac_minh">Verify</string>

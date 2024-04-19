@@ -1,5 +1,6 @@
 package com.example.giuaky1.Administrator.Activitys
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -58,11 +59,12 @@ class OrderList : AppCompatActivity() {
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun recylerviewListOrder() {
       FirebaseFunction.readAllOrdersList(){orderList->
        adapter = OrderListAdapter(this,orderList){show->showIconToolbarMenu(show)}
-          binding.recylerview.adapter = adapter
-          adapter.notifyDataSetChanged()
+       binding.recylerview.adapter = adapter
+       adapter.notifyDataSetChanged()
         }
     }
 

@@ -48,7 +48,7 @@ class MyApp : Application() {
 
     fun createValue(){
         val  data  : DBHelper = DBHelper(this,null)
-        data.addName("1","dark")
+        data.addName("1","light")
         data.addName("2","vi")
     }
 

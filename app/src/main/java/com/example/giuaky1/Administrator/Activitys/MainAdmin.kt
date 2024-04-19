@@ -4,8 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -51,29 +56,29 @@ class MainAdmin : AppCompatActivity() {
     }
 
     private fun navigationDrawer(){
+
+
+
+
+
         setSupportActionBar(binding.toolbar)
         toggle = ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close)
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+
+
+
         binding.navView.setNavigationItemSelectedListener { menu ->
             when (menu.itemId) {
                 R.id.orderManager ->  {
                     startActivity(Intent(this@MainAdmin,OrderList::class.java))
-
                 }
-                R.id.setLanguage ->{
-
+                R.id.orderManager_Users ->  {
+                    startActivity(Intent(this@MainAdmin,OrderList::class.java))
                 }
-                R.id.lightMode ->{
 
-                }
-                R.id.privacyPolicy ->{
-
-                }
-                R.id.notification ->{
-
-                }
                 R.id.nav_logout ->{
                     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                         .requestIdToken(getString(R.string.default_web_client_id))
