@@ -6,13 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.load.engine.Resource
 import com.example.giuaky1.Models.Order
 import com.example.giuaky1.R
 import com.example.giuaky1.Ultils.CustomString
 import com.example.giuaky1.Ultils.MyCategory
 import com.example.giuaky1.databinding.OrderCustomItemBinding
-import java.util.Locale.Category
 import kotlin.math.roundToInt
 
 class OrderCompletedAdapter(private val context: Context,

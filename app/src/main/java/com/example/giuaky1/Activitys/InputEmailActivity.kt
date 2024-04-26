@@ -4,7 +4,6 @@ import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.giuaky1.Interfaces.OTPEven
 import com.example.giuaky1.databinding.ActivityInputEmailBinding
 import java.util.Properties
 import javax.mail.Authenticator

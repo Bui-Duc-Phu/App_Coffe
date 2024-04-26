@@ -14,23 +14,15 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.giuaky1.Firebase.FirebaseFunction
 import com.example.giuaky1.Firebase.FirebaseUpdate
 import com.example.giuaky1.R
-import com.example.giuaky1.databinding.FragmentHistoryBinding
 import com.example.giuaky1.databinding.FragmentProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.launch
 import java.io.IOException
 

@@ -10,7 +10,6 @@ import android.text.TextUtils
 import android.util.Patterns
 import android.view.WindowManager
 import android.widget.Toast
-import com.example.giuaky1.Interfaces.OTPEven
 import com.example.giuaky1.Models.Users
 import com.example.giuaky1.databinding.ActivitySignUpBinding
 import com.example.giuaky1.databinding.DialogCustomBinding

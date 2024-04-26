@@ -2,13 +2,11 @@ package com.example.giuaky1.Activitys
 
 import android.app.ProgressDialog
 import android.content.Intent
-import android.database.Observable
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.TextUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.giuaky1.Interfaces.OTPEven
 import com.example.giuaky1.databinding.ActivityOtpsendBinding
 import java.util.Properties
 import javax.mail.Authenticator

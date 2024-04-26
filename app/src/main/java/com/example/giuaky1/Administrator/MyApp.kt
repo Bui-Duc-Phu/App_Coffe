@@ -2,13 +2,10 @@ package com.example.giuaky1.Administrator
 
 import android.app.Application
 import android.content.Context
-import android.content.Intent
 import android.content.res.Configuration
-import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.giuaky1.Models.ModeTheme
 import com.example.sqlite.DBHelper
-import com.google.firebase.FirebaseApp
 import java.util.Locale
 
 // Tạo một class mới kế thừa từ Application

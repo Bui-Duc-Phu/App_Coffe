@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
-import android.content.res.Resources
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,7 +13,6 @@ import android.widget.Toast
 import com.example.giuaky1.Administrator.Activitys.MainAdmin
 import com.example.giuaky1.Administrator.Controller
 import com.example.giuaky1.Models.Users
-import com.example.giuaky1.R
 import com.example.giuaky1.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -22,9 +20,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import java.util.*
-import javax.mail.*
-
 
 
 class Login : AppCompatActivity() {

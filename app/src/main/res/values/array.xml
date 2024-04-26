@@ -1,6 +1,7 @@
-<resources>
-    <string-array name="payment_methods">
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string-array name="payment_methods" tools:ignore="InconsistentArrays">
         <item>Thanh toán khi nhận hàng</item>
         <item>Quét mã QR</item>
+        <item>Thanh toán ZaloPay</item>
     </string-array>
 </resources>

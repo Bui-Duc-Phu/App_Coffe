@@ -1,106 +1,243 @@
 package com.example.giuaky1.Fragments
 
+
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.giuaky1.Adapters.BannerAdapter
+import com.example.giuaky1.Adapters.CategoryAdapter
 import com.example.giuaky1.Adapters.ProductAdapter
+import com.example.giuaky1.Models.CategoryModel
 import com.example.giuaky1.Models.ProductModel
 import com.example.giuaky1.R
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.util.Calendar
 import java.util.Locale
 
 class HomeFragment : Fragment() {
-    var productModelList: ArrayList<ProductModel> = ArrayList()
-    var searchModelList: ArrayList<ProductModel> = ArrayList()
-    lateinit var searchView: SearchView
-    lateinit var adapter: ProductAdapter
-    private lateinit var recyclerView: RecyclerView
-    val categories = ArrayList<String>()
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
-        recyclerView = view.findViewById(R.id.recyclerViewProducts)
-        recyclerView.layoutManager = GridLayoutManager(activity, 2)
-        adapter = ProductAdapter(productModelList)
-        recyclerView.adapter = adapter
-        searchView = view.findViewById(R.id.svCoffees)
+    private val productModelList = ArrayList<ProductModel>()
+    private val searchModelList = ArrayList<ProductModel>()
+    private var searchView: SearchView? = null
+    private var adapter: ProductAdapter? = null
+    private var recyclerViewProducts: RecyclerView? = null
+    private var recyclerViewCategory: RecyclerView? = null
+    private var currentCategory: CategoryModel? = null
+    private var adapterCategory: CategoryAdapter? = null
+    private var handler: Handler? = null
+    private var runnable: Runnable? = null
+    private var view: View? = null
+    private var currentProduct = 0
+    private var tvHello: TextView? = null
+    private var recyclerViewBanner: RecyclerView? = null
+    @SuppressLint("MissingInflatedId")
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        view = inflater.inflate(R.layout.fragment_home, container, false)
+        setControl()
         fetchDataFromFirebase()
-
+        fetchBannerFromFirebase()
+        setSearchView()
+        loadCategories()
+        setHello()
+        setRecyclerViewProducts()
         return view
     }
-    private fun fetchDataFromFirebase() {
-        val databaseReference = FirebaseDatabase.getInstance().getReference("Products")
-        databaseReference.addValueEventListener(object : ValueEventListener {
-            @SuppressLint("NotifyDataSetChanged")
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                productModelList.clear()
-                searchModelList.clear()
-                for (snapshot in dataSnapshot.children) {
-                    val productModel: ProductModel? = snapshot.getValue(ProductModel::class.java)
-                    if (productModel != null) {
-                        productModelList.add(productModel)
-                        searchModelList.add(productModel)
-                    }
-                }
-                adapter.notifyDataSetChanged()
 
-                searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                    override fun onQueryTextSubmit(query: String): Boolean {
-                        return false
-                    }
+    private fun setRecyclerViewProducts() {
+        recyclerViewProducts!!.setLayoutManager(GridLayoutManager(activity, 2))
+        adapter = ProductAdapter(productModelList)
+        recyclerViewProducts!!.setAdapter(adapter)
+    }
 
-                    override fun onQueryTextChange(newText: String): Boolean {
-                        val filteredList = filter(searchModelList, newText)
-                        adapter.updateList(filteredList)
-                        recyclerView.adapter = adapter
-                        return true
-                    }
-                })
+    @SuppressLint("UseRequireInsteadOfGet")
+    private fun setControl() {
+        recyclerViewProducts = view!!.findViewById(R.id.recyclerViewProducts)
+        recyclerViewCategory = view!!.findViewById(R.id.recyclerViewCategory)
+        searchView = view!!.findViewById(R.id.svCoffees)
+        tvHello = view!!.findViewById(R.id.tvHello)
+        recyclerViewBanner = view!!.findViewById(R.id.recyclerViewBanner)
+    }
+
+    private fun setHello() {
+        val calendar = Calendar.getInstance()
+        val hour = calendar[Calendar.HOUR_OF_DAY]
+        if (hour >= 5 && hour < 10) {
+            tvHello!!.setText(R.string.goodmorning)
+        } else if (hour >= 10 && hour < 13) {
+            tvHello!!.setText(R.string.goodluch)
+        } else if (hour >= 13 && hour < 18) {
+            tvHello!!.setText(R.string.goodafternoon)
+        } else {
+            tvHello!!.setText(R.string.goodnight)
+        }
+    }
+
+    private fun setSearchView() {
+        searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
             }
 
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.d("productsfb", "Fetch data cancelled: ${databaseError.message}")
-            }
-        })
-        val databaseReference1 = FirebaseDatabase.getInstance().getReference("Category")
-        databaseReference1.addValueEventListener(object : ValueEventListener {
-            @SuppressLint("NotifyDataSetChanged")
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                categories.clear()
-                for (snapshot in dataSnapshot.children) {
-                    val category = snapshot.getValue(String::class.java)
-                    if (category != null) {
-                        categories.add(category)
-                    }
-                }
-                adapter.notifyDataSetChanged()
-                Log.d("categories", categories.size.toString())
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.d("categoriesfb", "Fetch data cancelled: ${databaseError.message}")
+            override fun onQueryTextChange(newText: String): Boolean {
+                val filteredList = filter(searchModelList, newText)
+                adapter!!.updateList(filteredList)
+                recyclerViewProducts!!.setAdapter(adapter)
+                return true
             }
         })
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler!!.removeCallbacks(runnable!!)
+    }
+
+    private fun fetchBannerFromFirebase() {
+        val bannerImages: MutableList<String> = ArrayList()
+        FirebaseDatabase.getInstance().getReference("Banner")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    for (snapshot in dataSnapshot.getChildren()) {
+                        val bannerUrl = snapshot.getValue(String::class.java)
+                        if (bannerUrl != null) {
+                            bannerImages.add(bannerUrl)
+                        }
+                    }
+                    setBanner(bannerImages)
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.d("bannerfb", "Fetch data cancelled: " + databaseError.message)
+                }
+            })
+    }
+
+    private fun setBanner(bannerImages: List<String>) {
+        val bannerAdapter = BannerAdapter(bannerImages)
+        recyclerViewBanner!!.setLayoutManager(
+            LinearLayoutManager(
+                activity,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+        )
+        recyclerViewBanner!!.setAdapter(bannerAdapter)
+        handler = Handler()
+        runnable = object : Runnable {
+            override fun run() {
+                if (currentProduct >= bannerImages.size) {
+                    currentProduct = 0
+                    recyclerViewBanner!!.scrollToPosition(currentProduct)
+                } else {
+                    recyclerViewBanner!!.smoothScrollToPosition(currentProduct)
+                }
+                currentProduct++
+                handler!!.postDelayed(this, 3000)
+            }
+        }
+        handler!!.postDelayed(runnable as Runnable, 3000)
+    }
+
+    private fun fetchDataFromFirebase() {
+        FirebaseDatabase.getInstance().getReference("Products")
+            .addValueEventListener(object : ValueEventListener {
+                @SuppressLint("NotifyDataSetChanged")
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    productModelList.clear()
+                    for (snapshot in dataSnapshot.getChildren()) {
+                        val productModel = snapshot.getValue(ProductModel::class.java)
+                        if (productModel != null) {
+                            productModelList.add(productModel)
+                            searchModelList.add(productModel)
+                        }
+                    }
+                    adapter!!.notifyDataSetChanged()
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.d("productsfb", "Fetch data cancelled: " + databaseError.message)
+                }
+            })
+    }
+
     fun filter(models: List<ProductModel>, query: String): List<ProductModel> {
-        val query1=query.lowercase(Locale.getDefault())
-        val filteredList: MutableList<ProductModel> = java.util.ArrayList()
+        val query1 = query.lowercase(Locale.getDefault())
+        val filteredList: MutableList<ProductModel> = ArrayList()
         for (model in models) {
-            val text: String = model.name.lowercase(Locale.getDefault())
+            val text = model.name!!.lowercase(Locale.getDefault())
             if (text.contains(query1)) {
                 filteredList.add(model)
             }
         }
         return filteredList
+    }
+
+    private fun loadCategories() {
+        val layoutManager = FlexboxLayoutManager(activity)
+        layoutManager.flexDirection = FlexDirection.ROW
+        layoutManager.justifyContent = JustifyContent.SPACE_EVENLY
+        recyclerViewCategory!!.setLayoutManager(layoutManager)
+        FirebaseDatabase.getInstance().getReference("Categories")
+            .addValueEventListener(object : ValueEventListener {
+                @SuppressLint("NotifyDataSetChanged")
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val categoryList: MutableList<CategoryModel?> = ArrayList()
+                    for (categorySnapshot in dataSnapshot.getChildren()) {
+                        val category = categorySnapshot.getValue(
+                            CategoryModel::class.java
+                        )
+                        categoryList.add(category)
+                    }
+                    adapterCategory = CategoryAdapter(
+                        categoryList, object : CategoryAdapter.OnCategoryClickListener {
+                            override fun onCategoryClick(selectedCategory: CategoryModel?) {
+                                currentCategory = selectedCategory
+                                if (currentCategory!!.name == "All") {
+                                    adapter!!.updateList(productModelList)
+                                    adapter!!.notifyDataSetChanged()
+                                } else {
+                                    filterProducts(currentCategory)
+                                }
+                                adapterCategory!!.notifyDataSetChanged()
+                            }
+                        })
+                    recyclerViewCategory!!.setAdapter(adapterCategory)
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    // Handle error
+                }
+            })
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun filterProducts(selectedCategory: CategoryModel?) {
+        val filteredList: MutableList<ProductModel> = ArrayList()
+        for (product in productModelList) {
+            if (product.category != null && selectedCategory!!.name != null && product.category == selectedCategory.name) {
+                filteredList.add(product)
+            }
+        }
+        adapter!!.updateList(filteredList)
+        adapter!!.notifyDataSetChanged()
     }
 }
