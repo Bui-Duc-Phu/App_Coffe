@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -8,8 +9,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Chọn size"
-        android:textSize="18sp"
+        android:text="@string/chon_size"
+        android:textSize="30sp"
         android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -17,14 +18,51 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:layout_margin="8dp"
+        tools:listitem="@layout/item_size"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="end">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/so_luong"
+            android:textSize="20sp"/>
+        <ImageView
+            android:id="@+id/buttonDecrease"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/btn_minus"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/_1"
+            android:layout_marginStart="20dp"
+            android:id="@+id/textQuantity"
+            android:textSize="20sp"/>
 
+        <ImageView
+            android:id="@+id/buttonIncrease"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/btn_plus" />
+
+    </LinearLayout>
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_add_product_to_cart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Thêm vào giỏ hàng"
-        android:background="@drawable/btn_add_product"
-        android:layout_marginTop="16dp" />
+        android:text="@string/them_gio_hang"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_rectangle"
+        android:backgroundTint="#846046"
+        android:layout_margin="10dp"/>
 
 </LinearLayout>
