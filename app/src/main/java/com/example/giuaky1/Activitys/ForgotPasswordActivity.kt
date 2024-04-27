@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
+import android.view.WindowManager
 import android.widget.Toast
 import com.example.giuaky1.Models.Users
 import com.example.giuaky1.databinding.ActivityForgotPasswordBinding
@@ -56,11 +57,13 @@ class ForgotPasswordActivity : AppCompatActivity() {
     private fun upDatePasswrod() {
         val newPassword = binding.passwordEdt.text.toString()
         val retypePassword = binding.retypePassword.text.toString()
-        progressDialog = ProgressDialog.show(this, "App", "Loading...", true)
+
         when{
             TextUtils.isEmpty(newPassword) -> binding.passwordEdt.setError("Chưa nhập mật khẩu")
-            TextUtils.isEmpty(retypePassword) -> binding.passwordEdt.setError("Chưa nhập mật khẩu")
+            TextUtils.isEmpty(retypePassword) -> binding.retypePassword.setError("Chưa nhập mật khẩu")
+            !newPassword.equals(retypePassword) -> binding.retypePassword.setError("chưa đồng bộ")
             else -> {
+                progressDialog = ProgressDialog.show(this, "App", "Loading...", true)
             val ref  =  FirebaseDatabase
                     .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
                     .getReference("Users")
@@ -68,17 +71,13 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     System.out.println("11")
                     for (snapshot in snapshot.children) {
-
                         val user = snapshot.getValue(Users::class.java)
                         if(user!!.email.equals(receiver)) {
                             uri = user.userID
                             updatePassword(receiver, user.password, newPassword)
-
                         }
                     }
-                    
                 }
-
                 override fun onCancelled(error: DatabaseError) {
                     Toast.makeText(applicationContext, "", Toast.LENGTH_SHORT).show()
 
@@ -119,6 +118,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
                                                                 startActivity(Intent(this@ForgotPasswordActivity, Main::class.java))
                                                                 finish()
                                                             }, 2000)
+
                                                         }else{
                                                             Toast.makeText(
                                                                 applicationContext,
@@ -174,15 +174,31 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
 
     private fun dialog_(a: Int) {
-        if (!isFinishing) {
+        if (!isFinishing && !isDestroyed) { // Thêm kiểm tra isDestroyed
             val dialog = Dialog(this)
             val dialogView = DialogCustomForgotPasswordTrueBinding.inflate(layoutInflater)
             dialog.setContentView(dialogView.root)
+            val layoutParams = WindowManager.LayoutParams()
+            layoutParams.copyFrom(dialog.window?.attributes)
+            layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+            layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
+            dialog.window?.attributes = layoutParams
             if (a == 1) {
-                dialog.show()
+                try {
+                    dialog.show()
+                } catch (e: WindowManager.BadTokenException) {
+                    // Xử lý ngoại lệ nếu có
+                    e.printStackTrace()
+                }
             } else {
                 dialog.dismiss()
             }
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        progressDialog?.dismiss()
+    }
+
 }

@@ -76,7 +76,7 @@
             android:layout_marginEnd="30dp"
             app:boxCornerRadiusTopStart="15sp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             app:boxCornerRadiusTopEnd="15sp"
             app:boxCornerRadiusBottomStart="15sp"
             app:boxStrokeColor="@color/black"
@@ -101,7 +101,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tenDangNhapLayout"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
@@ -116,7 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             app:boxCornerRadiusTopStart="15sp"
             app:boxCornerRadiusTopEnd="15sp"
             app:boxCornerRadiusBottomStart="15sp"
@@ -125,7 +125,6 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxStrokeWidth="2dp"
             app:boxCornerRadiusBottomEnd="15sp">
-
             <EditText
                 android:id="@+id/emailEdt"
                 android:layout_width="match_parent"
@@ -139,11 +138,53 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/passwordLayout"
+        android:id="@+id/phoneLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/emailLayout"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginStart="40dp"
+            android:text="@string/signup_text_phone"
+            android:textColor="@color/black"
+            android:textSize="18dp"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="5dp"
+            app:boxCornerRadiusTopStart="15sp"
+            app:boxCornerRadiusTopEnd="15sp"
+            app:boxCornerRadiusBottomStart="15sp"
+            app:boxStrokeColor="@color/black"
+            app:hintTextColor="@color/black"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeWidth="2dp"
+            app:boxCornerRadiusBottomEnd="15sp">
+            <EditText
+                android:id="@+id/phoneEdt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/signup_hint_phone"
+                android:paddingStart="30dp"
+                android:inputType="phone"
+                android:textColor="@color/black"
+                android:textColorHint="@color/hint"
+                tools:ignore="TouchTargetSizeCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/passwordLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/phoneLayout"
+        android:layout_marginTop="10dp"
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
@@ -158,7 +199,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             app:boxCornerRadiusTopStart="15sp"
             app:boxCornerRadiusTopEnd="15sp"
             app:boxCornerRadiusBottomStart="15sp"
@@ -168,9 +209,7 @@
             app:hintTextColor="@color/black"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:passwordToggleEnabled="true"
-
             app:boxCornerRadiusBottomEnd="15sp">
-
             <EditText
                 android:id="@+id/passwordEdt"
                 android:layout_width="match_parent"
@@ -194,7 +233,7 @@
         android:textAllCaps="false"
         android:layout_marginEnd="30dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="140dp"
+        android:layout_marginBottom="70dp"
         android:textColor="@color/textcoler_Btn"
         android:layout_marginStart="30dp"
         android:elevation="0dp"
@@ -203,7 +242,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="90dp"
+        android:layout_marginBottom="30dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
         <TextView

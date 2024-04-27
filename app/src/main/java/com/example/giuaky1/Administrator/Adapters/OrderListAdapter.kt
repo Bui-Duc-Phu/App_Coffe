@@ -74,16 +74,16 @@ class OrderListAdapter (
             }
         }
         holder.category.setOnClickListener {
-            showPopupMenu(holder.category,position)
+            showPopupMenu(holder.category,holder.adapterPosition)
         }
         holder.itemView.setOnLongClickListener {
-            selectItem(holder,model,position)
+            selectItem(holder,model,holder.adapterPosition)
             true
         }
 
         holder.itemView.setOnClickListener {
-            if (selectedItems.get(position, false)){
-                selectedItems.delete(position)
+            if (selectedItems.get(holder.adapterPosition, false)){
+                selectedItems.delete(holder.adapterPosition)
                 holder.checkBox.visibility = View.GONE
                 if(selectedItems.isEmpty()){
                     showIconToolbarMenu(false)
@@ -91,10 +91,10 @@ class OrderListAdapter (
                 }
 
             }else if (isEnable){
-                selectItem(holder,model,position)
+                selectItem(holder,model,holder.adapterPosition)
             }
         }
-        if(selectedItems.get(position,false)){
+        if(selectedItems.get(holder.adapterPosition,false)){
             holder.checkBox.visibility =View.VISIBLE
             holder.checkBox.isChecked =true
         }

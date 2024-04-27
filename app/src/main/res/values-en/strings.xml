@@ -38,6 +38,8 @@
     <string name="signup_text_ban_da_co_tai_khoan">Already have an account? </string>
     <string name="signup_text_dang_nhap">Login</string>
     <string name="signup_ten_dang_nhap">Username</string>
+    <string name="signup_text_phone">Phone Number</string>
+    <string name="signup_hint_phone">Enter phone number</string>
 
 
     <!-- forgot password -->
@@ -52,7 +54,7 @@
 
     <!-- activity_input_email -->
     <string name="input_email_QuenMK" >Forgot Password</string>
-    <string name="input_email">Enter email</string>
+    <string name="input_email">Enter email or number phone</string>
     <string name="input_email_sendotp">Send OTP</string>
 
     <!-- Order List -->
@@ -132,6 +134,12 @@
     <string name="frag_TK_DT_TabItem">Revenue</string>
     <string name="frag_TK_SP_TabItem">Product</string>
     <string name="frag_TK_week">Week</string>
+
+
+    <!-- fragmentHistory -->
+    <string name="dialog_chose_type">Account Verification</string>
+    <string name="dialog_chose_type_authen">Verification Type</string>
+    <string name="dialog_chose_Phone">Phone Number</string>
 
 
 

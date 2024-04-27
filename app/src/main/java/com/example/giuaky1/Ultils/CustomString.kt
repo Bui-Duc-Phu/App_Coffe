@@ -38,6 +38,13 @@ class CustomString {
             return "$hour:$minute"
         }
 
+        fun subStringPhone(phone: String): String {
+            if (phone.isEmpty()) {
+                return phone
+            }
+            return phone.substring(1)
+        }
+
 
 
 

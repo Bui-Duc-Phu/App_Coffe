@@ -1,5 +1,6 @@
 package com.example.giuaky1.Ultils
 
+import android.util.Patterns
 import com.example.giuaky1.Models.Order_product
 import java.text.NumberFormat
 import java.util.Locale
@@ -24,8 +25,24 @@ class MyCategory {
             val formatter = NumberFormat.getNumberInstance(Locale("vi", "VN"))
             return formatter.format(totalPrice)
         }
+        fun isNumeric(input: String): Boolean {
+            return input.all { it.isDigit() }
+        }
+
+        fun mailOrPhone(s:String):Boolean{
+            if(Patterns.EMAIL_ADDRESS.matcher(s).matches()){
+                return  true
+
+            }else {
+                return false
+            }
+        }
 
 
     }
+
+
+
+
 
 }

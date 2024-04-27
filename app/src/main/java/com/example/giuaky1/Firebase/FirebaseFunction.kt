@@ -58,6 +58,57 @@ class FirebaseFunction {
         }
 
 
+        fun phoneAlreadyExists(context: Context,phoneUser:String, callback: (Boolean) -> Unit){
+            val databaseReference = FirebaseDatabase.getInstance()
+                .getReference("ProfileUser")
+            databaseReference.addListenerForSingleValueEvent(object :ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var cnt = false
+                    for (profileSnapshot in snapshot.children){
+                        val phone = profileSnapshot.child("phoneNumber").getValue(String::class.java)
+                        if(phone != null && phone.isNotEmpty()){
+                            if(phoneUser.equals(phone)){
+                                cnt=true
+                                break // Thêm break để dừng vòng lặp khi đã tìm thấy số điện thoại
+                            }
+                        }
+                    }
+                    callback(cnt)
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(context, "bug on fun phoneAlreadyExists ", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
+
+        fun getUidWithPhone(phone_:String,callback: (String) -> Unit){
+            val databaseReference = FirebaseDatabase.getInstance()
+                .getReference("ProfileUser")
+            databaseReference.addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for(profileSnapshot in snapshot.children){
+                        val phone = profileSnapshot.child("phoneNumber").getValue(String::class.java)
+                        val uid= profileSnapshot.key.toString()
+                        if(phone != null && phone.isNotEmpty()){
+                            if(phone_.equals(phone)){
+                                callback(uid)
+
+                            }
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            })
+
+        }
+
+
+
+
+
 
         @SuppressLint("SuspiciousIndentation")
         fun getPhoneProfile(context: Context, callback: (String) -> Unit, callback2: (String) -> Unit, callback3: (String) -> Unit)  {
@@ -65,16 +116,15 @@ class FirebaseFunction {
             val databaseReference = FirebaseDatabase.getInstance()
                 .getReference("ProfileUser")
                 .child(firebaseUser.uid)
-
                 databaseReference
                 .addValueEventListener(object :ValueEventListener{
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val phone:String = snapshot.child("phoneNumber").value.toString()
                         val location  = snapshot.child("location").value.toString()
                         val date = snapshot.child("dateOfBirth").value.toString()
-                        callback(phone!!)
-                        callback2(location!!)
-                        callback3(date!!)
+                        callback(phone)
+                        callback2(location)
+                        callback3(date)
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -97,7 +147,6 @@ class FirebaseFunction {
                     val user = snapshot.getValue(Users::class.java)
                     callback(user!!)
                 }
-
                 override fun onCancelled(error: DatabaseError) {
                     callback(Users())
                 }
