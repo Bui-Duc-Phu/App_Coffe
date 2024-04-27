@@ -14,7 +14,7 @@
         android:id="@+id/historyFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/history"
+        android:icon="@drawable/order"
         android:title="@string/menu1_history" />
     <item
         android:id="@+id/cartFragment"
@@ -26,6 +26,6 @@
         android:id="@+id/profileFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/person"
+        android:icon="@drawable/account"
         android:title="@string/menu1_profile" />
 </menu>

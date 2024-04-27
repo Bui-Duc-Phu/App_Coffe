@@ -49,7 +49,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.FirebaseDatabase
 import org.json.JSONException
 import org.json.JSONObject
-import vn.zalopay.sdk.ZaloPaySDK
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
@@ -300,62 +299,7 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
                     alertDialog!!.dismiss()
                 }
             }.start()
-        } else /*if (payment_methods!!.getText() == "Thanh toán ZaloPay") {
-            val policy = ThreadPolicy.Builder().permitAll().build()
-            StrictMode.setThreadPolicy(policy)
-            ZaloPaySDK.init(554, vn.zalopay.sdk.Environment.SANDBOX)
-            try {
-                val orderApi = CreateOrder()
-                val data =
-                    orderApi.createOrder(tvTotalPrice!!.getText().toString().replace(".", ""))
-                val code = data.getString("returncode")
-                if (code == "1") {
-                    val token = data.getString("zptranstoken")
-                    ZaloPaySDK.getInstance()
-                        .payOrder(this, token, "demozpdk://app", object : PayOrderListener {
-                            override fun onPaymentSucceeded(
-                                transactionId: String,
-                                transToken: String,
-                                appTransID: String
-                            ) {
-                                thongBaoThanhCong()
-                                tvTotalPrice?.let {
-                                    DataHandler.addToOrder(
-                                        orderId,
-                                        it,
-                                        dateTime,
-                                        orderModelArrayList
-                                    )
-                                }
-                                clearCart()
-                                finish()
-                            }
-
-                            override fun onPaymentCanceled(s: String, s1: String) {
-                                Toast.makeText(
-                                    this@CreateOrder,
-                                    "Thanh toán bị hủy",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                            }
-
-                            override fun onPaymentError(
-                                zaloPayError: ZaloPayError,
-                                s: String,
-                                s1: String
-                            ) {
-                                Toast.makeText(
-                                    this@CreateOrder,
-                                    "Thanh toán thất bại",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                            }
-                        })
-                }
-            } catch (e: Exception) {
-                Toast.makeText(this@CreateOrder, "Error: " + e.message, Toast.LENGTH_LONG).show()
-            }
-        } else*/ {
+        } else {
             thongBaoThanhCong()
             tvTotalPrice?.let { DataHandler.addToOrder(orderId, it, dateTime, orderModelArrayList) }
             clearCart()
@@ -453,11 +397,6 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
         if (price1 >= price2 && describe.contains(des!!)) {
             trangThai = 1
         }
-    }
-
-    override fun onNewIntent(intent: Intent) {
-        super.onNewIntent(intent)
-        ZaloPaySDK.getInstance().onResult(intent)
     }
 
     companion object {

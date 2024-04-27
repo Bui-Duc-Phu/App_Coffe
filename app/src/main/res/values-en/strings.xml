@@ -197,9 +197,9 @@
     <string name="don_hang_cua_ban">Đơn hàng của bạn</string>
     <string name="chon_size_khi_them_vao_cart">Chọn Size trước khi thêm vào giỏ hàng</string>
     <string name="them_vao_cart_thanh_cong">Đã thêm sản phẩm vào giỏ hàng</string>
-    <string name="goodmorning">Chào buổi sáng, Nhật</string>
-    <string name="goodluch">Chào buổi trưa, Nhật</string>
-    <string name="goodafternoon">Chào buổi chiều, Nhật</string>
-    <string name="goodnight">Chào buổi tối, Nhật</string>
+    <string name="goodmorning">Chào buổi sáng</string>
+    <string name="goodluch">Chào buổi trưa</string>
+    <string name="goodafternoon">Chào buổi chiều</string>
+    <string name="goodnight">Chào buổi tối</string>
 
 </resources>

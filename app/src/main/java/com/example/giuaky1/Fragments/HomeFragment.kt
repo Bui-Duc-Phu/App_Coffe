@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.giuaky1.Adapters.BannerAdapter
 import com.example.giuaky1.Adapters.CategoryAdapter
 import com.example.giuaky1.Adapters.ProductAdapter
+import com.example.giuaky1.Firebase.DataHandler
 import com.example.giuaky1.Models.CategoryModel
 import com.example.giuaky1.Models.ProductModel
 import com.example.giuaky1.R
@@ -80,14 +82,14 @@ class HomeFragment : Fragment() {
     private fun setHello() {
         val calendar = Calendar.getInstance()
         val hour = calendar[Calendar.HOUR_OF_DAY]
-        if (hour >= 5 && hour < 10) {
-            tvHello!!.setText(R.string.goodmorning)
-        } else if (hour >= 10 && hour < 13) {
-            tvHello!!.setText(R.string.goodluch)
-        } else if (hour >= 13 && hour < 18) {
-            tvHello!!.setText(R.string.goodafternoon)
-        } else {
-            tvHello!!.setText(R.string.goodnight)
+        if (hour in 5..9) {
+            tvHello!!.setText( R.string.goodmorning)
+        } else if (hour in 10..12) {
+            tvHello!!.setText( R.string.goodluch)
+        } else if (hour in 13..17) {
+            tvHello!!.setText( R.string.goodafternoon)
+        }  else {
+            tvHello!!.setText( R.string.goodnight)
         }
     }
 

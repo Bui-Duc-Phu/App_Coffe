@@ -161,4 +161,7 @@ object DataHandler {
     fun getUID(): String {
         return FirebaseAuth.getInstance().currentUser?.uid ?: ""
     }
+    fun getName(): String {
+        return FirebaseAuth.getInstance().currentUser?.displayName ?: ""
+    }
 }
