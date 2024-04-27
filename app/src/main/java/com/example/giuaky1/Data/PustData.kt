@@ -1,13 +1,9 @@
 package com.example.giuaky1.Data
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.widget.Button
-import com.example.giuaky1.Activitys.Main
-import com.example.giuaky1.Firebase.FirebaseFunction
 import com.example.giuaky1.Models.Order
 import com.example.giuaky1.Models.Order_product
 import com.example.giuaky1.Models.Shipper

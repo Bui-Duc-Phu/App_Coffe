@@ -14,11 +14,13 @@ import android.util.Patterns
 import android.view.WindowManager
 import android.widget.RadioButton
 import android.widget.Toast
+
 import com.chaos.view.PinView
 import com.example.giuaky1.Firebase.FirebaseFunction
 import com.example.giuaky1.Firebase.FirebaseUpdate
 import com.example.giuaky1.Firebase.OTP_Athen_Phone
 import com.example.giuaky1.Interfaces.OTPEven
+
 import com.example.giuaky1.Models.Users
 import com.example.giuaky1.databinding.ActivitySignUpBinding
 import com.example.giuaky1.databinding.DialogChoseTypeAuthenBinding

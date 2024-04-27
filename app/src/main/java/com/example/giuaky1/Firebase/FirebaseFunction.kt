@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.giuaky1.Adapters.MyCartAdapter
+import com.example.giuaky1.Adapters.CartAdapter
 import com.example.giuaky1.Models.CartModel
 
 import com.example.giuaky1.Models.Order
@@ -424,7 +424,7 @@ class FirebaseFunction {
                             llBuy.visibility = View.VISIBLE
                             recyclerView.visibility = View.VISIBLE
                             txtEmptyCart.visibility = View.GONE
-                            val adapter = recyclerView.adapter as? MyCartAdapter
+                            val adapter = recyclerView.adapter as? CartAdapter
                             adapter?.updateData(cartModelArrayList)
                         } else {
                             recyclerView.visibility = View.GONE

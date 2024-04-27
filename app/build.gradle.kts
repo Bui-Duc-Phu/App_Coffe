@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
 
+
 }
 
 android {
@@ -63,6 +64,10 @@ dependencies {
     implementation(files("libs/mail.jar"))
     implementation(files("libs/additionnal.jar"))
     implementation("androidx.activity:activity:1.9.0")
+    implementation(fileTree(mapOf(
+        "dir" to "A:\\",
+        "include" to listOf("*.aar", "*.jar")
+    )))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -76,7 +81,22 @@ dependencies {
     implementation ("com.airbnb.android:lottie:6.0.0")
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
+
     implementation ("com.googlecode.libphonenumber:libphonenumber:8.12.36")
+
+
+    implementation(fileTree(mapOf(
+        "dir" to "A:\\",
+        "include" to listOf("*.aar", "*.jar")
+    )))
+
+
+
+    implementation("com.squareup.okhttp3:okhttp:4.9.2")
+    implementation("commons-codec:commons-codec:1.15")
+    implementation("com.android.volley:volley:1.2.1")
+    implementation("com.google.android.gms:play-services-location:21.2.0")
+    implementation("com.google.android.flexbox:flexbox:3.0.0")
 
 
 

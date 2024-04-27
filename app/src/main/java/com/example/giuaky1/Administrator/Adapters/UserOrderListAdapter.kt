@@ -2,14 +2,12 @@ package com.example.giuaky1.Administrator.Adapters
 
 import android.content.Context
 
-import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.giuaky1.Firebase.FirebaseFunction
-import com.example.giuaky1.Models.Order
 
 
 import com.example.giuaky1.Models.Users

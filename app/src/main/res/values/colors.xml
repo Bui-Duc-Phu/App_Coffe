@@ -51,4 +51,26 @@
     <color name="Xanhduong">#28B6F6</color>
     <color name="red_delete">#FD1616</color>
     <color name="purple_black">#390063</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#00ffffff</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="white_transparent">#00ffffff</color>
+    <color name="white_100">#FFffffff</color>
+    <color name="toolbar_collasped">#B2B2B2</color>
+    <color name="primary_font">#1D1D1E</color>
+    <color name="secondary_font">#515151</color>
+    <color name="optional_font">#999999</color>
+    <color name="green_highlight_font">#00C663</color>
+    <color name="green_shade">#E9FFF5</color>
+    <color name="green_deep">#008E47</color>
+    <color name="gray_border">#ECECEC</color>
+    <color name="shipping">#4D4D4D</color>
+    <color name="spinner_font">#515151</color>
+    <color name="green_medium">#00b55b</color>
+    <color name="color_tab_1">#F44336</color>
+    <color name="color_tab_2">#F44336</color>
+    <color name="color_tab_3">#F44336</color>
+    <color name="color_tab_4">#F44336</color>
 </resources>

@@ -6,6 +6,7 @@ class OrderModel {
     var dateTime: String? = null
     var orderDetails: ArrayList<CartModel>? = null
 
+    // Constructors
     constructor()
     constructor(
         orderId: String?,

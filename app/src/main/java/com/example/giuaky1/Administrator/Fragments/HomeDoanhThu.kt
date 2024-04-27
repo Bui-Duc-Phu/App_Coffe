@@ -2,7 +2,6 @@ package com.example.giuaky1.Administrator.Fragments
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import com.example.giuaky1.Firebase.FirebaseFunction
 import com.example.giuaky1.Models.Order
 import com.example.giuaky1.R
 import com.example.giuaky1.databinding.FragmentHomeAdminDoanhThuBinding
-import com.example.giuaky1.databinding.FragmentHomeAdminDonHangBinding
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
