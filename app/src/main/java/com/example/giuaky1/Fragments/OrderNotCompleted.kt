@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-import com.example.giuaky1.Adapters.OrderNotCompletedAdapter
 import com.example.giuaky1.Firebase.FirebaseFunction
 
 import com.example.giuaky1.databinding.FragmentOrderNotCompletedBinding
@@ -45,10 +44,6 @@ class OrderNotCompleted : Fragment() {
     }
 
     private fun recylerview() {
-        FirebaseFunction.readOrdersNotCompleted(auth.currentUser!!.uid) { list->
-            val adapter  = OrderNotCompletedAdapter(requireContext(),list)
-            binding.orderRecylerview.adapter = adapter
-        }
     }
 
 

@@ -100,7 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/date_time_layout"
         android:layout_marginTop="20dp"
-        tools:listitem="@layout/product_in_order_item"
+        tools:listitem="@layout/item_detail_order_admin"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         />
     <LinearLayout

@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -60,7 +61,6 @@ import java.util.Locale
 import java.util.Random
 
 class CreateOrder : AppCompatActivity(), OnTaskCompleted {
-    private var orderModelArrayList: ArrayList<CartModel>? = null
     var alertDialog: AlertDialog? = null
     private var dateTime: String? = null
     private var trangThai = 0
@@ -108,6 +108,7 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
                 this,
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
+
         ) {
             ActivityCompat.requestPermissions(
                 this,
@@ -125,6 +126,7 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
                     getAddressFromCoordinates(location.latitude, location.longitude)
                 }
             }
+
     }
 
     private fun getAddressFromCoordinates(latitude: Double, longitude: Double) {

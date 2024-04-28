@@ -88,7 +88,7 @@
 
     <!--menu1 -->
     <string name="menu1_home">Home</string>
-    <string name="menu1_history">History</string>
+    <string name="menu1_history">Order</string>
     <string name="menu1_cart">Cart</string>
     <string name="menu1_profile">Profile</string>
 

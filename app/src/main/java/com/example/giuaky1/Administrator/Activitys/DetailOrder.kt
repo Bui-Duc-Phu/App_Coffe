@@ -1,59 +1,47 @@
 package com.example.giuaky1.Administrator.Activitys
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.giuaky1.Adapters.ProductInOrderItemAdapter
-import com.example.giuaky1.Firebase.FirebaseFunction
-import com.example.giuaky1.Ultils.CustomString
-import com.example.giuaky1.Ultils.MyCategory
-import com.example.giuaky1.databinding.ActivityDetailOrderBinding
+import android.util.Log
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
+import com.example.giuaky1.Administrator.Adapters.ItemDetailAdapter
+import com.example.giuaky1.Models.Order
+import com.example.giuaky1.R
 
-class DetailOrder : AppCompatActivity(){
-    private val binding : ActivityDetailOrderBinding by lazy {
-        ActivityDetailOrderBinding.inflate(layoutInflater)
-    }
-    lateinit var orderID : String
-    lateinit var uID : String
+class DetailOrder : AppCompatActivity() {
 
+    @SuppressLint("SetTextI18n", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_detail_order)
+        val orderDetail = intent.getSerializableExtra("orderDetail") as Order
+        val IDTv = findViewById<TextView>(R.id.IDTv1)
+        val payTv = findViewById<TextView>(R.id.payTv1)
+        val timeTv = findViewById<TextView>(R.id.timeTv1)
+        val shiperTv = findViewById<TextView>(R.id.shiperTv1)
+        val sumPrice = findViewById<TextView>(R.id.sumPrice1)
+        val receiverPhone = findViewById<TextView>(R.id.receiverPhone)
+        val receiverLocation = findViewById<TextView>(R.id.receiverLocation)
+        val productRecylerview = findViewById<RecyclerView>(R.id.product_recylerview1)
+        val btnBack = findViewById<Button>(R.id.btnBack1)
+        IDTv.text = "ID: #${orderDetail.orderID}"
+        payTv.text = "Phương thức thanh toán :${orderDetail.pay}"
+        timeTv.text = "Thời gian: ${orderDetail.time}"
+        shiperTv.text = "Shipper: ${orderDetail.shipper.name}\nSĐT: ${orderDetail.shipper.sDT}"
+        sumPrice.text = "Tổng: ${orderDetail.sumPrice}"
+        receiverPhone.text = "SĐT người nhận: ${orderDetail.receiverPhone}"
+        receiverLocation.text = "Địa chỉ: ${orderDetail.receiverLocation}"
 
-        uID = intent.getStringExtra("uID").toString()
-        orderID = intent.getStringExtra("orderID").toString()
-        System.out.println("uid  : " + uID  )
-        System.out.println("order  : " + orderID )
+        val adapter = ItemDetailAdapter(this, orderDetail.products)
+        productRecylerview.adapter = adapter
 
-
-
-
-
-        init_()
-
-    }
-
-    private fun init_() {
-        FirebaseFunction.getOrderDataWithOrderId(orderID){order->
-            System.out.println("order  : " + order )
-            binding.apply {
-                IDTv.text = "ID : #${order.orderID}"
-                payTv.text = order.pay
-                timeTv.text="Thời gian : ${order.time}"
-                shiperTv.text= CustomString.shipper(order.shipper.name,order.shipper.sDT)
-                sumPrice.text ="Tổng = 1000"
-                receiverPhone.text = "SĐT người nhận : ${order.receiverPhone}"
-                receiverLocation.text = "Địa chỉ : ${order.receiverLocation}"
-                val adapter =  ProductInOrderItemAdapter(this@DetailOrder,order.products)
-                productRecylerview.adapter = adapter
-                FirebaseFunction.getUserDataWithUid(order.uID){ User-> receiverEmail.text = "Email : ${User.email}"}
-            }
-        }
-        binding.btnBack.setOnClickListener {
-            onBackPressed()
+        btnBack.setOnClickListener {
             finish()
         }
     }
-
-
 
 }

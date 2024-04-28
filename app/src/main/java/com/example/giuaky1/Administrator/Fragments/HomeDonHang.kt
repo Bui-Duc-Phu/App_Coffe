@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.example.giuaky1.Firebase.DataHandler
 import com.example.giuaky1.Firebase.FirebaseFunction
 import com.example.giuaky1.Models.Order
 import com.example.giuaky1.R
@@ -44,7 +45,7 @@ class HomeDonHang : Fragment() {
         changeButton = binding.MonthWeekDHBtn
 
         barChart = binding.DonHangBarChar
-        FirebaseFunction.readAllOrdersList { orderList ->
+        DataHandler.readAllOrdersList { orderList ->
             setupBarChartMonth(orderList)
             changeButton.setOnClickListener(View.OnClickListener {
                 if (isChart1) {

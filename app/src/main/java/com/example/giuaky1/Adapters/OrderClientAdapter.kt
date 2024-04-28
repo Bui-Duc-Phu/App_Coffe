@@ -1,4 +1,4 @@
-package com.example.giuaky1.Administrator.Adapters
+package com.example.giuaky1.Adapters
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -16,10 +16,10 @@ import com.example.giuaky1.Models.CartModel
 import com.example.giuaky1.Models.Order
 import com.example.giuaky1.R
 
-class OrderListAdapter(private var orderList: List<Order>) : RecyclerView.Adapter<OrderListAdapter.OrderViewHolder>() {
+class OrderClientAdapter(private var orderList: List<Order>) : RecyclerView.Adapter<OrderClientAdapter.OrderViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_order_list, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_order_list_client, parent, false)
         return OrderViewHolder(view)
     }
 
@@ -29,23 +29,11 @@ class OrderListAdapter(private var orderList: List<Order>) : RecyclerView.Adapte
         holder.orderIdTextView.text = "ID : ${order.orderID}"
         holder.statusTextView.text = order.state
         holder.dateAndTimeTextView.text = order.time
-        if (order.state == "Đang chờ xác nhận") {
-            holder.changeStateButton.text = "Xác nhận"
-        } else if (order.state == "Đang giao hàng") {
-            holder.changeStateButton.text = "Giao hàng"
-        } else {
-            holder.changeStateButton.visibility = View.GONE
+        if(order.state == "Đã hủy") {
             holder.cancelButton.visibility = View.GONE
         }
-        holder.changeStateButton.setOnClickListener {
-            when (holder.changeStateButton.text) {
-                "Xác nhận" -> {
-                    DataHandler.updateState(order.uID, order.orderID, "Đang giao hàng")
-                }
-                "Giao hàng" -> {
-                    DataHandler.updateState(order.uID, order.orderID, "Đã giao hàng")
-                }
-            }
+        if(order.state == "Đã giao hàng") {
+            holder.cancelButton.visibility = View.GONE
         }
         holder.cancelButton.setOnClickListener {
             DataHandler.updateState(order.uID, order.orderID, "Đã hủy")
@@ -72,7 +60,6 @@ class OrderListAdapter(private var orderList: List<Order>) : RecyclerView.Adapte
         val orderIdTextView: TextView = view.findViewById(R.id.orderID)
         val statusTextView: TextView = view.findViewById(R.id.orderStatus)
         val dateAndTimeTextView: TextView = view.findViewById(R.id.dateAndTime)
-        val changeStateButton: Button = view.findViewById(R.id.changeStateButton)
         val detailsButton: Button = view.findViewById(R.id.detailsButton)
         val cancelButton: Button = view.findViewById(R.id.cancelButton)
 

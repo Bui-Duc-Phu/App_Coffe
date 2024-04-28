@@ -6,22 +6,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/home"
-
-
-
         android:title="@string/menu1_home" />
-    <item
-        android:id="@+id/historyFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:icon="@drawable/order"
-        android:title="@string/menu1_history" />
+
     <item
         android:id="@+id/cartFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/cart"
         android:title="@string/menu1_cart" />
+    <item
+        android:id="@+id/historyFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/order"
+        android:title="@string/menu1_history" />
     <item
         android:id="@+id/profileFragment"
         android:layout_width="wrap_content"

@@ -177,7 +177,7 @@ class LoginOrSignUp : AppCompatActivity() {
                             hashmap["userName"] = account.displayName.toString()
                             hashmap["email"] = account.email.toString()
                             hashmap["password"] = ""
-                            hashmap.put("typeAccount","2")
+                            hashmap.put("typeAccount","1")
                             databaseReference.setValue(hashmap).addOnCompleteListener { databaseTask ->
                                 if (databaseTask.isSuccessful) {
                                     startActivity(Intent(this@LoginOrSignUp, Main::class.java))

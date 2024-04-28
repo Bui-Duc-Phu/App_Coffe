@@ -12,6 +12,7 @@ import android.util.Patterns
 import android.widget.Toast
 import com.example.giuaky1.Administrator.Activitys.MainAdmin
 import com.example.giuaky1.Administrator.Controller
+import com.example.giuaky1.Firebase.DataHandler
 import com.example.giuaky1.Models.Users
 import com.example.giuaky1.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -134,19 +135,7 @@ class Login : AppCompatActivity() {
                     binding.emailEdt.setText("")
                     binding.passwordEdt.setText("")
                     progressDialog!!.dismiss()
-                    Controller.permission(applicationContext,email){userOrAdmin->
-                        System.out.println(userOrAdmin)
-                        if(userOrAdmin){
-                            startActivity(Intent(this@Login,MainAdmin::class.java))
-                            finish()
-                        }else{
-                            val intent = Intent(this, Main::class.java)
-                            startActivity(intent)
-                            finish()
-                        }
-                    }
-                    val intent = Intent(this, Main::class.java)
-                    startActivity(intent)
+                    checkTypeAccount(email)
                     finish()
 
                 }else{
@@ -156,11 +145,37 @@ class Login : AppCompatActivity() {
             }
     }
 
+    private fun checkTypeAccount(email: String) {
+        val ref = FirebaseDatabase
+            .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
+            .getReference("Users")
+            .orderByChild("email")
+            .equalTo(email)
 
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (snapshot in dataSnapshot.children) {
+                    val user = snapshot.getValue(Users::class.java)
+                    if (user != null) {
+                        if (user.typeAccount == "2") {
+                            DataHandler.setTypeAccount("2")
+                            startActivity(Intent(this@Login, MainAdmin::class.java))
+                            finish()
+                        } else {
+                            DataHandler.setTypeAccount("1")
+                            val intent = Intent(this@Login, Main::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                    }
+                }
+            }
 
-
-
-
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Handle possible errors.
+            }
+        })
+    }
 
 
 }

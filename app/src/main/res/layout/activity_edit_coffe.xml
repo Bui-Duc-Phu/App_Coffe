@@ -188,7 +188,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Lưu"
-
             android:background="@drawable/rounded_rectangle"
             android:backgroundTint="#846046"
             />

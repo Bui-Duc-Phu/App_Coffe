@@ -87,7 +87,7 @@
 
     <!--menu1 -->
     <string name="menu1_home">Trang chủ</string>
-    <string name="menu1_history">Lịch sử</string>
+    <string name="menu1_history">Đơn hàng</string>
     <string name="menu1_cart">Giỏ hàng</string>
     <string name="menu1_profile">Profile</string>
 

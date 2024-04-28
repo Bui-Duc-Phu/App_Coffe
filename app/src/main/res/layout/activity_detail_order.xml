@@ -7,25 +7,24 @@
     android:background="@color/white"
     android:paddingEnd="10dp"
     android:layout_height="match_parent">
-    <ImageView
-        android:id="@+id/btnBack"
+    <Button
+        android:id="@+id/btnBack1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/back_green"
+        android:text="Trở về"
         android:padding="5dp"
-        android:layout_marginTop="10dp"
         />
     <TextView
         android:id="@+id/tiltleTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Detailed orders"
+        android:text="Chi tiết đơn hàng"
         android:textSize="30dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
         android:textStyle="bold"
-        android:layout_below="@id/btnBack"
+        android:layout_below="@id/btnBack1"
         android:textColor="#EF683D"
         />
 
@@ -40,10 +39,10 @@
         android:layout_marginTop="20dp"
         android:layout_below="@id/tiltleTv"
         android:background="@color/white"
-        android:orientation="horizontal">
+        android:orientation="vertical">
         <TextView
-            android:id="@+id/IDTv"
-            android:layout_width="wrap_content"
+            android:id="@+id/IDTv1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="ID: #022345010"
             android:textColor="@color/black"
@@ -51,11 +50,11 @@
             android:textStyle="bold"
             tools:ignore="TextSizeCheck" />
         <TextView
-            android:id="@+id/payTv"
-            android:layout_width="wrap_content"
+            android:id="@+id/payTv1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
             android:text="Paid"
+            android:layout_marginTop="10dp"
             android:textColor="@color/black"
             android:textSize="15dp"
             android:textStyle="bold"
@@ -65,40 +64,85 @@
         android:id="@+id/date_time_layout"
         android:layout_width="match_parent"
         android:layout_below="@id/id_pay_layout"
-        android:paddingStart="20dp"
         android:background="@color/white"
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/dateTv"
+            android:id="@+id/timeTv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/day"
-            android:textColor="@color/black"
-            android:textSize="15dp"
-            android:textStyle="bold"
-            tools:ignore="TextSizeCheck" />
-
-        <TextView
-            android:id="@+id/timeTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
             android:text="@string/time"
+            android:layout_marginStart="20dp"
             android:textColor="@color/black"
             android:textSize="15dp"
             android:textStyle="bold"
             tools:ignore="TextSizeCheck" />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_below="@+id/date_time_layout"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/stt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="STT"
+            android:textSize="16dp"
+            android:textColor="@color/nau_nhat"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/productName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:text="Tên Coffe"
+            android:textColor="@color/nau_nhat"
+            />
+        <TextView
+            android:id="@+id/size"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:text="Size"
+            android:textColor="@color/nau_nhat"
+            />
+        <TextView
+            android:id="@+id/quantity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:text="Số lượng"
+            android:textColor="@color/nau_nhat"
+            />
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:text="Giá"
+            android:textColor="@color/nau_nhat"
+            />
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/product_recylerview"
+        android:id="@+id/product_recylerview1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/date_time_layout"
         android:background="@color/white"
         android:layout_marginTop="20dp"
-        tools:listitem="@layout/product_in_order_item"
+        tools:listitem="@layout/item_detail_order_admin"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         />
     <LinearLayout
@@ -106,7 +150,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_below="@id/product_recylerview"
+        android:layout_below="@id/product_recylerview1"
         android:background="@color/white"
         android:orientation="horizontal"
         android:gravity="start"
@@ -120,7 +164,7 @@
             android:layout_marginTop="10dp"
             />
         <TextView
-            android:id="@+id/shiperTv"
+            android:id="@+id/shiperTv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="18dp"
@@ -132,7 +176,7 @@
             />
     </LinearLayout>
     <TextView
-        android:id="@+id/sumPrice"
+        android:id="@+id/sumPrice1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/shiper_layout"
@@ -152,7 +196,7 @@
         android:text="SĐT người nhận : 0332634787"
         android:textStyle="bold"
         android:textColor="@color/black"
-        android:layout_below="@id/sumPrice"
+        android:layout_below="@id/sumPrice1"
         android:layout_marginStart="10dp"
         android:textSize="16dp"
         android:layout_marginTop="30dp"
@@ -161,7 +205,7 @@
         android:id="@+id/receiverEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email : Phuhk3@gmail.com"
+        android:text="Email :"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:layout_marginTop="10dp"

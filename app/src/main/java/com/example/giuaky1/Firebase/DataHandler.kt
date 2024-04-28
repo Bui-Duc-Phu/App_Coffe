@@ -7,9 +7,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.giuaky1.Adapters.CartAdapter
+import com.example.giuaky1.Administrator.Adapters.OrderListAdapter
 import com.example.giuaky1.Models.CartModel
 import com.example.giuaky1.Models.Order
-import com.example.giuaky1.Models.OrderModel
 import com.example.giuaky1.Models.ProductModel
 import com.example.giuaky1.Models.Shipper
 import com.example.giuaky1.Models.SizeModel
@@ -22,14 +22,98 @@ import java.text.NumberFormat
 import java.util.Locale
 
 object DataHandler {
+    var rule:String=""
     val shipper: Shipper = Shipper("Nguyễn Văn A", "0123456789")
     var orderModelArrayList = ArrayList<CartModel>()
     fun addOrderToFirebase(checkOut: String, orderId: String, paymentMethods1: String, dateTime: String, shipper: Shipper, phoneNumber: String, address: String, orderModelArrayList: ArrayList<CartModel>, totalPrice: String) {
         val ordersRef = FirebaseDatabase.getInstance().getReference("Orders").child(getUID())
-        val orderModel = Order("Đang xử lý", checkOut, getUID(), orderId, paymentMethods1, dateTime, shipper, phoneNumber, address, orderModelArrayList, totalPrice)
+        val orderModel = Order("Đang chờ xác nhận", checkOut, getUID(), orderId, paymentMethods1, dateTime, shipper, phoneNumber, address, orderModelArrayList, totalPrice)
         ordersRef.child(orderId).setValue(orderModel)
     }
+    fun getOrderDetails(orderID: String, uID: String, callback: (Order) -> Unit) {
+        val ref = FirebaseDatabase
+            .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
+            .getReference("Orders").child(uID).child(orderID)
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            @SuppressLint("SuspiciousIndentation")
+            override fun onDataChange(orderSnapshot: DataSnapshot) {
+                val state = orderSnapshot.child("state").value.toString()
+                val checkout = orderSnapshot.child("checkout").value.toString()
+                val uID = orderSnapshot.child("uID").value.toString()
+                val orderID = orderSnapshot.child("orderID").value.toString()
+                val pay = orderSnapshot.child("pay").value.toString()
+                val time = orderSnapshot.child("time").value.toString()
+                val shipperName = orderSnapshot.child("shipper").child("name").value.toString()
+                val shipperSDT = orderSnapshot.child("shipper").child("sDT").value.toString()
+                val receiverPhone = orderSnapshot.child("receiverPhone").value.toString()
+                val receiverLocation = orderSnapshot.child("receiverLocation").value.toString()
 
+                val productsList = mutableListOf<CartModel>()
+                for (productSnapshot in orderSnapshot.child("products").children) {
+                    val product=productSnapshot.getValue(CartModel::class.java)
+                    if (product != null) {
+                        productsList.add(product)
+                    }
+                }
+                val shipper = Shipper(shipperName, shipperSDT)
+                val sumPrice = orderSnapshot.child("sumPrice").value.toString()
+                val order = Order(state,checkout, uID, orderID, pay, time, shipper,receiverPhone,receiverLocation, productsList, sumPrice)
+                callback(order)
+            }
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+    }
+    fun readAllOrdersList(onDataReceived: (List<Order>) -> Unit) {
+        val ordersRef = FirebaseDatabase.getInstance().getReference("Orders")
+        ordersRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val orderList = ArrayList<Order>()
+                for (orderSnapshot in snapshot.children) {
+                    for (singleOrderSnapshot in orderSnapshot.children) {
+                        val order = singleOrderSnapshot.getValue(Order::class.java)
+                        Log.d("HomeDoanhThu123", "onDataChange: " + order.toString())
+                        if (order != null) {
+                            orderList.add(order)
+                        }
+                    }
+                }
+                onDataReceived(orderList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("HomeDoanhThu", "onCancelled: " + error.message)
+            }
+        })
+    }
+    fun getOrderWithState(state: String, callback: (List<Order>) -> Unit) {
+        val ordersRef = FirebaseDatabase.getInstance().getReference("Orders")
+        ordersRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val orderList = ArrayList<Order>()
+                for (orderSnapshot in snapshot.children) {
+                    for (singleOrderSnapshot in orderSnapshot.children) {
+                        val order = singleOrderSnapshot.getValue(Order::class.java)
+                        if (order != null && order.state == state) {
+                            orderList.add(order)
+                        }
+                    }
+                }
+                callback(orderList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("HomeDoanhThu", "onCancelled: " + error.message)
+            }
+        })
+    }
+
+    fun updateState(uID: String,orderID:String, state: String) {
+        val ref = FirebaseDatabase.getInstance().getReference("Orders").child(uID).child(orderID)
+        ref.child("state").setValue(state)
+
+    }
     fun addToCart(productModel: ProductModel, selectedSize: SizeModel, quantity: Int) {
         val productID = productModel.name + "_" + selectedSize.size
         val cartReference =
@@ -163,5 +247,8 @@ object DataHandler {
 
     fun getOMAL(): ArrayList<CartModel> {
         return orderModelArrayList
+    }
+    fun setTypeAccount(value:String) {
+        rule=value
     }
 }
