@@ -35,10 +35,9 @@ class OrderNotCompletedAdapter(private val context: Context,
             }
             id.text = "ID : #${model.orderID}"
             pay.text = model.pay
-            date.text = context.getString(R.string.day)+" ${model.day}"
             time.text= context.getString(R.string.time) + " ${model.time}"
             shipper.text= CustomString.shipper(model.shipper.name,model.shipper.sDT)
-            sumPrice.text =context.getString(R.string.sum)+" ${MyCategory.calculateTotalPriceFormatted(model.products)}"
+            sumPrice.text =context.getString(R.string.sum)+" 1000"
 
             val layoutManager = LinearLayoutManager(context)
             layoutManager.setInitialPrefetchItemCount(model.products.size)
@@ -61,7 +60,6 @@ class OrderNotCompletedAdapter(private val context: Context,
     inner class viewholer(view: View): RecyclerView.ViewHolder(view){
         var id = binding.IDTv
         var pay  = binding.payTv
-        var date = binding.dateTv
         var time = binding.timeTv
         var shipper = binding.shiperTv
         var sumPrice = binding.sumPrice

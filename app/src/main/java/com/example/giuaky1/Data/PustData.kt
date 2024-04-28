@@ -25,11 +25,11 @@ class PustData : AppCompatActivity() {
 
 
         button.setOnClickListener {
-            pushData()
+          //  pushData()
         }
     }
 
-    private fun pushData() {
+    /*private fun pushData() {
         val orderId = CustomString.idOrder()
         val ref = FirebaseDatabase
             .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
@@ -79,6 +79,6 @@ class PustData : AppCompatActivity() {
         )
         ref.setValue(orderMap)
     }
-
+*/
 
 }

@@ -114,7 +114,6 @@ class FirebaseFunction {
                         val uID = orderSnapshot.child("uID").value.toString()
                         val orderID = orderSnapshot.child("orderID").value.toString()
                         val pay = orderSnapshot.child("pay").value.toString()
-                        val day = orderSnapshot.child("day").value.toString()
                         val time = orderSnapshot.child("time").value.toString()
                         val shipperName = orderSnapshot.child("shipper").child("name").value.toString()
                         val shipperSDT = orderSnapshot.child("shipper").child("sDT").value.toString()
@@ -133,7 +132,7 @@ class FirebaseFunction {
                             productsList.add(product)
                         }
                         val shipper = Shipper(shipperName, shipperSDT)
-                        val order = Order(state,checkout, uID, orderID, pay, day, time, shipper,receiverPhone,receiverLocation, productsList)
+                        val order = Order(state,checkout, uID, orderID, pay, time, shipper,receiverPhone,receiverLocation, DataHandler.getOMAL(), "1000")
                         callback(order)
                 }
                 override fun onCancelled(error: DatabaseError) {
@@ -156,7 +155,6 @@ class FirebaseFunction {
                         val uID = orderSnapshot.child("uID").value.toString()
                         val orderID = orderSnapshot.child("orderID").value.toString()
                         val pay = orderSnapshot.child("pay").value.toString()
-                        val day = orderSnapshot.child("day").value.toString()
                         val time = orderSnapshot.child("time").value.toString()
                         val shipperName = orderSnapshot.child("shipper").child("name").value.toString()
                         val shipperSDT = orderSnapshot.child("shipper").child("sDT").value.toString()
@@ -175,7 +173,7 @@ class FirebaseFunction {
                             productsList.add(product)
                         }
                         val shipper = Shipper(shipperName, shipperSDT)
-                        val order = Order(state,checkout, uID, orderID, pay, day, time, shipper,receiverPhone,receiverLocation, productsList)
+                        val order = Order(state,checkout, uID, orderID, pay, time, shipper,receiverPhone,receiverLocation, DataHandler.getOMAL(), "1000")
 
                         if(checkout.equals("1")){
                             if(uid.equals(uID) && state.equals("1")  ) orderList.add(order)
@@ -201,7 +199,6 @@ class FirebaseFunction {
                         val uID = orderSnapshot.child("uID").value.toString()
                         val orderID = orderSnapshot.child("orderID").value.toString()
                         val pay = orderSnapshot.child("pay").value.toString()
-                        val day = orderSnapshot.child("day").value.toString()
                         val time = orderSnapshot.child("time").value.toString()
                         val shipperName = orderSnapshot.child("shipper").child("name").value.toString()
                         val shipperSDT = orderSnapshot.child("shipper").child("sDT").value.toString()
@@ -220,7 +217,7 @@ class FirebaseFunction {
                             productsList.add(product)
                         }
                         val shipper = Shipper(shipperName, shipperSDT)
-                        val order = Order(state,checkout, uID, orderID, pay, day, time, shipper,receiverPhone,receiverLocation, productsList)
+                        val order = Order(state,checkout, uID, orderID, pay, time, shipper,receiverPhone,receiverLocation, DataHandler.getOMAL(), "1000")
                         System.out.println("checkout : "+checkout)
 
                         if(checkout.equals("1")){
@@ -248,7 +245,6 @@ class FirebaseFunction {
                         val uID = orderSnapshot.child("uID").value.toString()
                         val orderID = orderSnapshot.child("orderID").value.toString()
                         val pay = orderSnapshot.child("pay").value.toString()
-                        val day = orderSnapshot.child("day").value.toString()
                         val time = orderSnapshot.child("time").value.toString()
                         val shipperName = orderSnapshot.child("shipper").child("name").value.toString()
                         val shipperSDT = orderSnapshot.child("shipper").child("sDT").value.toString()
@@ -267,7 +263,7 @@ class FirebaseFunction {
                             productsList.add(product)
                         }
                         val shipper = Shipper(shipperName, shipperSDT)
-                        val order = Order(state,checkout, uID, orderID, pay, day, time, shipper,receiverPhone,receiverLocation, productsList)
+                        val order = Order(state,checkout, uID, orderID, pay, time, shipper,receiverPhone,receiverLocation, DataHandler.getOMAL(), "1000")
                         orderList.add(order)
                     }
 
@@ -306,98 +302,7 @@ class FirebaseFunction {
             productData["price"]=price
             db1.setValue(productData).addOnSuccessListener { Log.d("succesproduct","Upload thành công") }
         }
-        fun addToCart(productModel: ProductModel, selectedSize: SizeModel){
-            val auth: FirebaseAuth = FirebaseAuth.getInstance()
-            val firebaseUser = auth.currentUser
-            val id=firebaseUser?.uid ?: ""
-            val productID = productModel.name + "_" + selectedSize.size // use both name and size to identify a unique product
-            val cartReference = FirebaseDatabase.getInstance().getReference("Carts").child(id)
-            cartReference.child(productID)
-                .addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        if (snapshot.exists()) {
-                            val cartModel: CartModel? = snapshot.getValue(CartModel::class.java)
-                            cartModel?.let {
-                                it.quantity = it.quantity + 1
-                                val updateData: MutableMap<String, Any> = HashMap()
-                                updateData["quantity"] = it.quantity
-                                updateData["totalPrice"] = it.quantity * (it.price + selectedSize.price) // add the price of the size to the product price
-                                updateData["sizePrice"] = selectedSize.price // update size price
-                                cartReference.child(productID)
-                                    .updateChildren(updateData)
-                            }
-                        } else {
-                            val cartModel = CartModel(
-                                productModel.name,
-                                productModel.imageUrl,
-                                1,
-                                productModel.price + selectedSize.price, // add the price of the size to the product price
-                                productModel.price + selectedSize.price, // add the price of the size to the product price
-                                selectedSize.size, // pass the selected size here
-                                selectedSize.price // pass the price of the selected size here
-                            )
-                            cartReference.child(productID)
-                                .setValue(cartModel)
-                        }
-                    }
 
-                    override fun onCancelled(error: DatabaseError) {
-                        Log.e("CartHandler", "addToCart onCancelled: " + error.message)
-                    }
-                })
-        }
-        fun fetchDataForCart(
-            recyclerView: RecyclerView,
-            txtEmptyCart: TextView,
-            txtTotalPrice: TextView,
-            llBuy: View,
-            tvGiaTien: TextView,
-            tvPhiGiaoHang: TextView,
-            tvTotalPrice: TextView
-        ) {
-            val auth: FirebaseAuth = FirebaseAuth.getInstance()
-            val firebaseUser = auth.currentUser
-            val id = firebaseUser?.uid ?: ""
-            val databaseReference = FirebaseDatabase.getInstance().getReference("Carts")
-            databaseReference.child(id)
-                .addValueEventListener(object : ValueEventListener {
-                    @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        val cartModelArrayList = ArrayList<CartModel>()
-                        if (dataSnapshot.exists()) {
-                            for (snapshot in dataSnapshot.children) {
-                                val cartModel = snapshot.getValue(CartModel::class.java)
-                                cartModel?.let {
-                                    cartModelArrayList.add(it)
-                                }
-                                orderModelArrayList = cartModelArrayList
-                            }
-                            llBuy.visibility = View.VISIBLE
-                            recyclerView.visibility = View.VISIBLE
-                            txtEmptyCart.visibility = View.GONE
-                            val adapter = recyclerView.adapter as? CartAdapter
-                            adapter?.updateData(cartModelArrayList)
-                        } else {
-                            recyclerView.visibility = View.GONE
-                            txtEmptyCart.visibility = View.VISIBLE
-                            llBuy.visibility = View.GONE
-                        }
-                        var totalPrice = 0.0
-                        for (cartModel in cartModelArrayList) {
-                            totalPrice += cartModel.totalPrice
-                        }
-                        val vndFormat = NumberFormat.getNumberInstance(Locale.getDefault())
-                        tvGiaTien.text = "${vndFormat.format(totalPrice)}đ"
-                        totalPrice+=tvPhiGiaoHang.text.toString().toDouble()
-                        txtTotalPrice.text = "${vndFormat.format(totalPrice)}đ"
-                        tvTotalPrice.text= "${vndFormat.format(totalPrice)}đ"
-                    }
-
-                    override fun onCancelled(databaseError: DatabaseError) {
-                        Log.e("CartFragment", "onCancelled: ${databaseError.message}")
-                    }
-                })
-        }
         fun getID(): String {
             val auth: FirebaseAuth = FirebaseAuth.getInstance()
             val firebaseUser = auth.currentUser

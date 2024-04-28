@@ -8,8 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.giuaky1.Adapters.CartAdapter
 import com.example.giuaky1.Models.CartModel
+import com.example.giuaky1.Models.Order
 import com.example.giuaky1.Models.OrderModel
 import com.example.giuaky1.Models.ProductModel
+import com.example.giuaky1.Models.Shipper
 import com.example.giuaky1.Models.SizeModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -20,22 +22,12 @@ import java.text.NumberFormat
 import java.util.Locale
 
 object DataHandler {
+    val shipper: Shipper = Shipper("Nguyễn Văn A", "0123456789")
     var orderModelArrayList = ArrayList<CartModel>()
-    fun addToOrder(
-        orderId: String?,
-        orderTotalPrice: TextView,
-        dateTime: String?,
-        s: ArrayList<CartModel>?
-    ) {
-        val ordersRef = FirebaseDatabase.getInstance().getReference("Orders")
-        val orderKey = ordersRef.push().getKey()
-        val orderModel = OrderModel()
-        orderModel.orderId = orderId
-        orderModel.totalPrice = orderTotalPrice.getText().toString()
-        orderModel.dateTime = dateTime
-        orderModel.orderDetails = s
-        assert(orderKey != null)
-        ordersRef.child(orderKey!!).setValue(orderModel)
+    fun addOrderToFirebase(checkOut: String, orderId: String, paymentMethods1: String, dateTime: String, shipper: Shipper, phoneNumber: String, address: String, orderModelArrayList: ArrayList<CartModel>, totalPrice: String) {
+        val ordersRef = FirebaseDatabase.getInstance().getReference("Orders").child(getUID())
+        val orderModel = Order("Đang xử lý", checkOut, getUID(), orderId, paymentMethods1, dateTime, shipper, phoneNumber, address, orderModelArrayList, totalPrice)
+        ordersRef.child(orderId).setValue(orderModel)
     }
 
     fun addToCart(productModel: ProductModel, selectedSize: SizeModel, quantity: Int) {
@@ -163,5 +155,13 @@ object DataHandler {
     }
     fun getName(): String {
         return FirebaseAuth.getInstance().currentUser?.displayName ?: ""
+    }
+
+    fun getPhoneNumber(): String {
+        return FirebaseAuth.getInstance().currentUser?.phoneNumber ?: ""
+    }
+
+    fun getOMAL(): ArrayList<CartModel> {
+        return orderModelArrayList
     }
 }

@@ -38,7 +38,7 @@ class OrderListAdapter (
     override fun onBindViewHolder(holder: viewholer, position: Int) {
         val model= list[position]
         holder.orderID.text = model.orderID
-        holder.dateAndTime.text = "${model.day} - ${model.time}"
+        holder.dateAndTime.text = model.time
         when{
             model.checkout.equals("0") ->{
                 if(model.state.equals("2")){

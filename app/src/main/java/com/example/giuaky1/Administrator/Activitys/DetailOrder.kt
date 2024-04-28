@@ -38,10 +38,9 @@ class DetailOrder : AppCompatActivity(){
             binding.apply {
                 IDTv.text = "ID : #${order.orderID}"
                 payTv.text = order.pay
-                dateTv.text = "Ngày : ${order.day}"
                 timeTv.text="Thời gian : ${order.time}"
                 shiperTv.text= CustomString.shipper(order.shipper.name,order.shipper.sDT)
-                sumPrice.text ="Tổng = ${MyCategory.calculateTotalPriceFormatted(order.products)}"
+                sumPrice.text ="Tổng = 1000"
                 receiverPhone.text = "SĐT người nhận : ${order.receiverPhone}"
                 receiverLocation.text = "Địa chỉ : ${order.receiverLocation}"
                 val adapter =  ProductInOrderItemAdapter(this@DetailOrder,order.products)

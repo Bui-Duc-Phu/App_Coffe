@@ -46,14 +46,14 @@ class HomeSanPham : Fragment() {
         timeView = binding.TimePieChartLabel
 
         FirebaseFunction.readAllOrdersList { orderList ->
-            setupBarChartMonth(orderList)
+          //  setupBarChartMonth(orderList)
             changeButton.setOnClickListener(View.OnClickListener {
                 if (isChart1) {
                     changeButton.setText(getString(R.string.frag_TK_week))
-                    setupPieChartWeek(orderList)
+                    //setupPieChartWeek(orderList)
                 } else {
                     changeButton.setText(getString(R.string.frag_TK_month))
-                    setupBarChartMonth(orderList)
+                 //   setupBarChartMonth(orderList)
                 }
                 isChart1 = !isChart1
             })
@@ -62,7 +62,7 @@ class HomeSanPham : Fragment() {
         return binding.root
     }
 
-    private fun setupBarChartMonth(orderList: List<Order>) {
+ /*   *//*private fun setupBarChartMonth(orderList: List<Order>) {
         val entries: MutableList<PieEntry> = ArrayList()
         var TONGSP = 0
 
@@ -70,12 +70,12 @@ class HomeSanPham : Fragment() {
         val calendar = Calendar.getInstance()
         for (order in orderList){
             val entryDate = Calendar.getInstance()
-            val dateParts = order.day.split("/".toRegex()).dropLastWhile { it.isEmpty() }
+            val dateParts = order.time.split("/".toRegex()).dropLastWhile { it.isEmpty() }
                 .toTypedArray()
             entryDate[dateParts[2].toInt(), dateParts[1].toInt() - 1] = dateParts[0].toInt()
             if (isWithinOneMonth(entryDate,calendar)) {
                 for(product in order.products){
-                    if(!listSanPham.contains(product.productName)){
+                    if(!listSanPham.contains(product.name)){
                         listSanPham[product.productName] = product.quantity.toInt()
                     }
                     else{
@@ -102,9 +102,9 @@ class HomeSanPham : Fragment() {
         pieChart.description.isEnabled = false
         pieChart.invalidate()
         timeView.setText(getMonth())
-    }
+    }*//*
 
-    private fun setupPieChartWeek(orderList: List<Order>) {
+    *//*private fun setupPieChartWeek(orderList: List<Order>) {
         val entries: MutableList<PieEntry> = ArrayList()
         var TONGSP = 0
 
@@ -145,7 +145,7 @@ class HomeSanPham : Fragment() {
         pieChart.invalidate()
         timeView.setText(getWeek())
     }
-
+*/
     private fun isWithinOneMonth(dateToCheck: Calendar, currentDate: Calendar): Boolean {
         val oneMonthFromNow = currentDate.clone() as Calendar
         oneMonthFromNow.add(Calendar.MONTH, -1)

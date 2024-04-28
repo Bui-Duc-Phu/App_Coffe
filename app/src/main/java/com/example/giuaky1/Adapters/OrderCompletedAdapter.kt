@@ -1,11 +1,13 @@
 package com.example.giuaky1.Adapters
 
 import android.content.Context
+import android.provider.ContactsContract.Data
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.giuaky1.Firebase.DataHandler
 import com.example.giuaky1.Models.Order
 import com.example.giuaky1.R
 import com.example.giuaky1.Ultils.CustomString
@@ -35,16 +37,16 @@ class OrderCompletedAdapter(private val context: Context,
         }
 
 
-        holder.id.text = "ID : #${model.orderID}"
+        holder.id.text = model.uID
         holder.pay.text = model.pay
-        holder.date.text = context.getString(R.string.day)+" ${model.day}"
-        holder.time.text= context.getString(R.string.time) + " ${model.time}"
-        holder.shipper.text= CustomString.shipper(model.shipper.name,model.shipper.sDT)
-        holder.sumPrice.text =context.getString(R.string.sum)+" ${MyCategory.calculateTotalPriceFormatted(model.products)}"
+        holder.time.text = model.time
+        holder.shipper.text = model.shipper.toString()
+        holder.sumPrice.text = "1000"
+
         val layoutManager = LinearLayoutManager(context)
         layoutManager.setInitialPrefetchItemCount(model.products.size)
         holder.recylerview.layoutManager = layoutManager
-        val adapter =  ProductInOrderItemAdapter(context,model.products)
+        val adapter =  ProductInOrderItemAdapter(context, DataHandler.getOMAL())
         holder.recylerview.adapter=adapter
 
 

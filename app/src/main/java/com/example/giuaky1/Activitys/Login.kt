@@ -145,6 +145,9 @@ class Login : AppCompatActivity() {
                             finish()
                         }
                     }
+                    val intent = Intent(this, Main::class.java)
+                    startActivity(intent)
+                    finish()
 
                 }else{
                     progressDialog!!.dismiss()

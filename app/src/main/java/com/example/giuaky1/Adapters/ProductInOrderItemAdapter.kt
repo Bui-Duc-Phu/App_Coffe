@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.giuaky1.Models.Order_product
+import com.example.giuaky1.Models.CartModel
+import com.example.giuaky1.Models.ProductModel
 import com.example.giuaky1.Ultils.MyCategory
 import com.example.giuaky1.databinding.ProductInOrderItemBinding
 
 class ProductInOrderItemAdapter(private val context: Context,
-                                private var list: List<Order_product>)
+                                private var list:ArrayList<CartModel>)
     : RecyclerView.Adapter<ProductInOrderItemAdapter.viewholer>()  {
         lateinit var binding: ProductInOrderItemBinding
 
@@ -23,13 +24,11 @@ class ProductInOrderItemAdapter(private val context: Context,
 
         val model =  list[position]
         holder.apply {
-            System.out.println("cnt${position+1}")
-            System.out.println(list[position])
-            stt.text = "${position + 1}."
-            nameProduct.text = model.productName
-            size.text = "(${model.size})"
-            quantity.text = "x${model.quantity}"
-            price.text=  MyCategory.isSumPriceProduct(model.quantity,model.price)
+            stt.text = (position+1).toString()
+            nameProduct.text = model.name
+            size.text = model.size
+            price.text = model.price.toString()
+            quantity.text = model.quantity.toString()
         }
 
 

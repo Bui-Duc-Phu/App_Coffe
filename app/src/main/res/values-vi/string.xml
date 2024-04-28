@@ -23,7 +23,7 @@
     <string name="login_text_dang_nhap_button">Đăng Nhập</string>
     <string name="login_text_ban_da_co_tai_khoan">Bạn chưa có tài khoản? </string>
     <string name="login_text_dang_ky"> Đăng ký</string>
-    <string name="login_email_hoạc_name">Email hoạc tên đăng nhập</string>
+    <string name="login_email_hoạc_name">Email hoặc tên đăng nhập</string>
 
     <!-- sign up -->
     <string name="signup_text_dang_ky">Đăng Ký</string>
