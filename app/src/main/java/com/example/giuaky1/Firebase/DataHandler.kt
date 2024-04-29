@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.Locale
 
 object DataHandler {
@@ -232,6 +233,20 @@ object DataHandler {
                     Log.e("CartFragment", "onCancelled: " + databaseError.message)
                 }
             })
+    }
+    fun getDoanhThuTheoNgay(startDate: String, endDate: String, orderList: List<Order>): Double {
+        var doanhThu = 0.0
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+        val start = sdf.parse("$startDate 00:00:00")
+        val end = sdf.parse("$endDate 23:59:59")
+
+        for (order in orderList) {
+            val orderDate = sdf.parse(order.time)
+            if (orderDate.after(start) && orderDate.before(end)) {
+                doanhThu += order.sumPrice.toDouble()
+            }
+        }
+        return doanhThu
     }
     fun getUID(): String {
         return FirebaseAuth.getInstance().currentUser?.uid ?: ""
