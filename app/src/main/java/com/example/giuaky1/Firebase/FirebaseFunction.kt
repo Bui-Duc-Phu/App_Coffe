@@ -123,7 +123,7 @@ class FirebaseFunction {
 
 
         @SuppressLint("SuspiciousIndentation")
-        fun getPhoneProfile(context: Context, callback: (String) -> Unit, callback2: (String) -> Unit, callback3: (String) -> Unit)  {
+        fun getPhoneProfile(context: Context, callback: (String) -> Unit, callback2: (String) -> Unit, callback3: (String)->Unit,callback4:(String) -> Unit)  {
             val firebaseUser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
             val databaseReference = FirebaseDatabase.getInstance()
                 .getReference("ProfileUser")
@@ -134,9 +134,11 @@ class FirebaseFunction {
                         val phone:String = snapshot.child("phoneNumber").value.toString()
                         val location  = snapshot.child("location").value.toString()
                         val date = snapshot.child("dateOfBirth").value.toString()
+                        val name = snapshot.child("name").value.toString()
                         callback(phone)
                         callback2(location)
                         callback3(date)
+                        callback4(name)
                     }
 
                     override fun onCancelled(error: DatabaseError) {

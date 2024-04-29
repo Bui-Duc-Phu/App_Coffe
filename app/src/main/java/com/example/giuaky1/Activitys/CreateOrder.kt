@@ -63,6 +63,8 @@ import java.util.Random
 
 class CreateOrder : AppCompatActivity(), OnTaskCompleted {
     var alertDialog: AlertDialog? = null
+    var address =""
+    var phone=""
     private var dateTime: String? = null
     private var trangThai = 0
     private var googleSheetsTask: GoogleSheetsTask? = null
@@ -96,6 +98,8 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
         setRecyclerViewOrder()
         setBack()
         setEdit()
+        DataHandler.getAddress { address1 -> address = address1 }
+        DataHandler.getPhoneNumber { phone1 -> phone = phone1 }
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         ivUpdateAddress!!.setOnClickListener { updateAddressFromLocation() }
         ivEditAddress!!.setOnClickListener { setEdit() }
@@ -287,7 +291,7 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
                     dateTime = sdf.format(Date())
                     val sdf1 = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault())
                     orderId = sdf1.format(Date())
-                    DataHandler.addOrderToFirebase("Đã thanh toán", orderId!!, paymentMethods1!!.text.toString(), dateTime!!, DataHandler.shipper, "0966638738", edtAddress!!.text.toString(), DataHandler.orderModelArrayList, tvTotalPrice!!.text.toString())
+                    DataHandler.addOrderToFirebase("Đã thanh toán", orderId!!, paymentMethods1!!.text.toString(), dateTime!!, DataHandler.shipper, phone,address, DataHandler.orderModelArrayList, tvTotalPrice!!.text.toString())
                     thongBaoThanhCong("Thanh toán thành công")
                     alertDialog!!.dismiss()
                     clearCart()
@@ -315,7 +319,8 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
             dateTime = sdf.format(Date())
             val sdf1 = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault())
             orderId = sdf1.format(Date())
-            DataHandler.addOrderToFirebase("Chưa thanh toán", orderId!!, paymentMethods1!!.text.toString(), dateTime!!, DataHandler.shipper, "0966638738", edtAddress!!.text.toString(), DataHandler.orderModelArrayList, tvTotalPrice!!.text.toString())
+
+            DataHandler.addOrderToFirebase("Chưa thanh toán", orderId!!, paymentMethods1!!.text.toString(), dateTime!!, DataHandler.shipper, phone, address, DataHandler.orderModelArrayList, tvTotalPrice!!.text.toString())
             thongBaoThanhCong("Đơn hàng của bạn đã được tạo")
             clearCart()
             finish()

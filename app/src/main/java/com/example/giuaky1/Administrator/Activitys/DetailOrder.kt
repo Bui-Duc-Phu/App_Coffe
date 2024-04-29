@@ -27,7 +27,7 @@ class DetailOrder : AppCompatActivity() {
         val receiverPhone = findViewById<TextView>(R.id.receiverPhone)
         val receiverLocation = findViewById<TextView>(R.id.receiverLocation)
         val productRecylerview = findViewById<RecyclerView>(R.id.product_recylerview1)
-        val btnBack = findViewById<Button>(R.id.btnBack1)
+        val btnBack = findViewById<Button>(R.id.btnBack)
         IDTv.text = "ID: #${orderDetail.orderID}"
         payTv.text = "Phương thức thanh toán :${orderDetail.pay}"
         timeTv.text = "Thời gian: ${orderDetail.time}"

@@ -94,7 +94,11 @@ class ProfileFragment : Fragment() {
         },{dateOfbirth->
             binding.dateEdt.isEnabled = false
             binding.dateEdt.setText(dateOfbirth)
-        })
+        },{name->
+            binding.nameEdt.isEnabled = false
+            binding.nameEdt.setText(name)
+        }
+        )
 
         binding.editPhone.setOnClickListener {
             binding.phoneEdt.isEnabled = true
