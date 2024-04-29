@@ -268,20 +268,21 @@ object DataHandler {
         rule=value
     }
 
-    fun getListDoanhThuTheoNgay(startDate: String, endDate: String, listOrder: List<Order>): List<DoanhThu> {
-        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val start = sdf.parse(startDate)
-        val end = sdf.parse(endDate)
-        val calendar = Calendar.getInstance()
-        calendar.time = start
-        val doanhThuList = mutableListOf<DoanhThu>()
-        while (!calendar.time.after(end)) {
-            val dateStr = sdf.format(calendar.time)
-            val doanhThu = getDoanhThuTheoNgay(dateStr, dateStr, listOrder)
+    fun getListDoanhThuTheoNgay(startDate: String, endDate: String, listOrder: List<Order>, callback: (List<DoanhThu>) -> Unit) {
+    val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    val start = sdf.parse(startDate)
+    val end = sdf.parse(endDate)
+    val calendar = Calendar.getInstance()
+    calendar.time = start
+    val doanhThuList = mutableListOf<DoanhThu>()
+    while (!calendar.time.after(end)) {
+        val dateStr = sdf.format(calendar.time)
+        val doanhThu = getDoanhThuTheoNgay(dateStr, dateStr, listOrder)
+        if (doanhThu > 0) { // Only add the day to the list if the revenue is greater than 0
             doanhThuList.add(DoanhThu(dateStr, doanhThu))
-            calendar.add(Calendar.DATE, 1)
         }
-
-        return doanhThuList
+        calendar.add(Calendar.DATE, 1)
     }
+    callback(doanhThuList)
+}
 }

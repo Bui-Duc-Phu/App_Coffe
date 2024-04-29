@@ -1,5 +1,6 @@
 package com.example.giuaky1.Administrator.Adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ class ItemDoanhThuAdapter(private val doanhThuList: List<DoanhThu>) : RecyclerVi
 
     override fun onBindViewHolder(holder: DoanhThuViewHolder, position: Int) {
         val currentItem = doanhThuList[position]
+        Log.d("DoanhThu123456", currentItem.toString())
         holder.tvDate.text = currentItem.date
         holder.tvRevenue.text = currentItem.revenue.toString()
     }
