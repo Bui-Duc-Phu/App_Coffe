@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/back_changePass"
+    tools:context=".Activitys.ChangePasswrod">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_arrow_back_24"
+            android:padding="10dp"
+            android:layout_gravity="start"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forgot_new_password"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            />
+    </RelativeLayout>
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation"
+        android:layout_width="250dp"
+        android:layout_height="210dp"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitXY"
+        app:lottie_rawRes="@raw/change_password"
+        android:layout_below="@id/toolbar"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        />
+
+    <LinearLayout
+        android:id="@+id/oldPassLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/animation"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:text="@string/change_paswrod_old_passwrod"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/oldPasswrodTil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+
+            app:boxCornerRadiusTopStart="15sp"
+            app:boxCornerRadiusTopEnd="15sp"
+            app:boxStrokeColor="@color/black"
+            app:hintTextColor="@color/black"
+            app:boxCornerRadiusBottomStart="15sp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeWidth="2dp"
+            app:boxCornerRadiusBottomEnd="15sp">
+            <EditText
+                android:id="@+id/oldPasswrodEdt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/change_paswrod_old_pass_hint"
+                android:paddingStart="30dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/hint"
+                android:textColorHighlight="@color/hint"
+                tools:ignore="TouchTargetSizeCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/newPassLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/oldPassLayout"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:text="@string/change_paswrod_new_passwrod"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/newPassLayoutTil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+
+            app:boxCornerRadiusTopStart="15sp"
+            app:boxCornerRadiusTopEnd="15sp"
+            app:boxStrokeColor="@color/black"
+            app:hintTextColor="@color/black"
+            app:boxCornerRadiusBottomStart="15sp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeWidth="2dp"
+            app:boxCornerRadiusBottomEnd="15sp">
+            <EditText
+                android:id="@+id/newPassLayoutEdt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/change_paswrod_new_pass_hint"
+                android:paddingStart="30dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/hint"
+                tools:ignore="RtlSymmetry,TouchTargetSizeCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/confirmPasswordLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/newPassLayout"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:text="@string/login_email_hoạc_name"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/confirmPasswordTil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            app:boxCornerRadiusTopStart="15sp"
+            app:boxCornerRadiusTopEnd="15sp"
+            app:boxStrokeColor="@color/black"
+            app:hintTextColor="@color/black"
+            app:boxCornerRadiusBottomStart="15sp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeWidth="2dp"
+            app:boxCornerRadiusBottomEnd="15sp">
+            <EditText
+                android:id="@+id/confirmPasswordEdt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/login_hint_email"
+                android:paddingStart="30dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/hint"
+                tools:ignore="TouchTargetSizeCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/changePasswBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/change_paswrod"
+        android:textSize="20dp"
+        android:padding="4dp"
+        android:layout_below="@+id/confirmPasswordLayout"
+        android:textColor="@color/buton_text"
+        android:layout_marginTop="40dp"
+        android:textAllCaps="false"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/sign_up"
+
+
+        />
+
+
+
+</RelativeLayout>

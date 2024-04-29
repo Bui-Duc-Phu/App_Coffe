@@ -3,4 +3,7 @@
 
     <corners android:radius="24dp"/>
     <solid android:color="@color/btn_color"/>
+  <stroke android:color="#FFFFFF"
+      android:width="2dp"
+      />
 </shape>

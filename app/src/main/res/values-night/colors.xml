@@ -16,7 +16,7 @@
 
     <color name="splash">#252c4b</color>
     <color name="xam_vang">#6273C2</color>
-    <color name="btn_color">#252c4b</color>
+    <color name="btn_color">#1C2137</color>
     <color name="backgroup">#252c4b</color>
     <color name="vien">#CCC9C9</color>
     <color name="hint">#CCC9C9</color>
@@ -34,6 +34,7 @@
     <color name="input_email_back">#172E80</color>
     <color name="backItem_pinview">#ffffff</color>
     <color name="blue11">#C0DDEA</color>
+    <color name="back_changePass">#513385</color>
 
 
 

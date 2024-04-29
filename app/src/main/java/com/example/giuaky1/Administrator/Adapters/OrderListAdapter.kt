@@ -143,8 +143,6 @@ class OrderListAdapter (
           showIconToolbarMenu(false)
 
         }
-
-
         notifyDataSetChanged()
     }
 

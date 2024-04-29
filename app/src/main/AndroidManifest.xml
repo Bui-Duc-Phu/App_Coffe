@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
-
     <application
         android:name=".Administrator.MyApp"
         android:allowBackup="true"
@@ -17,15 +16,17 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Base.Theme.Light"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".Activitys.ChangePasswrod"
+            android:exported="false" />
         <activity
             android:name=".Administrator.Activitys.UserOrderList"
             android:exported="false" />
-
         <activity
             android:name=".Administrator.Activitys.DetailOrder"
             android:exported="false" />
@@ -53,7 +54,6 @@
         <activity
             android:name=".Activitys.CreateOrder"
             android:exported="false" />
-
         <activity
             android:name=".Activitys.Main"
             android:exported="false" />

@@ -210,6 +210,14 @@
     <string name="goodnight">Chào buổi tối, Nhật</string>
 
 
+    <!-- change Passwrod  -->
+    <string name="change_paswrod">Thay Đổi Mật Khẩu</string>
+    <string name="change_paswrod_old_passwrod">Nhập lại  mật khẩu</string>
+    <string name="change_paswrod_old_pass_hint">Mật khẩu cũ</string>
+    <string name="change_paswrod_new_passwrod">Nhập mật khẩu mới</string>
+    <string name="change_paswrod_new_pass_hint">Mật khẩu mới</string>
+    <string name="change_paswrod_confirm_passwrod">Nhập lại mật khẩu</string>
+
 
 
 </resources>

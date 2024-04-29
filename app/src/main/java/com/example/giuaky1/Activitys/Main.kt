@@ -1,6 +1,7 @@
 package com.example.giuaky1.Activitys
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -8,6 +9,8 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.WindowManager
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -19,6 +22,7 @@ import com.example.giuaky1.Models.ModeTheme
 import com.example.giuaky1.R
 
 import com.example.giuaky1.databinding.ActivityMainBinding
+import com.example.giuaky1.databinding.DialogChoseTypeAuthenBinding
 import com.example.sqlite.DBHelper
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -97,7 +101,7 @@ class Main : AppCompatActivity(){
         binding.navView.setNavigationItemSelectedListener { menu ->
             when (menu.itemId) {
               R.id.changePassword ->  {
-                  Toast.makeText(applicationContext, "changePasswrod", Toast.LENGTH_SHORT).show()
+
 
               }
               R.id.setLanguage ->{
@@ -213,6 +217,21 @@ class Main : AppCompatActivity(){
         val currentLocale = context.resources.configuration.locale
         return currentLocale == Locale("vi")
     }
+
+
+
+    private fun changePassword(){
+
+    }
+
+
+
+
+
+
+
+
+
 
 
 

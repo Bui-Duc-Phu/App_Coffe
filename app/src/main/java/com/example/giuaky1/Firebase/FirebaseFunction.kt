@@ -57,6 +57,27 @@ class FirebaseFunction {
             ordersRef.child(orderKey!!).child("method").setValue(method)
         }
 
+        fun getPasswrodWithUid(context: Context,callback: (String) -> Unit){
+
+            val firebaseUser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+            val ref = FirebaseDatabase
+                .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference("Users").child(firebaseUser.uid.toString())
+
+            ref.addListenerForSingleValueEvent(object  : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val password  = snapshot.child("password").value.toString()
+                    if(password.isNotEmpty()) callback(password)
+                    else callback("")
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+
+                }
+            })
+        }
+
 
         fun phoneAlreadyExists(context: Context,phoneUser:String, callback: (Boolean) -> Unit){
             val databaseReference = FirebaseDatabase.getInstance()

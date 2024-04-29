@@ -129,8 +129,6 @@
     <string name="don_hang_da_dat">Đơn hàng đã đặt</string>
 
 
-
-
     <!-- fragmentHistory -->
     <string name="dialog_chose_type">Xác Thực Tài Khoản</string>
     <string name="dialog_chose_type_authen">Kiểu Xác Thực</string>
@@ -138,12 +136,6 @@
 
 
 
-
-
-
-
-
-=======
     <!-- string cua nhat -->
     <string name="account">Account</string>
     <string name="cart">cart</string>
@@ -212,5 +204,16 @@
     <string name="goodluch">Chào buổi trưa, Nhật</string>
     <string name="goodafternoon">Chào buổi chiều, Nhật</string>
     <string name="goodnight">Chào buổi tối, Nhật</string>
->>>>>>> origin/nhat
+
+    <!-- change Passwrod  -->
+    <string name="change_paswrod">Thay Đổi Mật Khẩu</string>
+    <string name="change_paswrod_old_passwrod">Nhập lại  mật khẩu</string>
+    <string name="change_paswrod_old_pass_hint">Mật khẩu cũ</string>
+    <string name="change_paswrod_new_passwrod">Nhập mật khẩu mới</string>
+    <string name="change_paswrod_new_pass_hint">Mật khẩu mới</string>
+    <string name="change_paswrod_confirm_passwrod">Nhập lại mật khẩu</string>
+
+
+
+
 </resources>

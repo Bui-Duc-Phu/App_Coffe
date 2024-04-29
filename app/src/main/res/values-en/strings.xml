@@ -142,7 +142,7 @@
     <string name="dialog_chose_Phone">Phone Number</string>
 
 
-=======
+
 <!-- string cua nhat -->
     <string name="account">Account</string>
     <string name="cart">cart</string>
@@ -211,6 +211,15 @@
     <string name="goodluch">Chào buổi trưa, Nhật</string>
     <string name="goodafternoon">Chào buổi chiều, Nhật</string>
     <string name="goodnight">Chào buổi tối, Nhật</string>
->>>>>>> origin/nhat
+
+    <!-- change Passwrod  -->
+    <string name="change_paswrod">Change Passwrod</string>
+    <string name="change_paswrod_old_passwrod">Re-enter Password</string>
+    <string name="change_paswrod_old_pass_hint">Old Password</string>
+    <string name="change_paswrod_new_passwrod">Enter New Password</string>
+    <string name="change_paswrod_new_pass_hint">New Password</string>
+    <string name="change_paswrod_confirm_passwrod">Confirm New Password</string>
+
+
 
 </resources>
