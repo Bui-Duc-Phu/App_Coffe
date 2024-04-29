@@ -27,6 +27,7 @@ class MainAdmin : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        auth = FirebaseAuth.getInstance()
         init_()
     }
 
@@ -77,6 +78,7 @@ class MainAdmin : AppCompatActivity() {
                     googleSignInClient = GoogleSignIn.getClient(this, gso)
                     googleSignInClient.revokeAccess().addOnCompleteListener(this) {}
                     googleSignInClient.signOut().addOnCompleteListener(this){}
+                    auth.signOut()
                     startActivity(Intent(this, LoginOrSignUp::class.java))
                 }
             }

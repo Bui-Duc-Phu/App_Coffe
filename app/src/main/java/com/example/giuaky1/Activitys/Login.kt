@@ -39,7 +39,7 @@ class Login : AppCompatActivity() {
     lateinit var firebaseUser: FirebaseUser
     private var progressDialog: ProgressDialog? = null
 
-    private var progressDialog2 : Dialog? = null
+
 
 
 
@@ -161,26 +161,24 @@ class Login : AppCompatActivity() {
 
     @SuppressLint("NotConstructor")
     private fun loginWithEmail(email:String, password:String){
-        progressDialog = ProgressDialog.show(this, "App", "Loading...", true)
-        auth.signInWithEmailAndPassword(email,password)
 
+        auth.signInWithEmailAndPassword(email,password)
             .addOnCompleteListener {
 
                 if(it.isSuccessful){
+                    progressDialog = ProgressDialog.show(this, "App", "Login...", true)
                     binding.emailEdt.setText("")
                     binding.passwordEdt.setText("")
-                    progressDialog?.dismiss()
-
+                    progressDialog!!.dismiss()
                     checkTypeAccount(email)
-
-
-
                 }
             }.addOnFailureListener { e ->
-                progressDialog?.dismiss()
+
                 Toast.makeText(this, "Login failed: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
+
 
     private fun checkTypeAccount(email: String) {
         val ref = FirebaseDatabase
