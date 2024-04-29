@@ -199,6 +199,7 @@ class HomeDoanhThu : Fragment() {
 import android.app.DatePickerDialog
 import androidx.fragment.app.Fragment
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -206,6 +207,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
+import com.example.giuaky1.Administrator.Adapters.ItemDoanhThuAdapter
+import com.example.giuaky1.Administrator.model.DoanhThu
 import com.example.giuaky1.Firebase.DataHandler
 import com.example.giuaky1.Models.Order
 import com.example.giuaky1.R
@@ -220,41 +224,51 @@ class HomeDoanhThu : Fragment() {
     private lateinit var startDateEditText: EditText
     private lateinit var endDateEditText: EditText
     private lateinit var view: View
-    private lateinit var DoanhThuTextView: TextView
     private lateinit var DoanhThuButton: Button
     private lateinit var DoanhThuChartButton: Button
     private lateinit var listOrder: List<Order>
+    private lateinit var listDoanhThu: List<DoanhThu>
+    private lateinit var DoanhThuRecyclerView: RecyclerView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         view = inflater.inflate(R.layout.fragment_home_admin_doanh_thu, container, false)
         setControl()
+        Log.d("DoanhThu123", "onCreateView")
+        DataHandler.readAllOrdersList { orderList ->
+            listOrder = orderList
+            Log.d("DoanhThu123", listOrder.toString())}
+        /*
         DataHandler.getOrderWithState("Đã giao hàng") { orderList ->
             listOrder = orderList
-        }
+            Log.d("DoanhThu123", listOrder.toString())
+        }*/
         setDate()
         setDoanhThu()
         return view
     }
 
     private fun setDoanhThu() {
+
         DoanhThuButton.setOnClickListener {
             if(startDateEditText.text.toString().isEmpty() || endDateEditText.text.toString().isEmpty()) {
                 Toast.makeText(view.context, "Vui lòng chọn ngày bắt đầu và ngày kết thúc", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            val doanhThu = DataHandler.getDoanhThuTheoNgay(startDateEditText.text.toString(), endDateEditText.text.toString(), listOrder)
-            DoanhThuTextView.text = "Doanh thu: $doanhThu"
+            DoanhThuRecyclerView.visibility = View.VISIBLE
+            listDoanhThu = DataHandler.getListDoanhThuTheoNgay(startDateEditText.text.toString(), endDateEditText.text.toString(), listOrder)
+            Log.d("DoanhThu123", listDoanhThu.toString())
+            DoanhThuRecyclerView.adapter = ItemDoanhThuAdapter(listDoanhThu)
         }
     }
 
     private fun setControl() {
         startDateEditText = view.findViewById(R.id.startDateEditText)
         endDateEditText = view.findViewById(R.id.endDateEditText)
-        DoanhThuTextView = view.findViewById(R.id.DoanhThuTextView)
         DoanhThuButton = view.findViewById(R.id.DoanhThuButton)
         DoanhThuChartButton = view.findViewById(R.id.DoanhThuChartButton)
+        DoanhThuRecyclerView = view.findViewById(R.id.DoanhThuRecyclerView)
 
     }
 
