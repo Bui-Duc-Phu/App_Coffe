@@ -146,8 +146,7 @@
     <string name="home">Trang chủ</string>
     <string name="trangcanhan">Trang cá nhân</string>
     <string name="giohang">Giỏ hàng</string>
-    <string name="donhang">Đơn hàng</string>
-    <string name="emptyCart">Giỏ hàng rỗng</string>
+
     <string name="gioHang">Giỏ hàng của bạn</string>
     <string name="diaDiemGiaoHang">Địa chỉ nhận hàng</string>
     <string name="manthien">97 Man Thiện</string>
