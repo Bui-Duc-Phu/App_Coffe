@@ -1,32 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/mainLayout"
-    android:background="#FFFFFF"
+    android:orientation="vertical"
     tools:context=".Fragments.ProfileFragment">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:id="@+id/layout1"
+        android:orientation="vertical"
         android:background="@drawable/back_proflie2"
-        android:layout_height="230dp">
-
-
-        <ImageView
-            android:id="@+id/save"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:background="@drawable/button_save"
-            android:src="@drawable/save_image"
-            android:scaleType="fitXY"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_alignParentEnd="true"
-             android:visibility="gone"
-            android:padding="20dp"
-            />
+        android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
@@ -41,48 +27,24 @@
             android:id="@+id/userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/profile_image"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+              android:layout_gravity="center"
             android:text="UserName"
             android:textColor="#FF000000"
             android:textSize="20dp"
             android:textStyle="bold" />
-
-        <LinearLayout
-            android:id="@+id/saveLayout"
+        <Button
+            android:id="@+id/saveBtn"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/userName"
-            android:layout_centerHorizontal="true"
-            android:visibility="gone"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:text="Save"
-                android:textColor="#3477AC"
-                android:textSize="25dp"
-                android:textStyle="bold|italic" />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/save" />
+            android:layout_margin="20dp"
+            android:layout_gravity="center"
+            android:background="@drawable/rounded_rectangle"
+            android:text="Lưu ảnh"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp" />
 
-        </LinearLayout>
-
-
-
-    </RelativeLayout>
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_marginTop="200dp"
-        />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -93,10 +55,42 @@
         android:layout_marginEnd="20dp"
         android:background="@drawable/custom_back_edit"
         android:orientation="vertical">
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/back_item_pro"
+            android:padding="10dp">
+            <ImageView
+                android:id="@+id/icon_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:padding="10dp"
+                android:src="@drawable/ursername" />
+            <EditText
+                android:id="@+id/nameEdt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColorHint="@android:color/transparent"
+                android:textColorHighlight="@android:color/transparent"
+                android:text="Họ và tên"
+                android:textColor="#000000"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/edtName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:src="@drawable/editing" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:background="@drawable/back_item_pro"
             android:padding="10dp">
             <ImageView
@@ -104,17 +98,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_centerVertical="true"
                 android:padding="10dp"
-                android:src="@drawable/telephone" />
+                android:src="@drawable/phone" />
             <EditText
                 android:id="@+id/phoneEdt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_toStartOf="@id/editPhone"
-                android:layout_toEndOf="@id/icon_phone"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="20dp"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:textColorHint="@android:color/transparent"
                 android:textColorHighlight="@android:color/transparent"
@@ -126,12 +116,9 @@
                 android:id="@+id/editPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-
                 android:padding="10dp"
                 android:src="@drawable/editing" />
-        </RelativeLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -145,24 +132,25 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:padding="10dp"
-                android:src="@drawable/email" />
+                android:src="@drawable/mail" />
             <TextView
                 android:id="@+id/emailTv"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:layout_gravity="center_vertical"
-                android:gravity="start"
-                android:paddingStart="20dp"
+                android:layout_marginStart="20dp"
                 android:text="phuhk9@gmail.com"
                 android:textColor="#000000"
                 android:textSize="16dp"
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/back_item_pro"
+            android:orientation="horizontal"
             android:padding="10dp">
             <ImageView
                 android:id="@+id/icon_loacation"
@@ -171,19 +159,13 @@
                 android:layout_marginStart="20dp"
                 android:padding="10dp"
                 android:layout_centerVertical="true"
-                android:src="@drawable/location" />
+                android:src="@drawable/address" />
 
             <EditText
                 android:id="@+id/locationEdt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toStartOf="@id/editLocation"
-                android:layout_toEndOf="@id/icon_loacation"
-                android:minHeight="48dp"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:gravity="center"
+                android:layout_weight="1"
                 android:text="97 Man Thiện/Quân 9/hcm"
                 android:textColor="#000000"
                 android:textColorHighlight="@android:color/transparent"
@@ -194,13 +176,11 @@
                 android:id="@+id/editLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
                 android:padding="10dp"
                 android:src="@drawable/editing" />
-        </RelativeLayout>
+        </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/back_item_pro"
@@ -212,15 +192,13 @@
                 android:layout_marginStart="20dp"
                 android:padding="10dp"
                 android:layout_centerVertical="true"
-                android:src="@drawable/date_icon" />
+                android:src="@drawable/calendar" />
 
             <EditText
                 android:id="@+id/dateEdt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toStartOf="@id/editdate"
-                android:layout_toEndOf="@id/icon_date"
+                android:layout_weight="1"
                 android:minHeight="48dp"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
@@ -239,44 +217,19 @@
                 android:layout_centerVertical="true"
                 android:padding="10dp"
                 android:src="@drawable/editing" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/back_item_pro"
-            android:padding="10dp">
-            <ImageView
-                android:id="@+id/icon_order"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:padding="10dp"
-                android:layout_centerVertical="true"
-                android:src="@drawable/order_icon" />
-
-            <TextView
-                android:id="@+id/ordertv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                android:minHeight="48dp"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:gravity="center"
-                android:text="@string/don_hang_da_dat"
-                android:textColor="#000000"
-                android:textColorHighlight="@android:color/transparent"
-                android:textColorHint="@android:color/transparent"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
-
+        </LinearLayout>
 
     </LinearLayout>
+    <Button
+        android:id="@+id/save"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/rounded_rectangle"
+        android:text="Lưu"
+        android:textColor="#FFFFFF"
+        android:textSize="16dp" />
 
 
-
-</RelativeLayout>
+</LinearLayout>
