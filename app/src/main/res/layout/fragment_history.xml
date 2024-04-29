@@ -13,9 +13,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/back_viewpaper"
-
         android:contentDescription="@string/app_name" />
 
+    <ImageButton
+        android:id="@+id/printf_pdf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:backgroundTint="#9C644E"
+        android:src="@drawable/pdf_print" />
     <com.google.android.material.tabs.TabLayout
         android:layout_marginTop="10dp"
         android:paddingBottom="4dp"
@@ -24,6 +30,7 @@
         android:paddingEnd="6dp"
         app:tabPaddingEnd="6dp"
         android:id="@+id/tab_layout"
+        android:layout_below="@id/printf_pdf"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_width="match_parent"

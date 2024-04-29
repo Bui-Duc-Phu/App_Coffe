@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.example.giuaky1.Firebase.DataHandler
 import com.example.giuaky1.Models.ModeTheme
 import com.example.giuaky1.R
 
@@ -49,7 +50,9 @@ class Main : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
-
+        DataHandler.getInforPDF {
+            DataHandler.userInfo=it
+        }
 
 
 
@@ -118,9 +121,7 @@ class Main : AppCompatActivity(){
               R.id.privacyPolicy ->{
 
               }
-              R.id.notification ->{
-
-              }
+              R.id.notification -> loadNotification()
               R.id.nav_logout ->{
                   val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                       .requestIdToken(getString(R.string.default_web_client_id))
@@ -136,6 +137,10 @@ class Main : AppCompatActivity(){
             binding.drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
+
+    }
+
+    private fun loadNotification() {
 
     }
 

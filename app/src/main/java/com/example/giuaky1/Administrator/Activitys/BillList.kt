@@ -2,9 +2,17 @@ package com.example.giuaky1.Administrator.Activitys
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.pdf.PdfDocument
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.util.DisplayMetrics
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -20,7 +28,9 @@ import com.itextpdf.text.Element
 import com.itextpdf.text.Font
 import com.itextpdf.text.Paragraph
 import com.itextpdf.text.pdf.PdfWriter
+import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 
 class BillList : AppCompatActivity() {
     private val STORAGE_PERMISSION_CODE = 1
@@ -66,8 +76,7 @@ class BillList : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             STORAGE_PERMISSION_CODE -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    createPdf()
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) { createPdf()
                 } else {
                     Toast.makeText(this, "Permission denied to read your External storage", Toast.LENGTH_SHORT).show()
                 }
@@ -80,30 +89,33 @@ class BillList : AppCompatActivity() {
     }
 
     private fun createPdf() {
-    val pdfDoc = Document()
-    try {
-        val path = getExternalFilesDir(null)?.absolutePath + "/billList.pdf"
-        val writer = PdfWriter.getInstance(pdfDoc, FileOutputStream(path))
-        pdfDoc.open()
+        val pdfDoc = Document()
+        try {
+            val path = getExternalFilesDir(null)?.absolutePath + "/billList.pdf"
+            val writer = PdfWriter.getInstance(pdfDoc, FileOutputStream(path))
+            pdfDoc.open()
 
-        val mHeadingFont = Font(Font.FontFamily.TIMES_ROMAN, 20.0f, Font.BOLD)
-        val mValueFont = Font(Font.FontFamily.TIMES_ROMAN, 18.0f, Font.NORMAL)
+            val mHeadingFont = Font(Font.FontFamily.TIMES_ROMAN, 20.0f, Font.BOLD)
+            val mValueFont = Font(Font.FontFamily.TIMES_ROMAN, 18.0f, Font.NORMAL)
 
-        val heading = Paragraph("DANH SACH HOA DON", mHeadingFont)
-        heading.alignment = Element.ALIGN_CENTER
-        pdfDoc.add(heading)
+            val heading = Paragraph("DANH SACH HOA DON", mHeadingFont)
+            heading.alignment = Element.ALIGN_CENTER
+            pdfDoc.add(heading)
 
-        val billList =billList1
-        for (bill in billList) {
-            val billParagraph = Paragraph("Ngay: ${bill.date}, Ten: ${bill.name}, Tong tien: ${bill.price}", mValueFont)
-            pdfDoc.add(billParagraph)
+            val billList = billList1
+            for (bill in billList) {
+                val billParagraph = Paragraph(
+                    "Ngay: ${bill.date}, Ten: ${bill.name}, Tong tien: ${bill.price}", mValueFont
+                )
+                pdfDoc.add(billParagraph)
+            }
+
+            Toast.makeText(this, "PDF đã được tạo thành công tại $path", Toast.LENGTH_LONG).show()
+        } catch (e: Exception) {
+            Toast.makeText(this, "Đã xảy ra lỗi khi tạo PDF", Toast.LENGTH_LONG).show()
+        } finally {
+            pdfDoc.close()
         }
 
-        Toast.makeText(this, "PDF đã được tạo thành công tại $path", Toast.LENGTH_LONG).show()
-    } catch (e: Exception) {
-        Toast.makeText(this, "Đã xảy ra lỗi khi tạo PDF", Toast.LENGTH_LONG).show()
-    } finally {
-        pdfDoc.close()
     }
-}
 }

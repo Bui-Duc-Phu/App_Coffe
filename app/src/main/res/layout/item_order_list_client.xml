@@ -62,6 +62,16 @@
                 android:layout_marginStart="10dp"
                 android:background="@drawable/rounded_rectangle"
                 android:backgroundTint="#846046"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:visibility="gone"
+                android:id="@+id/resetButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Đặt lại"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/rounded_rectangle"
+                android:backgroundTint="#846046"/>
         </LinearLayout>
 
     </LinearLayout>

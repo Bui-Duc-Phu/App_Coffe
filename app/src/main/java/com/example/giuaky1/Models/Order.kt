@@ -13,8 +13,9 @@ data  class Order(
         var receiverPhone: String,
         var receiverLocation: String,
         var products: MutableList<CartModel>,
-        var sumPrice: String
+        var sumPrice: String,
+        var receiverName: String
     ): Serializable {
-            constructor():this("","","","","","",Shipper(),"","",ArrayList<CartModel>(),"")
+            constructor():this("","","","","","",Shipper(),"","",ArrayList<CartModel>(),"","")
 
 }

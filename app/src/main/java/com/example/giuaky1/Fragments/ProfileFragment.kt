@@ -204,10 +204,11 @@ class ProfileFragment : Fragment() {
         var location = binding.locationEdt.text.toString().trim()
         var date = binding.dateEdt.text.toString().trim()
         var name = binding.nameEdt.text.toString().trim()
+        var mail= binding.emailTv.text.toString().trim()
         if(phone.isEmpty()) phone = ""
         if(location.isEmpty()) location=""
         if (date.isEmpty()) date=""
-        FirebaseUpdate.updateDataProfile(requireContext(),phone,location,date,name)
+        FirebaseUpdate.updateDataProfile(requireContext(),phone,location,date,name,mail)
 
         if(binding.phoneEdt.isEnabled == true){
             binding.phoneEdt.isEnabled = false
