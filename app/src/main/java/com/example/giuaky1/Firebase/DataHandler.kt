@@ -10,6 +10,7 @@ import com.example.giuaky1.Adapters.CartAdapter
 import com.example.giuaky1.Administrator.Adapters.OrderListAdapter
 import com.example.giuaky1.Administrator.model.DoanhThu
 import com.example.giuaky1.Administrator.model.DonHang
+import com.example.giuaky1.Administrator.model.ItemBill
 import com.example.giuaky1.Administrator.model.SanPham
 import com.example.giuaky1.Models.CartModel
 import com.example.giuaky1.Models.Order
@@ -25,6 +26,7 @@ import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import java.util.concurrent.CountDownLatch
 
 object DataHandler {
     var rule:String=""
@@ -102,6 +104,25 @@ object DataHandler {
                         if (order != null && order.state == state) {
                             orderList.add(order)
                         }
+                    }
+                }
+                callback(orderList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("HomeDoanhThu", "onCancelled: " + error.message)
+            }
+        })
+    }
+    fun getOrderWithStateClient(state: String, callback: (List<Order>) -> Unit) {
+        val ordersRef = FirebaseDatabase.getInstance().getReference("Orders").child(getUID())
+        ordersRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val orderList = ArrayList<Order>()
+                for (singleOrderSnapshot in snapshot.children) {
+                    val order = singleOrderSnapshot.getValue(Order::class.java)
+                    if (order != null && order.state == state) {
+                        orderList.add(order)
                     }
                 }
                 callback(orderList)
@@ -254,10 +275,9 @@ object DataHandler {
     }
     private fun getDonHangTheoNgay(startDate: String, endDate: String, orderList: List<Order>): Int {
         var donHang = 0
-        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
         val start = sdf.parse("$startDate 00:00:00")
         val end = sdf.parse("$endDate 23:59:59")
-        Log.d("DataHandler", "getDoanhThuTheoNgay: $start - $end")
         for (order in orderList) {
             val orderDate = sdf.parse(order.time)
             if (orderDate.after(start) && orderDate.before(end)) {
@@ -268,7 +288,7 @@ object DataHandler {
     }
     private fun getSanPhamTheoNgay(startDate: String, endDate: String, orderList: List<Order>): Int {
         var soLuong = 0
-        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
         val start = sdf.parse("$startDate 00:00:00")
         val end = sdf.parse("$endDate 23:59:59")
         for (order in orderList) {
@@ -276,8 +296,6 @@ object DataHandler {
 
             if (orderDate.after(start) && orderDate.before(end)) {
                 for (product in order.products) {
-                    if(product==null) Log.d("DataHandler", "getSanPhamTheoNgay: product null")
-                    Log.d("DataHandler", "getSanPhamTheoNgay: ${product}")
                     soLuong += product.quantity
                 }
             }
@@ -355,5 +373,49 @@ object DataHandler {
             calendar.add(Calendar.DATE, 1)
         }
         callback(sanPhamList)
+    }
+
+    fun getOrderWithStateClient(s: String, any: Any) {
+
+    }
+
+    fun getAllBill( callback: (List<ItemBill>) -> Unit) {
+        val ordersRef = FirebaseDatabase.getInstance().getReference("Orders")
+        ordersRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val orderList = ArrayList<ItemBill>()
+                val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+                for (orderSnapshot in snapshot.children) {
+                    for (singleOrderSnapshot in orderSnapshot.children) {
+                        val order = singleOrderSnapshot.getValue(Order::class.java)
+                        if (order != null && order.state == "Đã giao hàng") {
+                            val name1=getNameFromUID(order.uID)
+                            val bill=ItemBill(order.time,"123",order.sumPrice.toDouble(),order.orderID,order.uID)
+                            orderList.add(bill)
+                        }
+                    }
+                }
+                val sortedOrderList = orderList.sortedWith(compareByDescending { sdf.parse(it.date) })
+                callback(sortedOrderList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("HomeDoanhThu", "onCancelled: " + error.message)
+            }
+        })
+    }
+    fun getNameFromUID(uID: String): String {
+        var name = ""
+        val ref = FirebaseDatabase.getInstance().getReference("Users").child(uID)
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                name = snapshot.child("name").value.toString()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("HomeDoanhThu", "onCancelled: " + error.message)
+            }
+        })
+        return name
     }
 }

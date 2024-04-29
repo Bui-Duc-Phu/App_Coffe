@@ -30,7 +30,7 @@ class ChoGiaoHangFragment : Fragment() {
         val adapter = OrderClientAdapter(emptyList())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
-        dataHandler.getOrderWithState("Đang giao hàng") { orderList ->
+        dataHandler.getOrderWithStateClient("Đang giao hàng") { orderList ->
             adapter.submitList(orderList)
         }
 

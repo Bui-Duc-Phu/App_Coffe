@@ -33,7 +33,7 @@ class DaHuyFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        dataHandler.getOrderWithState("Đã hủy") { orderList ->
+        dataHandler.getOrderWithStateClient("Đã hủy") { orderList ->
             adapter.submitList(orderList)
         }
 

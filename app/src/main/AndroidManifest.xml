@@ -21,6 +21,9 @@
         android:theme="@style/Base.Theme.Light"
         tools:targetApi="31">
         <activity
+            android:name=".Administrator.Activitys.BillList"
+            android:exported="false" />
+        <activity
             android:name=".Administrator.Activitys.EditCoffe"
             android:exported="false" />
         <activity
@@ -29,7 +32,6 @@
         <activity
             android:name=".Administrator.Activitys.AddProduct"
             android:exported="false" />
-
         <activity
             android:name=".Administrator.Activitys.DetailOrder"
             android:exported="false" />
@@ -74,6 +76,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -135,7 +135,6 @@
     <string name="dialog_chose_Phone">Số Điện Thoại</string>
 
 
-
     <!-- string cua nhat -->
     <string name="account">Account</string>
     <string name="cart">cart</string>
@@ -212,10 +211,6 @@
     <string name="change_paswrod_new_passwrod">Nhập mật khẩu mới</string>
     <string name="change_paswrod_new_pass_hint">Mật khẩu mới</string>
     <string name="change_paswrod_confirm_passwrod">Nhập lại mật khẩu</string>
-
-
-
-
 
 
 </resources>
