@@ -129,6 +129,7 @@ class Main : AppCompatActivity(){
                   googleSignInClient = GoogleSignIn.getClient(this, gso)
                   googleSignInClient.revokeAccess().addOnCompleteListener(this) {}
                   googleSignInClient.signOut().addOnCompleteListener(this){}
+                  auth.signOut()
                   startActivity(Intent(this, LoginOrSignUp::class.java))
               }
             }

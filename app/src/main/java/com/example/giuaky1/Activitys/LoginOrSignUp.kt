@@ -70,8 +70,8 @@ class LoginOrSignUp : AppCompatActivity() {
             .build()
         googleSignInClient = GoogleSignIn.getClient(this , gso)
 
-        val a= 0
-        val b=0
+
+
 
 
         init_()
