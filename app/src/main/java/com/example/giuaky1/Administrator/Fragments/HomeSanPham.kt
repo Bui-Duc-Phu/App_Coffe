@@ -1,180 +1,186 @@
 package com.example.giuaky1.Administrator.Fragments
 
+import androidx.fragment.app.Fragment
+import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.fragment.app.Fragment
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.giuaky1.Administrator.Adapters.ItemSanPhamAdapter
+import com.example.giuaky1.Administrator.model.SanPham
 import com.example.giuaky1.Firebase.DataHandler
-import com.example.giuaky1.Firebase.FirebaseFunction
 import com.example.giuaky1.Models.Order
 import com.example.giuaky1.R
-import com.example.giuaky1.databinding.FragmentHomeAdminSanPhamBinding
-import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.utils.ColorTemplate
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
 class HomeSanPham : Fragment() {
 
-    lateinit var binding : FragmentHomeAdminSanPhamBinding
-
-    private lateinit var pieChart: PieChart
-
-    private lateinit var changeButton: Button
-
-    private lateinit var timeView: TextView
-
-    private var isChart1 = true
+    private lateinit var barChart: BarChart
+    private lateinit var startDateEditText: EditText
+    private lateinit var endDateEditText: EditText
+    private lateinit var view: View
+    private lateinit var SanPhamButton: Button
+    private lateinit var SanPhamChartButton: Button
+    private lateinit var listOrder: List<Order>
+    private lateinit var listSanPham: List<SanPham>
+    private lateinit var SanPhamRecyclerView: RecyclerView
+    private lateinit var SanPhamHeader: LinearLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentHomeAdminSanPhamBinding.inflate(inflater,container,false)
-
-//        Log.d("SUPER LONGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG LABEL: ","I AM HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        changeButton = binding.MonthWeekSPBtn
-
-        pieChart = binding.SanPhamPieChart
-
-        timeView = binding.TimePieChartLabel
-
-        DataHandler.readAllOrdersList { orderList ->
-          //  setupBarChartMonth(orderList)
-            changeButton.setOnClickListener(View.OnClickListener {
-                if (isChart1) {
-                    changeButton.setText(getString(R.string.frag_TK_week))
-                    //setupPieChartWeek(orderList)
-                } else {
-                    changeButton.setText(getString(R.string.frag_TK_month))
-                 //   setupBarChartMonth(orderList)
-                }
-                isChart1 = !isChart1
-            })
+    ): View {
+        view = inflater.inflate(R.layout.fragment_home_admin_san_pham, container, false)
+        setControl()
+        DataHandler.getOrderWithState("Đã giao hàng") { orderList ->
+            listOrder = orderList
         }
-
-        return binding.root
+        setDate()
+        setSanPham()
+        return view
     }
 
- /*   *//*private fun setupBarChartMonth(orderList: List<Order>) {
-        val entries: MutableList<PieEntry> = ArrayList()
-        var TONGSP = 0
-
-        val listSanPham = mutableMapOf<String, Int>()
-        val calendar = Calendar.getInstance()
-        for (order in orderList){
-            val entryDate = Calendar.getInstance()
-            val dateParts = order.time.split("/".toRegex()).dropLastWhile { it.isEmpty() }
-                .toTypedArray()
-            entryDate[dateParts[2].toInt(), dateParts[1].toInt() - 1] = dateParts[0].toInt()
-            if (isWithinOneMonth(entryDate,calendar)) {
-                for(product in order.products){
-                    if(!listSanPham.contains(product.name)){
-                        listSanPham[product.productName] = product.quantity.toInt()
-                    }
-                    else{
-                        listSanPham[product.productName] = listSanPham[product.productName]!! +product.quantity.toInt()
-                    }
-                    TONGSP+=product.quantity.toInt()
-                }
+    @SuppressLint("NotifyDataSetChanged")
+    private fun setSanPham() {
+        SanPhamButton.setOnClickListener {
+            if(startDateEditText.text.toString().isEmpty() || endDateEditText.text.toString().isEmpty()) {
+                Toast.makeText(view.context, "Vui lòng chọn ngày bắt đầu và ngày kết thúc", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            SanPhamRecyclerView.visibility = View.VISIBLE
+            SanPhamHeader.visibility = View.VISIBLE
+            barChart.visibility = View.GONE
+            DataHandler.getListSanPhamTheoNgay(startDateEditText.text.toString(), endDateEditText.text.toString(), listOrder) { listSanPham ->
+                this.listSanPham = listSanPham // Initialize listSanPham here
+                Log.d("listSanPham", listSanPham.toString())
+                SanPhamRecyclerView.adapter = ItemSanPhamAdapter(listSanPham)
+                SanPhamRecyclerView.adapter?.notifyDataSetChanged()
             }
         }
-        for ((key, value) in listSanPham) {
-            entries.add( PieEntry(
-                (value.toFloat() / TONGSP * 10000).toInt() / 100.0f,
-                key
-            ))
-        }
-
-        val dataSet = PieDataSet(entries, null)
-        dataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
-        dataSet.valueTextSize = 20f
-        val data = PieData(dataSet)
-        pieChart.data = data
-        pieChart.holeRadius = 25f
-        pieChart.transparentCircleRadius = 30f
-        pieChart.description.isEnabled = false
-        pieChart.invalidate()
-        timeView.setText(getMonth())
-    }*//*
-
-    *//*private fun setupPieChartWeek(orderList: List<Order>) {
-        val entries: MutableList<PieEntry> = ArrayList()
-        var TONGSP = 0
-
-        val listSanPham = mutableMapOf<String, Int>()
-        val calendar = Calendar.getInstance()
-        for (order in orderList){
-            val entryDate = Calendar.getInstance()
-            val dateParts = order.day.split("/".toRegex()).dropLastWhile { it.isEmpty() }
-                .toTypedArray()
-            entryDate[dateParts[2].toInt(), dateParts[1].toInt() - 1] = dateParts[0].toInt()
-            if (isWithinLastSevenDays(entryDate,calendar)) {
-                for(product in order.products){
-                    if(!listSanPham.contains(product.productName)){
-                        listSanPham[product.productName] = product.quantity.toInt()
-                    }
-                    else{
-                        listSanPham[product.productName] = listSanPham[product.productName]!! +product.quantity.toInt()
-                    }
-                    TONGSP+=product.quantity.toInt()
-                }
+        SanPhamChartButton.setOnClickListener {
+            SanPhamRecyclerView.visibility = View.GONE
+            SanPhamHeader.visibility = View.GONE
+            barChart.visibility = View.VISIBLE
+            if (listSanPham.isEmpty()) {
+                Toast.makeText(view.context, "Không có dữ liệu để hiển thị", Toast.LENGTH_SHORT).show()
+            } else {
+                createChart(listSanPham)
             }
         }
-        for ((key, value) in listSanPham) {
-            entries.add( PieEntry(
-                (value.toFloat() / TONGSP * 10000).toInt() / 100.0f,
-                key
-            ))
+    }
+
+
+    private fun createChart(listSanPham: List<SanPham>) {
+        // Tạo dữ liệu cho biểu đồ từ listSanPham
+        val entries = listSanPham.mapIndexed { index, SanPham ->
+            BarEntry(index.toFloat(), SanPham.quantity.toFloat())
         }
 
-        val dataSet = PieDataSet(entries, null)
-        dataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
-        dataSet.valueTextSize = 20f
-        val data = PieData(dataSet)
-        pieChart.data = data
-        pieChart.holeRadius = 25f
-        pieChart.transparentCircleRadius = 30f
-        pieChart.description.isEnabled = false
-        pieChart.invalidate()
-        timeView.setText(getWeek())
-    }
-*/
-    private fun isWithinOneMonth(dateToCheck: Calendar, currentDate: Calendar): Boolean {
-        val oneMonthFromNow = currentDate.clone() as Calendar
-        oneMonthFromNow.add(Calendar.MONTH, -1)
-        return dateToCheck.after(oneMonthFromNow) && !dateToCheck.after(currentDate)
+        // Tạo một BarDataSet với entries
+        val barDataSet = BarDataSet(entries, "Sản phẩm")
+
+        // Tạo một BarData với barDataSet
+        val barData = BarData(barDataSet)
+
+        // Thiết lập dữ liệu cho biểu đồ và làm mới biểu đồ
+        barChart.data = barData
+        barChart.invalidate()
     }
 
-    private fun isWithinLastSevenDays(dateToCheck: Calendar, currentDate: Calendar): Boolean {
-        val sevenDaysAgo = currentDate.clone() as Calendar
-        sevenDaysAgo.add(Calendar.DATE, -7)
-        return dateToCheck.after(sevenDaysAgo) && !dateToCheck.after(currentDate)
+    private fun setControl() {
+        startDateEditText = view.findViewById(R.id.startDateEditText)
+        endDateEditText = view.findViewById(R.id.endDateEditText)
+        SanPhamButton = view.findViewById(R.id.SanPhamButton)
+        SanPhamChartButton = view.findViewById(R.id.SanPhamChartButton)
+        SanPhamRecyclerView = view.findViewById(R.id.SanPhamRecyclerView)
+        SanPhamRecyclerView.layoutManager = LinearLayoutManager(view.context)
+        SanPhamHeader = view.findViewById(R.id.SanPhamHeader)
+        barChart = view.findViewById(R.id.SanPhamBarChart)
     }
 
-    private fun getMonth(): String? {
-        val calendar = Calendar.getInstance()
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val endDate = dateFormat.format(calendar.time)
-        calendar.add(Calendar.MONTH, -1)
-        val startDate = dateFormat.format(calendar.time)
-        return "$startDate - $endDate"
-    }
+    private fun setDate() {
 
-    fun getWeek(): String? {
-        val calendar = Calendar.getInstance()
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val endDate = dateFormat.format(calendar.time)
-        calendar.add(Calendar.DAY_OF_YEAR, -6)
-        val startDate = dateFormat.format(calendar.time)
-        return "$startDate - $endDate"
-    }
+        startDateEditText.setOnClickListener { view ->
+            val now = Calendar.getInstance()
+            DatePickerDialog(
+                view.context,
+                { _, year, monthOfYear, dayOfMonth ->
+                    val selectedDate = Calendar.getInstance()
+                    selectedDate.set(Calendar.YEAR, year)
+                    selectedDate.set(Calendar.MONTH, monthOfYear)
+                    selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    val dateStr = SimpleDateFormat(
+                        "dd/MM/yyyy",
+                        Locale.getDefault()
+                    ).format(selectedDate.time)
+                    if (endDateEditText.text.toString().isNotEmpty()) {
+                        val endDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(
+                            endDateEditText.text.toString()
+                        )
+                        if (selectedDate.time.after(endDate)) {
+                            Toast.makeText(
+                                view.context,
+                                "Ngày bắt đầu không thể sau ngày kết thúc",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return@DatePickerDialog
+                        }
+                    }
+                    startDateEditText.setText(dateStr)
+                },
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
+            ).show()
+        }
 
+        endDateEditText.setOnClickListener { view ->
+            val now = Calendar.getInstance()
+            DatePickerDialog(
+                view.context,
+                { _, year, monthOfYear, dayOfMonth ->
+                    val selectedDate = Calendar.getInstance()
+                    selectedDate.set(Calendar.YEAR, year)
+                    selectedDate.set(Calendar.MONTH, monthOfYear)
+                    selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    val dateStr = SimpleDateFormat(
+                        "dd/MM/yyyy",
+                        Locale.getDefault()
+                    ).format(selectedDate.time)
+                    if (startDateEditText.text.toString().isNotEmpty()) {
+                        val startDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(
+                            startDateEditText.text.toString()
+                        )
+                        if (selectedDate.time.before(startDate)) {
+                            Toast.makeText(
+                                view.context,
+                                "Ngày kết thúc không thể trước ngày bắt đầu",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return@DatePickerDialog
+                        }
+                    }
+                    endDateEditText.setText(dateStr)
+                },
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
+            ).show()
+        }
+    }
 }

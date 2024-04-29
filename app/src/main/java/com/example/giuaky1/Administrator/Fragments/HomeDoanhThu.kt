@@ -22,6 +22,10 @@ import com.example.giuaky1.Firebase.DataHandler
 import com.example.giuaky1.Models.Order
 import com.example.giuaky1.R
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.formatter.ValueFormatter
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -55,18 +59,58 @@ class HomeDoanhThu : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     private fun setDoanhThu() {
         DoanhThuButton.setOnClickListener {
-            if(startDateEditText.text.toString().isEmpty() || endDateEditText.text.toString().isEmpty()) {
-                Toast.makeText(view.context, "Vui lòng chọn ngày bắt đầu và ngày kết thúc", Toast.LENGTH_SHORT).show()
+            if (startDateEditText.text.toString().isEmpty() || endDateEditText.text.toString()
+                    .isEmpty()
+            ) {
+                Toast.makeText(
+                    view.context,
+                    "Vui lòng chọn ngày bắt đầu và ngày kết thúc",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return@setOnClickListener
             }
             DoanhThuRecyclerView.visibility = View.VISIBLE
             DoanhThuHeader.visibility = View.VISIBLE
-            DataHandler.getListDoanhThuTheoNgay(startDateEditText.text.toString(), endDateEditText.text.toString(), listOrder) { listDoanhThu ->
+            barChart.visibility = View.GONE
+            DataHandler.getListDoanhThuTheoNgay(
+                startDateEditText.text.toString(),
+                endDateEditText.text.toString(),
+                listOrder
+            ) { listDoanhThu ->
+                this.listDoanhThu = listDoanhThu
                 DoanhThuRecyclerView.adapter = ItemDoanhThuAdapter(listDoanhThu)
                 DoanhThuRecyclerView.adapter?.notifyDataSetChanged()
-
             }
         }
+        DoanhThuChartButton.setOnClickListener {
+            DoanhThuRecyclerView.visibility = View.GONE
+            DoanhThuHeader.visibility = View.GONE
+            barChart.visibility = View.VISIBLE
+            if (listDoanhThu.isEmpty()) {
+                Toast.makeText(view.context, "Không có dữ liệu để hiển thị", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                createChart(listDoanhThu)
+            }
+        }
+    }
+
+
+    private fun createChart(listDoanhThu: List<DoanhThu>) {
+        // Tạo dữ liệu cho biểu đồ từ listDoanhThu
+        val entries = listDoanhThu.mapIndexed { index, doanhThu ->
+            BarEntry(index.toFloat(), doanhThu.revenue.toFloat())
+        }
+
+        // Tạo một BarDataSet với entries
+        val barDataSet = BarDataSet(entries, "Doanh Thu")
+
+        // Tạo một BarData với barDataSet
+        val barData = BarData(barDataSet)
+
+        // Thiết lập dữ liệu cho biểu đồ và làm mới biểu đồ
+        barChart.data = barData
+        barChart.invalidate()
     }
 
     private fun setControl() {
@@ -75,8 +119,9 @@ class HomeDoanhThu : Fragment() {
         DoanhThuButton = view.findViewById(R.id.DoanhThuButton)
         DoanhThuChartButton = view.findViewById(R.id.DoanhThuChartButton)
         DoanhThuRecyclerView = view.findViewById(R.id.DoanhThuRecyclerView)
-        DoanhThuRecyclerView.layoutManager=LinearLayoutManager(view.context)
+        DoanhThuRecyclerView.layoutManager = LinearLayoutManager(view.context)
         DoanhThuHeader = view.findViewById(R.id.DoanhThuHeader)
+        barChart = view.findViewById(R.id.DoanhThuBarChart)
     }
 
     private fun setDate() {
@@ -90,11 +135,20 @@ class HomeDoanhThu : Fragment() {
                     selectedDate.set(Calendar.YEAR, year)
                     selectedDate.set(Calendar.MONTH, monthOfYear)
                     selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                    val dateStr = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(selectedDate.time)
-                    if(endDateEditText.text.toString().isNotEmpty()) {
-                        val endDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(endDateEditText.text.toString())
-                        if(selectedDate.time.after(endDate)) {
-                            Toast.makeText(view.context, "Ngày bắt đầu không thể sau ngày kết thúc", Toast.LENGTH_SHORT).show()
+                    val dateStr = SimpleDateFormat(
+                        "dd/MM/yyyy",
+                        Locale.getDefault()
+                    ).format(selectedDate.time)
+                    if (endDateEditText.text.toString().isNotEmpty()) {
+                        val endDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(
+                            endDateEditText.text.toString()
+                        )
+                        if (selectedDate.time.after(endDate)) {
+                            Toast.makeText(
+                                view.context,
+                                "Ngày bắt đầu không thể sau ngày kết thúc",
+                                Toast.LENGTH_SHORT
+                            ).show()
                             return@DatePickerDialog
                         }
                     }
@@ -115,11 +169,20 @@ class HomeDoanhThu : Fragment() {
                     selectedDate.set(Calendar.YEAR, year)
                     selectedDate.set(Calendar.MONTH, monthOfYear)
                     selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                    val dateStr = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(selectedDate.time)
-                    if(startDateEditText.text.toString().isNotEmpty()) {
-                        val startDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(startDateEditText.text.toString())
-                        if(selectedDate.time.before(startDate)) {
-                            Toast.makeText(view.context, "Ngày kết thúc không thể trước ngày bắt đầu", Toast.LENGTH_SHORT).show()
+                    val dateStr = SimpleDateFormat(
+                        "dd/MM/yyyy",
+                        Locale.getDefault()
+                    ).format(selectedDate.time)
+                    if (startDateEditText.text.toString().isNotEmpty()) {
+                        val startDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(
+                            startDateEditText.text.toString()
+                        )
+                        if (selectedDate.time.before(startDate)) {
+                            Toast.makeText(
+                                view.context,
+                                "Ngày kết thúc không thể trước ngày bắt đầu",
+                                Toast.LENGTH_SHORT
+                            ).show()
                             return@DatePickerDialog
                         }
                     }

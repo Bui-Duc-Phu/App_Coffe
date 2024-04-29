@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.giuaky1.Adapters.CartAdapter
 import com.example.giuaky1.Administrator.Adapters.OrderListAdapter
 import com.example.giuaky1.Administrator.model.DoanhThu
+import com.example.giuaky1.Administrator.model.DonHang
+import com.example.giuaky1.Administrator.model.SanPham
 import com.example.giuaky1.Models.CartModel
 import com.example.giuaky1.Models.Order
 import com.example.giuaky1.Models.ProductModel
@@ -250,6 +252,38 @@ object DataHandler {
         }
         return doanhThu
     }
+    private fun getDonHangTheoNgay(startDate: String, endDate: String, orderList: List<Order>): Int {
+        var donHang = 0
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val start = sdf.parse("$startDate 00:00:00")
+        val end = sdf.parse("$endDate 23:59:59")
+        Log.d("DataHandler", "getDoanhThuTheoNgay: $start - $end")
+        for (order in orderList) {
+            val orderDate = sdf.parse(order.time)
+            if (orderDate.after(start) && orderDate.before(end)) {
+                donHang++
+            }
+        }
+        return donHang
+    }
+    private fun getSanPhamTheoNgay(startDate: String, endDate: String, orderList: List<Order>): Int {
+        var soLuong = 0
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val start = sdf.parse("$startDate 00:00:00")
+        val end = sdf.parse("$endDate 23:59:59")
+        for (order in orderList) {
+            val orderDate = sdf.parse(order.time)
+
+            if (orderDate.after(start) && orderDate.before(end)) {
+                for (product in order.products) {
+                    if(product==null) Log.d("DataHandler", "getSanPhamTheoNgay: product null")
+                    Log.d("DataHandler", "getSanPhamTheoNgay: ${product}")
+                    soLuong += product.quantity
+                }
+            }
+        }
+        return soLuong
+    }
     fun getUID(): String {
         return FirebaseAuth.getInstance().currentUser?.uid ?: ""
     }
@@ -285,4 +319,41 @@ object DataHandler {
     }
     callback(doanhThuList)
 }
+
+
+    fun getListDonHangTheoNgay(startDate: String, endDate: String, listOrder: List<Order>, callback: (List<DonHang>) -> Unit) {
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val start = sdf.parse(startDate)
+        val end = sdf.parse(endDate)
+        val calendar = Calendar.getInstance()
+        calendar.time = start
+        val donHangList = mutableListOf<DonHang>()
+        while (!calendar.time.after(end)) {
+            val dateStr = sdf.format(calendar.time)
+            val donhang = getDonHangTheoNgay(dateStr, dateStr, listOrder)
+            if (donhang > 0) { // Only add the day to the list if the revenue is greater than 0
+                donHangList.add(DonHang(dateStr, donhang))
+            }
+            calendar.add(Calendar.DATE, 1)
+        }
+        callback(donHangList)
+    }
+
+    fun getListSanPhamTheoNgay(startDate: String, endDate: String, listOrder: List<Order>, callback: (List<SanPham>) -> Unit) {
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val start = sdf.parse(startDate)
+        val end = sdf.parse(endDate)
+        val calendar = Calendar.getInstance()
+        calendar.time = start
+        val sanPhamList = mutableListOf<SanPham>()
+        while (!calendar.time.after(end)) {
+            val dateStr = sdf.format(calendar.time)
+            val soLuong = getSanPhamTheoNgay(dateStr, dateStr, listOrder)
+            if (soLuong > 0) { // Only add the day to the list if the revenue is greater than 0
+                sanPhamList.add(SanPham(dateStr, soLuong))
+            }
+            calendar.add(Calendar.DATE, 1)
+        }
+        callback(sanPhamList)
+    }
 }
