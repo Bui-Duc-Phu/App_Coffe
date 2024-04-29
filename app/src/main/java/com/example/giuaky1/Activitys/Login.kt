@@ -52,6 +52,15 @@ class Login : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
 
+        if(auth.currentUser != null){
+            val intent = Intent(this, Main::class.java)
+            startActivity(intent)
+
+        }
+
+
+
+
 
 
 
@@ -147,7 +156,7 @@ class Login : AppCompatActivity() {
                     binding.passwordEdt.setText("")
                     progressDialog!!.dismiss()
                     checkTypeAccount(email)
-                    finish()
+
 
 
                 }else{
@@ -173,11 +182,13 @@ class Login : AppCompatActivity() {
                             DataHandler.setTypeAccount("2")
                             startActivity(Intent(this@Login, MainAdmin::class.java))
                             finish()
+
                         } else {
                             DataHandler.setTypeAccount("1")
                             val intent = Intent(this@Login, Main::class.java)
                             startActivity(intent)
                             finish()
+
                         }
                     }
                 }
