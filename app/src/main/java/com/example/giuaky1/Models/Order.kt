@@ -8,12 +8,13 @@ data  class Order(
         var uID:String ="",
         var orderID:String="",
         var pay:String = "",
-        var day:String = "",
         var time:String = "",
         var shipper: Shipper,
         var receiverPhone: String,
         var receiverLocation: String,
-        var products:List<Order_product>
+        var products: MutableList<CartModel>,
+        var sumPrice: String
     ): Serializable {
+            constructor():this("","","","","","",Shipper(),"","",ArrayList<CartModel>(),"")
 
-    }
+}

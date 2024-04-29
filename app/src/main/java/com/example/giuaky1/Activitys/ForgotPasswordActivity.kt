@@ -69,7 +69,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
                     .getReference("Users")
             ref.addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    System.out.println("11")
+
                     for (snapshot in snapshot.children) {
                         val user = snapshot.getValue(Users::class.java)
                         if(user!!.email.equals(receiver)) {

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.example.giuaky1.Firebase.DataHandler
 import com.example.giuaky1.Firebase.FirebaseFunction
 import com.example.giuaky1.Models.Order
 import com.example.giuaky1.R
@@ -44,7 +45,7 @@ class HomeDonHang : Fragment() {
         changeButton = binding.MonthWeekDHBtn
 
         barChart = binding.DonHangBarChar
-        FirebaseFunction.readAllOrdersList { orderList ->
+        DataHandler.readAllOrdersList { orderList ->
             setupBarChartMonth(orderList)
             changeButton.setOnClickListener(View.OnClickListener {
                 if (isChart1) {
@@ -72,7 +73,7 @@ class HomeDonHang : Fragment() {
             val pattern = Pattern.compile(regexPattern)
             var SUM: Int = 0
             for (order in orderList) {
-                if (pattern.matcher(order.day).matches()) {
+                if (pattern.matcher(order.time).matches()) {
                     SUM += 1
                 }
             }
@@ -115,7 +116,7 @@ class HomeDonHang : Fragment() {
             var SUM: Int = 0
             for (order in orderList) {
                 val entryDate = Calendar.getInstance()
-                val dateParts = order.day.split("/".toRegex()).dropLastWhile { it.isEmpty() }
+                val dateParts = order.time.split("/".toRegex()).dropLastWhile { it.isEmpty() }
                     .toTypedArray()
                 entryDate[dateParts[2].toInt(), dateParts[1].toInt() - 1] = dateParts[0].toInt()
                 if (isWithinLastSevenDays(entryDate,calendar)) {

@@ -23,7 +23,7 @@
     <string name="login_text_dang_nhap_button">Đăng Nhập</string>
     <string name="login_text_ban_da_co_tai_khoan">Bạn chưa có tài khoản? </string>
     <string name="login_text_dang_ky"> Đăng ký</string>
-    <string name="login_email_hoạc_name">Email hoạc tên đăng nhập</string>
+    <string name="login_email_hoạc_name">Email hoặc tên đăng nhập</string>
 
     <!-- sign up -->
     <string name="signup_text_dang_ky">Đăng Ký</string>
@@ -89,7 +89,7 @@
 
     <!--menu1 -->
     <string name="menu1_home">Trang chủ</string>
-    <string name="menu1_history">Lịch sử</string>
+    <string name="menu1_history">Đơn hàng</string>
     <string name="menu1_cart">Giỏ hàng</string>
     <string name="menu1_profile">Profile</string>
 
@@ -204,10 +204,13 @@
     <string name="don_hang_cua_ban">Đơn hàng của bạn</string>
     <string name="chon_size_khi_them_vao_cart">Chọn Size trước khi thêm vào giỏ hàng</string>
     <string name="them_vao_cart_thanh_cong">Đã thêm sản phẩm vào giỏ hàng</string>
-    <string name="goodmorning">Chào buổi sáng, Nhật</string>
-    <string name="goodluch">Chào buổi trưa, Nhật</string>
-    <string name="goodafternoon">Chào buổi chiều, Nhật</string>
-    <string name="goodnight">Chào buổi tối, Nhật</string>
+
+    <string name="goodmorning">Chào buổi sáng</string>
+    <string name="goodluch">Chào buổi trưa</string>
+    <string name="goodafternoon">Chào buổi chiều</string>
+    <string name="goodnight">Chào buổi tối</string>
+
+
 
 
     <!-- change Passwrod  -->

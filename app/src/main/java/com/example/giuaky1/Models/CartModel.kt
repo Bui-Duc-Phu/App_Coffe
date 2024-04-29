@@ -1,6 +1,7 @@
 package com.example.giuaky1.Models
+import java.io.Serializable
 
-class CartModel {
+class CartModel: Serializable{
     var name: String? = null
     var imageUrl: String? = null
     var quantity = 0

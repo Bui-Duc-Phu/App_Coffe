@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -41,6 +42,7 @@ import com.example.giuaky1.Adapters.CartAdapter
 import com.example.giuaky1.Firebase.DataHandler
 import com.example.giuaky1.Interfaces.OnTaskCompleted
 import com.example.giuaky1.Models.CartModel
+import com.example.giuaky1.Models.Order
 import com.example.giuaky1.Paid.GoogleSheetsTask
 import com.example.giuaky1.R
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -53,11 +55,13 @@ import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
+import java.sql.Time
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 import java.util.Random
 
 class CreateOrder : AppCompatActivity(), OnTaskCompleted {
-    private var orderModelArrayList: ArrayList<CartModel>? = null
     var alertDialog: AlertDialog? = null
     private var dateTime: String? = null
     private var trangThai = 0
@@ -105,6 +109,7 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
                 this,
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
+
         ) {
             ActivityCompat.requestPermissions(
                 this,
@@ -122,6 +127,7 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
                     getAddressFromCoordinates(location.latitude, location.longitude)
                 }
             }
+
     }
 
     private fun getAddressFromCoordinates(latitude: Double, longitude: Double) {
@@ -277,9 +283,13 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
                 googleSheetsTask = GoogleSheetsTask(this)
                 googleSheetsTask!!.execute()
                 if (trangThai == 1) {
-                    thongBaoThanhCong()
+                    val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+                    dateTime = sdf.format(Date())
+                    val sdf1 = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault())
+                    orderId = sdf1.format(Date())
+                    DataHandler.addOrderToFirebase("Đã thanh toán", orderId!!, paymentMethods1!!.text.toString(), dateTime!!, DataHandler.shipper, "0966638738", edtAddress!!.text.toString(), DataHandler.orderModelArrayList, tvTotalPrice!!.text.toString())
+                    thongBaoThanhCong("Thanh toán thành công")
                     alertDialog!!.dismiss()
-                    DataHandler.addToOrder(orderId, tvTotalPrice!!, dateTime, orderModelArrayList)
                     clearCart()
                     finish()
                 } else {
@@ -300,64 +310,13 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
                     alertDialog!!.dismiss()
                 }
             }.start()
-        } else /*if (payment_methods!!.getText() == "Thanh toán ZaloPay") {
-            val policy = ThreadPolicy.Builder().permitAll().build()
-            StrictMode.setThreadPolicy(policy)
-            ZaloPaySDK.init(554, vn.zalopay.sdk.Environment.SANDBOX)
-            try {
-                val orderApi = CreateOrder()
-                val data =
-                    orderApi.createOrder(tvTotalPrice!!.getText().toString().replace(".", ""))
-                val code = data.getString("returncode")
-                if (code == "1") {
-                    val token = data.getString("zptranstoken")
-                    ZaloPaySDK.getInstance()
-                        .payOrder(this, token, "demozpdk://app", object : PayOrderListener {
-                            override fun onPaymentSucceeded(
-                                transactionId: String,
-                                transToken: String,
-                                appTransID: String
-                            ) {
-                                thongBaoThanhCong()
-                                tvTotalPrice?.let {
-                                    DataHandler.addToOrder(
-                                        orderId,
-                                        it,
-                                        dateTime,
-                                        orderModelArrayList
-                                    )
-                                }
-                                clearCart()
-                                finish()
-                            }
-
-                            override fun onPaymentCanceled(s: String, s1: String) {
-                                Toast.makeText(
-                                    this@CreateOrder,
-                                    "Thanh toán bị hủy",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                            }
-
-                            override fun onPaymentError(
-                                zaloPayError: ZaloPayError,
-                                s: String,
-                                s1: String
-                            ) {
-                                Toast.makeText(
-                                    this@CreateOrder,
-                                    "Thanh toán thất bại",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                            }
-                        })
-                }
-            } catch (e: Exception) {
-                Toast.makeText(this@CreateOrder, "Error: " + e.message, Toast.LENGTH_LONG).show()
-            }
-        } else*/ {
-            thongBaoThanhCong()
-            tvTotalPrice?.let { DataHandler.addToOrder(orderId, it, dateTime, orderModelArrayList) }
+        } else {
+            val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+            dateTime = sdf.format(Date())
+            val sdf1 = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault())
+            orderId = sdf1.format(Date())
+            DataHandler.addOrderToFirebase("Chưa thanh toán", orderId!!, paymentMethods1!!.text.toString(), dateTime!!, DataHandler.shipper, "0966638738", edtAddress!!.text.toString(), DataHandler.orderModelArrayList, tvTotalPrice!!.text.toString())
+            thongBaoThanhCong("Đơn hàng của bạn đã được tạo")
             clearCart()
             finish()
         }
@@ -419,7 +378,7 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
         builder.show()
     }
 
-    private fun thongBaoThanhCong() {
+    private fun thongBaoThanhCong(msg:String) {
         val notificationManager = this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         val NOTIFICATION_CHANNEL_ID = "my_channel_id_01"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -440,7 +399,7 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
             .setDefaults(Notification.DEFAULT_ALL)
             .setWhen(System.currentTimeMillis())
             .setSmallIcon(R.drawable.coffee_icon)
-            .setContentTitle(getString(R.string.thanh_toan_thanh_cong))
+            .setContentTitle(msg)
             .setContentText(getString(R.string.don_hang_dang_xu_ly))
             .setContentInfo(getString(R.string.thong_tin))
         notificationManager.notify(1, notificationBuilder.build())
@@ -454,7 +413,6 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
             trangThai = 1
         }
     }
-
 
 
     companion object {

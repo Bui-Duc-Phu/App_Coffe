@@ -65,6 +65,8 @@ class otpsendActivity : AppCompatActivity(){
            binding.pinview.setError("bạn chưa nhập mã OTP")
         }else{
             if(type.equals("mail")){
+                println("otp send : " + OTP)
+                println("otp nhap vao  : " + OTP)
                 if(otp.equals(OTP)){
                     startActivity(
                         Intent(this@otpsendActivity, ForgotPasswordActivity::class.java)

@@ -19,14 +19,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Base.Theme.Light"
-        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".Activitys.ChangePasswrod"
+            android:name=".Administrator.Activitys.EditCoffe"
             android:exported="false" />
         <activity
-            android:name=".Administrator.Activitys.UserOrderList"
+            android:name=".Administrator.Activitys.AddCategory"
             android:exported="false" />
+        <activity
+            android:name=".Administrator.Activitys.AddProduct"
+            android:exported="false" />
+
         <activity
             android:name=".Administrator.Activitys.DetailOrder"
             android:exported="false" />
@@ -71,7 +74,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -88,7 +88,7 @@
 
     <!--menu1 -->
     <string name="menu1_home">Trang chủ</string>
-    <string name="menu1_history">Lịch sử</string>
+    <string name="menu1_history">Đơn hàng</string>
     <string name="menu1_cart">Giỏ hàng</string>
     <string name="menu1_profile">Profile</string>
 
@@ -200,6 +200,7 @@
     <string name="don_hang_cua_ban">Đơn hàng của bạn</string>
     <string name="chon_size_khi_them_vao_cart">Chọn Size trước khi thêm vào giỏ hàng</string>
     <string name="them_vao_cart_thanh_cong">Đã thêm sản phẩm vào giỏ hàng</string>
+
     <string name="goodmorning">Chào buổi sáng, Nhật</string>
     <string name="goodluch">Chào buổi trưa, Nhật</string>
     <string name="goodafternoon">Chào buổi chiều, Nhật</string>
@@ -212,6 +213,8 @@
     <string name="change_paswrod_new_passwrod">Nhập mật khẩu mới</string>
     <string name="change_paswrod_new_pass_hint">Mật khẩu mới</string>
     <string name="change_paswrod_confirm_passwrod">Nhập lại mật khẩu</string>
+
+
 
 
 

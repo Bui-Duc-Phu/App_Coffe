@@ -11,8 +11,11 @@ import android.text.TextUtils
 import android.util.Patterns
 import android.widget.Toast
 import com.example.giuaky1.Administrator.Activitys.MainAdmin
-import com.example.giuaky1.Administrator.Controller
+
 import com.example.giuaky1.Firebase.OTP_Athen_Phone
+
+import com.example.giuaky1.Firebase.DataHandler
+
 import com.example.giuaky1.Models.Users
 
 import com.example.giuaky1.R
@@ -98,7 +101,6 @@ class Login : AppCompatActivity() {
             TextUtils.isEmpty(password) -> Toast.makeText(this, "Password not null", Toast.LENGTH_SHORT).show()
             else -> {
                 if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) loginWithUsername(email,password)
-                else if(MyCategory.isNumeric(email))
                 else  loginWithEmail(email,password)
             }
         }
@@ -110,18 +112,19 @@ class Login : AppCompatActivity() {
         val ref  =  FirebaseDatabase
             .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
             .getReference("Users")
-        ref.addValueEventListener(object : ValueEventListener{
+        ref.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                progressDialog = ProgressDialog.show(this@Login, "App", "Loading...", true)
+                if (!isFinishing) {
+                    progressDialog = ProgressDialog.show(this@Login, "App", "Loading...", true)
+                }
+
                 for (snapshot in snapshot.children) {
                     val user = snapshot.getValue(Users::class.java)
                     if(user!!.userName.equals(username) ) {
-                        if(user.typeAccount.equals("1")){
+                            println("checked usser successfull")
                             loginWithEmail(user.email,password)
                             progressDialog!!.dismiss()
                             return
-                        }
-
                     }
                 }
                 progressDialog!!.dismiss()
@@ -140,20 +143,12 @@ class Login : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email,password)
             .addOnCompleteListener {
                 if(it.isSuccessful){
-                    Controller.permission(applicationContext,email){userOrAdmin->
-                        System.out.println(userOrAdmin)
-                        if(userOrAdmin){
-                            startActivity(Intent(this@Login,MainAdmin::class.java))
-                            finish()
-                            progressDialog!!.dismiss()
-                        }else{
-                            val intent = Intent(this, Main::class.java)
-                            startActivity(intent)
-                            finish()
-                            progressDialog!!.dismiss()
-                        }
-                    }
+                    binding.emailEdt.setText("")
+                    binding.passwordEdt.setText("")
                     progressDialog!!.dismiss()
+                    checkTypeAccount(email)
+                    finish()
+
 
                 }else{
                     progressDialog!!.dismiss()
@@ -162,11 +157,37 @@ class Login : AppCompatActivity() {
             }
     }
 
+    private fun checkTypeAccount(email: String) {
+        val ref = FirebaseDatabase
+            .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
+            .getReference("Users")
+            .orderByChild("email")
+            .equalTo(email)
 
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (snapshot in dataSnapshot.children) {
+                    val user = snapshot.getValue(Users::class.java)
+                    if (user != null) {
+                        if (user.typeAccount == "2") {
+                            DataHandler.setTypeAccount("2")
+                            startActivity(Intent(this@Login, MainAdmin::class.java))
+                            finish()
+                        } else {
+                            DataHandler.setTypeAccount("1")
+                            val intent = Intent(this@Login, Main::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                    }
+                }
+            }
 
-
-
-
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Handle possible errors.
+            }
+        })
+    }
 
 
 }

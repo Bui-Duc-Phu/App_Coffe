@@ -68,9 +68,6 @@ class MainAdmin : AppCompatActivity() {
                 R.id.orderManager ->  {
                     startActivity(Intent(this@MainAdmin,OrderList::class.java))
                 }
-                R.id.orderManager_Users ->  {
-                    startActivity(Intent(this@MainAdmin,OrderList::class.java))
-                }
 
                 R.id.nav_logout ->{
                     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

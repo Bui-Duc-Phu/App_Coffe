@@ -32,15 +32,17 @@ class HistoryFragment : Fragment() {
         binding = FragmentHistoryBinding.inflate(inflater,container,false)
 
 
-        init_()
+        setUpTabLayout()
 
 
         return binding.root
     }
 
-    private fun init_() {
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.frag_history_hoan_thanh))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.frag_history_dang_cho) )
+    private fun setUpTabLayout() {
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Chờ xác nhận"))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Đang giao hàng") )
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Đã giao") )
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Đã hủy") )
         val adapter = FragmentAdapter(childFragmentManager, lifecycle)
         binding.viewPager.adapter = adapter
 

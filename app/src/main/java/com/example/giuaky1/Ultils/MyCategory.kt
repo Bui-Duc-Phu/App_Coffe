@@ -1,7 +1,11 @@
 package com.example.giuaky1.Ultils
 
+
 import android.util.Patterns
 import com.example.giuaky1.Models.Order_product
+
+import com.example.giuaky1.Models.ProductModel
+
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -13,15 +17,9 @@ class MyCategory {
             val formatter = NumberFormat.getNumberInstance(Locale("vi", "VN"))
             return formatter.format(sum)
         }
-
-
-        fun calculateTotalPriceFormatted(list:List<Order_product>): String {
+        fun calculateTotalPriceFormatted(): String{
             var totalPrice = 0.0
-            for (order in list) {
-                val quantity = order.quantity.toDoubleOrNull() ?: 0.0
-                val price = order.price.toDoubleOrNull() ?: 0.0
-                totalPrice += quantity * price
-            }
+
             val formatter = NumberFormat.getNumberInstance(Locale("vi", "VN"))
             return formatter.format(totalPrice)
         }
