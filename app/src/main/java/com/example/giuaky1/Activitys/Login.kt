@@ -15,6 +15,7 @@ import com.example.giuaky1.Administrator.Activitys.MainAdmin
 import com.example.giuaky1.Firebase.OTP_Athen_Phone
 
 import com.example.giuaky1.Firebase.DataHandler
+import com.example.giuaky1.Firebase.FirebaseFunction
 
 import com.example.giuaky1.Models.Users
 
@@ -51,12 +52,7 @@ class Login : AppCompatActivity() {
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
 
-
-        if(auth.currentUser != null){
-            val intent = Intent(this, Main::class.java)
-            startActivity(intent)
-
-        }
+        autoLogin()
 
 
 
@@ -71,6 +67,23 @@ class Login : AppCompatActivity() {
 
         init_()
     }
+
+   fun autoLogin(){
+       if(auth.currentUser != null){
+           progressDialog = ProgressDialog.show(this, "App", "Login...", true)
+          FirebaseFunction.getUserDataWithUid(auth!!.currentUser!!.uid.toString()){user->
+              if(user.typeAccount.equals("2")){
+                  progressDialog!!.dismiss()
+                  startActivity(Intent(this, MainAdmin::class.java))
+
+              }else {
+                  progressDialog!!.dismiss()
+                  startActivity(Intent(this, Main::class.java))
+              }
+          }
+
+       }
+   }
 
 
 
@@ -150,19 +163,22 @@ class Login : AppCompatActivity() {
     private fun loginWithEmail(email:String, password:String){
         progressDialog = ProgressDialog.show(this, "App", "Loading...", true)
         auth.signInWithEmailAndPassword(email,password)
+
             .addOnCompleteListener {
+
                 if(it.isSuccessful){
                     binding.emailEdt.setText("")
                     binding.passwordEdt.setText("")
-                    progressDialog!!.dismiss()
+                    progressDialog?.dismiss()
+
                     checkTypeAccount(email)
 
 
 
-                }else{
-                    progressDialog!!.dismiss()
-                    Toast.makeText(this, "email or password is incorrect", Toast.LENGTH_SHORT).show()
                 }
+            }.addOnFailureListener { e ->
+                progressDialog?.dismiss()
+                Toast.makeText(this, "Login failed: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 
