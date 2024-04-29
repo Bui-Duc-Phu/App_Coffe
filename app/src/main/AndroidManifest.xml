@@ -29,9 +29,7 @@
         <activity
             android:name=".Administrator.Activitys.AddProduct"
             android:exported="false" />
-        <activity
-            android:name=".Administrator.Activitys.UserOrderList"
-            android:exported="false" />
+
         <activity
             android:name=".Administrator.Activitys.DetailOrder"
             android:exported="false" />
@@ -76,7 +74,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

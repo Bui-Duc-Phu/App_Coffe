@@ -11,12 +11,20 @@ import android.text.TextUtils
 import android.util.Patterns
 import android.widget.Toast
 import com.example.giuaky1.Administrator.Activitys.MainAdmin
-import com.example.giuaky1.Administrator.Controller
+
+import com.example.giuaky1.Firebase.OTP_Athen_Phone
+
 import com.example.giuaky1.Firebase.DataHandler
+
 import com.example.giuaky1.Models.Users
+
+import com.example.giuaky1.R
+import com.example.giuaky1.Ultils.MyCategory
+
 import com.example.giuaky1.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -96,24 +104,27 @@ class Login : AppCompatActivity() {
                 else  loginWithEmail(email,password)
             }
         }
-
-
-
     }
 
-    private fun loginWithUsername(email:String,password: String){
+
+
+    private fun loginWithUsername(username:String,password: String){
         val ref  =  FirebaseDatabase
             .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
             .getReference("Users")
-        ref.addValueEventListener(object : ValueEventListener{
+        ref.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                progressDialog = ProgressDialog.show(this@Login, "App", "Loading...", true)
+                if (!isFinishing) {
+                    progressDialog = ProgressDialog.show(this@Login, "App", "Loading...", true)
+                }
+
                 for (snapshot in snapshot.children) {
                     val user = snapshot.getValue(Users::class.java)
-                    if(user!!.userName.equals(email)) {
-                        progressDialog!!.dismiss()
-                        loginWithEmail(user.email,password)
-                        return
+                    if(user!!.userName.equals(username) ) {
+                            println("checked usser successfull")
+                            loginWithEmail(user.email,password)
+                            progressDialog!!.dismiss()
+                            return
                     }
                 }
                 progressDialog!!.dismiss()
@@ -137,6 +148,7 @@ class Login : AppCompatActivity() {
                     progressDialog!!.dismiss()
                     checkTypeAccount(email)
                     finish()
+
 
                 }else{
                     progressDialog!!.dismiss()

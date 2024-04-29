@@ -4,6 +4,12 @@ import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+
+import android.widget.Toast
+import com.example.giuaky1.Firebase.FirebaseFunction
+import com.example.giuaky1.Firebase.OTP_Athen_Phone
+import com.example.giuaky1.Interfaces.OTPEven
+import com.example.giuaky1.Ultils.MyCategory
 import com.example.giuaky1.databinding.ActivityInputEmailBinding
 import java.util.Properties
 import javax.mail.Authenticator
@@ -39,9 +45,47 @@ class InputEmailActivity : AppCompatActivity() {
 
         binding.sendOTP.setOnClickListener {
             val receiver = binding.emailEdt.text.toString()
-            creatOtp(receiver)
+            if(receiver.isNotEmpty()){
+                if(MyCategory.mailOrPhone(receiver)) {
+                    creatOtp(receiver)
+                }else{
+                    FirebaseFunction.phoneAlreadyExists(this,receiver){
+                        if(it){
+                            FirebaseFunction.getUidWithPhone(receiver){uid->
+                                FirebaseFunction.getUserDataWithUid(uid){user->
+                                    if(user.typeAccount.equals("1")){
+                                        sendOTPPhone(receiver,user.email)
+                                    }else{
+                                        Toast.makeText(applicationContext, "SDT Đã liên kết google", Toast.LENGTH_SHORT).show()
+                                    }
+
+                                }
+                            }
+                        }else{
+                            Toast.makeText(applicationContext, "SĐT chưa được đăng ký", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                }
+            } else binding.emailEdt.setError("Bạn chưa nhập thông tin")
+
         }
     }
+
+    fun sendOTPPhone(receiver: String,mail:String){
+        progressDialog = ProgressDialog.show(this@InputEmailActivity, "App", "Loading...", true)
+        OTP_Athen_Phone.sendOtp(receiver,this){OTP_key->
+            val intent = Intent(this, otpsendActivity::class.java)
+            intent.putExtra("OTP",OTP_key)
+            intent.putExtra("type","phone")
+            intent.putExtra("receiver",mail)
+            startActivity(intent)
+            finish()
+            progressDialog!!.dismiss()
+        }
+    }
+
+
 
 
     private fun creatOtp(receiver: String){
@@ -84,8 +128,9 @@ class InputEmailActivity : AppCompatActivity() {
                 Transport.send(mimeMessage)
                 val intent = Intent(this, otpsendActivity::class.java)
                 intent.putExtra("OTP",otp)
+                intent.putExtra("type","mail")
                 intent.putExtra("receiver",receiver)
-                intent.putExtra("receiver",receiver)
+
                 progressDialog!!.dismiss()
                 startActivity(intent)
                 finish()

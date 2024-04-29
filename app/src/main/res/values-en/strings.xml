@@ -38,6 +38,8 @@
     <string name="signup_text_ban_da_co_tai_khoan">Already have an account? </string>
     <string name="signup_text_dang_nhap">Login</string>
     <string name="signup_ten_dang_nhap">Username</string>
+    <string name="signup_text_phone">Phone Number</string>
+    <string name="signup_hint_phone">Enter phone number</string>
 
 
     <!-- forgot password -->
@@ -52,7 +54,7 @@
 
     <!-- activity_input_email -->
     <string name="input_email_QuenMK" >Forgot Password</string>
-    <string name="input_email">Enter email</string>
+    <string name="input_email">Enter email or number phone</string>
     <string name="input_email_sendotp">Send OTP</string>
 
     <!-- Order List -->
@@ -133,6 +135,14 @@
     <string name="frag_TK_SP_TabItem">Product</string>
     <string name="frag_TK_week">Week</string>
 
+
+    <!-- fragmentHistory -->
+    <string name="dialog_chose_type">Account Verification</string>
+    <string name="dialog_chose_type_authen">Verification Type</string>
+    <string name="dialog_chose_Phone">Phone Number</string>
+
+
+
 <!-- string cua nhat -->
     <string name="account">Account</string>
     <string name="cart">cart</string>
@@ -143,8 +153,7 @@
     <string name="home">Trang chủ</string>
     <string name="trangcanhan">Trang cá nhân</string>
     <string name="giohang">Giỏ hàng</string>
-    <string name="donhang">Đơn hàng</string>
-    <string name="emptyCart">Giỏ hàng rỗng</string>
+
     <string name="gioHang">Giỏ hàng của bạn</string>
     <string name="diaDiemGiaoHang">Địa chỉ nhận hàng</string>
     <string name="manthien">97 Man Thiện</string>
@@ -201,5 +210,15 @@
     <string name="goodluch">Chào buổi trưa</string>
     <string name="goodafternoon">Chào buổi chiều</string>
     <string name="goodnight">Chào buổi tối</string>
+
+    <!-- change Passwrod  -->
+    <string name="change_paswrod">Change Passwrod</string>
+    <string name="change_paswrod_old_passwrod">Re-enter Password</string>
+    <string name="change_paswrod_old_pass_hint">Old Password</string>
+    <string name="change_paswrod_new_passwrod">Enter New Password</string>
+    <string name="change_paswrod_new_pass_hint">New Password</string>
+    <string name="change_paswrod_confirm_passwrod">Confirm New Password</string>
+
+
 
 </resources>

@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 
 import com.example.giuaky1.Administrator.Activitys.MainAdmin
 import com.example.giuaky1.Administrator.Controller
+import com.example.giuaky1.Data.PustData
 import com.example.giuaky1.Models.Users
 import com.example.giuaky1.R
 import com.example.giuaky1.Ultils.CommonUtils
@@ -94,6 +95,7 @@ class LoginOrSignUp : AppCompatActivity() {
             }
             googleBtn.setOnClickListener {
                signInGoogle()
+//                startActivity(Intent(this@LoginOrSignUp, PustData::class.java))
             }
 
         }
@@ -177,7 +179,7 @@ class LoginOrSignUp : AppCompatActivity() {
                             hashmap["userName"] = account.displayName.toString()
                             hashmap["email"] = account.email.toString()
                             hashmap["password"] = ""
-                            hashmap.put("typeAccount","1")
+                            hashmap.put("typeAccount","3")
                             databaseReference.setValue(hashmap).addOnCompleteListener { databaseTask ->
                                 if (databaseTask.isSuccessful) {
                                     startActivity(Intent(this@LoginOrSignUp, Main::class.java))

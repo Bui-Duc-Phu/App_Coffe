@@ -38,6 +38,8 @@
     <string name="signup_text_ban_da_co_tai_khoan">Bạn đã có tài khoản? </string>
     <string name="signup_text_dang_nhap">Đăng nhập</string>
     <string name="signup_ten_dang_nhap">Tên đăng nhập</string>
+    <string name="signup_text_phone">Số Điện Thoại</string>
+    <string name="signup_hint_phone">Nhập số điện thoại</string>
 
     <!-- forgot password -->
 
@@ -51,7 +53,7 @@
 
     <!-- activity_input_email -->
     <string name="input_email_QuenMK">Quên Mật Khẩu</string>
-    <string name="input_email">Nhập email</string>
+    <string name="input_email">Nhập email hoạc SĐT</string>
     <string name="input_email_sendotp">Gửi OTP</string>
 
     <!-- Order List -->
@@ -123,9 +125,16 @@
     <string name="frag_TK_SP_TabItem">Sản Phẩm</string>
     <string name="frag_TK_week">Tuần</string>
 
-
     <string name="Edit"><![CDATA[<u>Edit</u>.]]></string>
     <string name="don_hang_da_dat">Đơn hàng đã đặt</string>
+
+
+    <!-- fragmentHistory -->
+    <string name="dialog_chose_type">Xác Thực Tài Khoản</string>
+    <string name="dialog_chose_type_authen">Kiểu Xác Thực</string>
+    <string name="dialog_chose_Phone">Số Điện Thoại</string>
+
+
 
     <!-- string cua nhat -->
     <string name="account">Account</string>
@@ -137,8 +146,7 @@
     <string name="home">Trang chủ</string>
     <string name="trangcanhan">Trang cá nhân</string>
     <string name="giohang">Giỏ hàng</string>
-    <string name="donhang">Đơn hàng</string>
-    <string name="emptyCart">Giỏ hàng rỗng</string>
+
     <string name="gioHang">Giỏ hàng của bạn</string>
     <string name="diaDiemGiaoHang">Địa chỉ nhận hàng</string>
     <string name="manthien">97 Man Thiện</string>
@@ -191,8 +199,23 @@
     <string name="don_hang_cua_ban">Đơn hàng của bạn</string>
     <string name="chon_size_khi_them_vao_cart">Chọn Size trước khi thêm vào giỏ hàng</string>
     <string name="them_vao_cart_thanh_cong">Đã thêm sản phẩm vào giỏ hàng</string>
-    <string name="goodmorning">Chào buổi sáng</string>
-    <string name="goodluch">Chào buổi trưa</string>
-    <string name="goodafternoon">Chào buổi chiều </string>
-    <string name="goodnight">Chào buổi tối</string>
+
+    <string name="goodmorning">Chào buổi sáng, Nhật</string>
+    <string name="goodluch">Chào buổi trưa, Nhật</string>
+    <string name="goodafternoon">Chào buổi chiều, Nhật</string>
+    <string name="goodnight">Chào buổi tối, Nhật</string>
+
+    <!-- change Passwrod  -->
+    <string name="change_paswrod">Thay Đổi Mật Khẩu</string>
+    <string name="change_paswrod_old_passwrod">Nhập lại  mật khẩu</string>
+    <string name="change_paswrod_old_pass_hint">Mật khẩu cũ</string>
+    <string name="change_paswrod_new_passwrod">Nhập mật khẩu mới</string>
+    <string name="change_paswrod_new_pass_hint">Mật khẩu mới</string>
+    <string name="change_paswrod_confirm_passwrod">Nhập lại mật khẩu</string>
+
+
+
+
+
+
 </resources>

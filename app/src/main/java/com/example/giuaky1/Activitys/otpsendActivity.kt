@@ -7,6 +7,11 @@ import android.os.CountDownTimer
 import android.text.TextUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+
+import com.example.giuaky1.Firebase.FirebaseFunction
+import com.example.giuaky1.Firebase.OTP_Athen_Phone
+import com.example.giuaky1.Interfaces.OTPEven
+
 import com.example.giuaky1.databinding.ActivityOtpsendBinding
 import java.util.Properties
 import javax.mail.Authenticator
@@ -30,6 +35,7 @@ class otpsendActivity : AppCompatActivity(){
     }
     lateinit var OTP: String
     lateinit var receiver: String
+    lateinit var type: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +43,7 @@ class otpsendActivity : AppCompatActivity(){
 
         OTP  = intent.getStringExtra("OTP").toString()
         receiver = intent.getStringExtra("receiver").toString()
+        type = intent.getStringExtra("type").toString()
 
 
 
@@ -44,7 +51,9 @@ class otpsendActivity : AppCompatActivity(){
     }
 
     private fun init_() {
-       binding.xacNhanOTPBtn.setOnClickListener { oTPProcessing() }
+       binding.xacNhanOTPBtn.setOnClickListener {
+           oTPProcessing()
+       }
        binding.guiLaiTv.setOnClickListener {  creatOtp(receiver)}
         if(OTP.isNotEmpty()) countDownTime()
     }
@@ -55,16 +64,32 @@ class otpsendActivity : AppCompatActivity(){
         if(TextUtils.isEmpty(otp) || otp.length < 6){
            binding.pinview.setError("bạn chưa nhập mã OTP")
         }else{
-            if(otp.equals(OTP)){
-               startActivity(
-                Intent(this@otpsendActivity, ForgotPasswordActivity::class.java)
-                    .putExtra("receiver",receiver))
+            if(type.equals("mail")){
+                println("otp send : " + OTP)
+                println("otp nhap vao  : " + OTP)
+                if(otp.equals(OTP)){
+                    startActivity(
+                        Intent(this@otpsendActivity, ForgotPasswordActivity::class.java)
+                            .putExtra("receiver",receiver))
+                }else{
+                    binding.pinview.setText("")
+                    Toast.makeText(applicationContext, "OTP không chính xác", Toast.LENGTH_SHORT).show()
+                }
             }else{
-                binding.pinview.setText("")
-                Toast.makeText(applicationContext, "OTP không chính xác", Toast.LENGTH_SHORT).show()
+
+                OTP_Athen_Phone.OTPAuthenAndRegister(OTP,otp,this){
+                    if(true) {
+                        startActivity(
+                            Intent(this@otpsendActivity, ForgotPasswordActivity::class.java)
+                                .putExtra("receiver",receiver))
+                    }
+                }
+
             }
         }
     }
+
+
 
 
 
@@ -125,7 +150,7 @@ class otpsendActivity : AppCompatActivity(){
 
     private fun countDownTime() {
         runOnUiThread {
-            val countdownMillis: Long = 60000
+            val countdownMillis: Long = 120000
             countDownTimer = object : CountDownTimer(countdownMillis, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
                     binding.countdownTextview.text = "Thời gian còn lại: ${millisUntilFinished / 1000} giây"

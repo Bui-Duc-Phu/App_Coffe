@@ -33,14 +33,12 @@ class MyApp : Application() {
             mode = modeList[0]
             lang = modeList[1]
         }
-
-        if (mode == ModeTheme.dark.toString()) {
-            if (mode.equals(ModeTheme.dark.toString())) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
+        if (mode.equals(ModeTheme.dark.toString())) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
+
         changeLang(applicationContext,lang)
     }
 

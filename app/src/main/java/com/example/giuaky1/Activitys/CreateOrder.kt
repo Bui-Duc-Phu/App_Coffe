@@ -51,6 +51,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.FirebaseDatabase
 import org.json.JSONException
 import org.json.JSONObject
+
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
@@ -412,6 +413,7 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
             trangThai = 1
         }
     }
+
 
     companion object {
         fun clearCart() {
