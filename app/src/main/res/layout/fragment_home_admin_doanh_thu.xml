@@ -18,14 +18,21 @@
             android:gravity="center"
             android:textStyle="bold"/>
 
-        <Button
-            android:id="@+id/MonthWeekDTBtn"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:text="@string/frag_TK_month"
-            android:textSize="20dp"
-            android:textStyle="bold"/>
+        <EditText
+            android:id="@+id/startDateEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Chọn ngày bắt đầu"
+            android:focusable="false"
+            android:clickable="true"/>
+
+        <EditText
+            android:id="@+id/endDateEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Chọn ngày kết thúc"
+            android:focusable="false"
+            android:clickable="true"/>
 
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/DoanhThuBarChart"

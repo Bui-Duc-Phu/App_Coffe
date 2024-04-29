@@ -73,7 +73,6 @@ object DataHandler {
                 for (orderSnapshot in snapshot.children) {
                     for (singleOrderSnapshot in orderSnapshot.children) {
                         val order = singleOrderSnapshot.getValue(Order::class.java)
-                        Log.d("HomeDoanhThu123", "onDataChange: " + order.toString())
                         if (order != null) {
                             orderList.add(order)
                         }

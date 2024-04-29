@@ -1,7 +1,10 @@
 package com.example.giuaky1.Administrator.Fragments
 
+
+/*
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -42,10 +45,11 @@ class HomeDoanhThu : Fragment() {
         binding = FragmentHomeAdminDoanhThuBinding.inflate(inflater,container,false)
 
 //        Log.d("SUPER LONGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG LABEL: ","I AM HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        changeButton = binding.MonthWeekDTBtn
+  //      changeButton = binding.MonthWeekDTBtn
 
         barChart = binding.DoanhThuBarChart
         DataHandler.readAllOrdersList { orderList ->
+
             setupBarChartMonth(orderList)
             changeButton.setOnClickListener(View.OnClickListener {
                 if (isChart1) {
@@ -63,6 +67,7 @@ class HomeDoanhThu : Fragment() {
     }
 
     private fun setupBarChartMonth(orderList: List<Order>) {
+        Log.d("chartMonth", orderList.toString())
         val Past5Months: List<String?> = java.util.ArrayList(getMonthLabels())
         Collections.reverse(Past5Months)
 
@@ -189,4 +194,65 @@ class HomeDoanhThu : Fragment() {
         return labels
     }
 
+}*/
+
+import android.app.DatePickerDialog
+import androidx.fragment.app.Fragment
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
+import com.example.giuaky1.R
+import com.github.mikephil.charting.charts.BarChart
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+
+class HomeDoanhThu : Fragment() {
+
+    private lateinit var barChart: BarChart
+    private lateinit var startDateEditText: EditText
+    private lateinit var endDateEditText: EditText
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_home_admin_doanh_thu, container, false)
+
+        barChart = view.findViewById(R.id.DoanhThuBarChart)
+
+        startDateEditText = view.findViewById(R.id.startDateEditText)
+        endDateEditText = view.findViewById(R.id.endDateEditText)
+        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+            val selectedDate = Calendar.getInstance()
+            selectedDate.set(Calendar.YEAR, year)
+            selectedDate.set(Calendar.MONTH, monthOfYear)
+            selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(selectedDate.time)
+        }
+
+        startDateEditText.setOnClickListener { view ->
+            val now = Calendar.getInstance()
+            DatePickerDialog(
+                view.context, dateSetListener,
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
+            ).show()
+
+        }
+
+        endDateEditText.setOnClickListener { view ->
+            val now = Calendar.getInstance()
+            DatePickerDialog(
+                view.context, dateSetListener,
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
+            ).show()
+        }
+        return view
+    }
 }
