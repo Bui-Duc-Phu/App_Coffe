@@ -66,6 +66,7 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
     var address =""
     var phone=""
     private var dateTime: String? = null
+    private var name: String? = null
     private var trangThai = 0
     private var googleSheetsTask: GoogleSheetsTask? = null
     private var randomDescription: String? = null
@@ -291,7 +292,8 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
                     dateTime = sdf.format(Date())
                     val sdf1 = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault())
                     orderId = sdf1.format(Date())
-                    DataHandler.addOrderToFirebase("Đã thanh toán", orderId!!, paymentMethods1!!.text.toString(), dateTime!!, DataHandler.shipper, phone,address, DataHandler.orderModelArrayList, tvTotalPrice!!.text.toString())
+                    name=DataHandler.userInfo.name
+                    DataHandler.addOrderToFirebase("Đã thanh toán", orderId!!, paymentMethods1!!.text.toString(), dateTime!!, DataHandler.shipper, phone,address, DataHandler.orderModelArrayList, tvTotalPrice!!.text.toString(),name!!)
                     thongBaoThanhCong("Thanh toán thành công")
                     alertDialog!!.dismiss()
                     clearCart()
@@ -319,8 +321,8 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
             dateTime = sdf.format(Date())
             val sdf1 = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault())
             orderId = sdf1.format(Date())
-
-            DataHandler.addOrderToFirebase("Chưa thanh toán", orderId!!, paymentMethods1!!.text.toString(), dateTime!!, DataHandler.shipper, phone, address, DataHandler.orderModelArrayList, tvTotalPrice!!.text.toString())
+            name=DataHandler.userInfo.name
+            DataHandler.addOrderToFirebase("Chưa thanh toán", orderId!!, paymentMethods1!!.text.toString(), dateTime!!, DataHandler.shipper, phone, address, DataHandler.orderModelArrayList, tvTotalPrice!!.text.toString(),name!!)
             thongBaoThanhCong("Đơn hàng của bạn đã được tạo")
             clearCart()
             finish()

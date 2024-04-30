@@ -18,6 +18,7 @@ import com.example.giuaky1.Models.Order
 import com.example.giuaky1.Models.ProductModel
 import com.example.giuaky1.Models.Shipper
 import com.example.giuaky1.Models.SizeModel
+import com.example.giuaky1.Models.UserInfo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -32,6 +33,7 @@ import java.util.concurrent.CountDownLatch
 object DataHandler {
     var rule: String = ""
     val shipper: Shipper = Shipper("Nguyễn Văn A", "0123456789")
+    var userInfo = UserInfo("", "", "")
     var orderModelArrayList = ArrayList<CartModel>()
     fun addOrderToFirebase(
         checkOut: String,
@@ -42,7 +44,8 @@ object DataHandler {
         phoneNumber: String,
         address: String,
         orderModelArrayList: ArrayList<CartModel>,
-        totalPrice: String
+        totalPrice: String,
+        name: String
     ) {
         val ordersRef = FirebaseDatabase.getInstance().getReference("Orders").child(getUID())
         val orderModel = Order(
@@ -56,7 +59,8 @@ object DataHandler {
             phoneNumber,
             address,
             orderModelArrayList,
-            totalPrice
+            totalPrice,
+            name
         )
         ordersRef.child(orderId).setValue(orderModel)
     }
@@ -78,7 +82,7 @@ object DataHandler {
                 val shipperSDT = orderSnapshot.child("shipper").child("sDT").value.toString()
                 val receiverPhone = orderSnapshot.child("receiverPhone").value.toString()
                 val receiverLocation = orderSnapshot.child("receiverLocation").value.toString()
-
+                val receiverName = orderSnapshot.child("receiverName").value.toString()
                 val productsList = mutableListOf<CartModel>()
                 for (productSnapshot in orderSnapshot.child("products").children) {
                     val product = productSnapshot.getValue(CartModel::class.java)
@@ -99,7 +103,8 @@ object DataHandler {
                     receiverPhone,
                     receiverLocation,
                     productsList,
-                    sumPrice
+                    sumPrice,
+                    receiverName
                 )
                 callback(order)
             }
@@ -110,27 +115,6 @@ object DataHandler {
         })
     }
 
-    fun readAllOrdersList(onDataReceived: (List<Order>) -> Unit) {
-        val ordersRef = FirebaseDatabase.getInstance().getReference("Orders")
-        ordersRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val orderList = ArrayList<Order>()
-                for (orderSnapshot in snapshot.children) {
-                    for (singleOrderSnapshot in orderSnapshot.children) {
-                        val order = singleOrderSnapshot.getValue(Order::class.java)
-                        if (order != null) {
-                            orderList.add(order)
-                        }
-                    }
-                }
-                onDataReceived(orderList)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("HomeDoanhThu", "onCancelled: " + error.message)
-            }
-        })
-    }
 
     fun getOrderWithState(state: String, callback: (List<Order>) -> Unit) {
         val ordersRef = FirebaseDatabase.getInstance().getReference("Orders")
@@ -359,13 +343,6 @@ object DataHandler {
         return FirebaseAuth.getInstance().currentUser?.uid ?: ""
     }
 
-    fun getPhoneNumber(): String {
-        return FirebaseAuth.getInstance().currentUser?.phoneNumber ?: ""
-    }
-
-    fun getOMAL(): ArrayList<CartModel> {
-        return orderModelArrayList
-    }
 
     fun setTypeAccount(value: String) {
         rule = value
@@ -452,15 +429,13 @@ object DataHandler {
                     for (singleOrderSnapshot in orderSnapshot.children) {
                         val order = singleOrderSnapshot.getValue(Order::class.java)
                         if (order != null && order.state == "Đã giao hàng") {
-                            val name1 = getNameFromUID(order.uID)
-                            val bill = ItemBill(
-                                order.time,
-                                "123",
-                                order.sumPrice.toDouble(),
-                                order.orderID,
-                                order.uID
-                            )
-                            orderList.add(bill)
+                            val date = order.time
+                            val orderID = order.orderID
+                            val receiverName = order.receiverName
+                            val uID= order.uID
+                            val sumPrice = order.sumPrice.toDouble()
+                            val itemBill = ItemBill(date,receiverName,sumPrice , orderID, uID)
+                            orderList.add(itemBill)
                         }
                     }
                 }
@@ -474,22 +449,18 @@ object DataHandler {
             }
         })
     }
-
-    fun getNameFromUID(uID: String): String {
-        var name = ""
-        val ref = FirebaseDatabase.getInstance().getReference("Users").child(uID)
-        ref.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                name = snapshot.child("name").value.toString()
+    fun getBillByDate(startDate: String, endDate: String, callback: (List<ItemBill>) -> Unit) {
+        getAllBill { allBills ->
+            val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+            val start = sdf.parse("$startDate 00:00:00")
+            val end = sdf.parse("$endDate 23:59:59")
+            val filteredBills = allBills.filter { bill ->
+                val billDate = sdf.parse(bill.date)
+                billDate.after(start) && billDate.before(end)
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("HomeDoanhThu", "onCancelled: " + error.message)
-            }
-        })
-        return name
+            callback(filteredBills)
+        }
     }
-
     fun getAddress(callback: (String) -> Unit) {
         val ref = FirebaseDatabase.getInstance().getReference("ProfileUser").child(getUID())
         ref.addValueEventListener(object : ValueEventListener {
@@ -517,5 +488,46 @@ object DataHandler {
                 Log.e("HomeDoanhThu", "onCancelled: " + error.message)
             }
         })
+    }
+
+
+
+    fun getInforPDF(callback: (UserInfo) -> Unit) {
+        val ref = FirebaseDatabase.getInstance().getReference("ProfileUser").child(getUID())
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val name = snapshot.child("name").value.toString()
+                val phone = snapshot.child("phoneNumber").value.toString()
+                val email = snapshot.child("mail").value.toString()
+                callback(UserInfo(name, phone, email))
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("HomeDoanhThu", "onCancelled: " + error.message)
+            }
+        })
+    }
+    fun countItemsInCart(callback: CartItemCountCallback) {
+        val cartReference =
+            FirebaseDatabase.getInstance().getReference("Carts").child(getUID())
+        cartReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var cartItemCount = 0
+                for (snapshot in dataSnapshot.getChildren()) {
+                    val cartModel = snapshot.getValue(CartModel::class.java)
+                    if (cartModel != null) {
+                        cartItemCount += cartModel.quantity
+                    }
+                }
+                callback.onCartItemCount(cartItemCount)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("DataHandler", "countItemsInCart onCancelled: " + databaseError.message)
+            }
+        })
+    }
+    fun interface CartItemCountCallback {
+        fun onCartItemCount(count: Int)
     }
 }

@@ -31,10 +31,7 @@ class DaGiaoFragment : Fragment() {
         val adapter = OrderClientAdapter(emptyList())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
-
-        // Call getOrderWithState function
         dataHandler.getOrderWithStateClient("Đã giao hàng") { orderList ->
-            // Update the adapter with the order list
             adapter.submitList(orderList)
         }
 

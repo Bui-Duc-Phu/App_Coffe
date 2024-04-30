@@ -70,7 +70,7 @@
             android:layout_marginStart="10dp"
             android:background="@drawable/rounded_rectangle"
             android:backgroundTint="#846046"
-            android:text="Xuất file PDF"
+            android:text="Xuất tất cả hóa đơn"
             />
         <androidx.appcompat.widget.AppCompatButton
             android:visibility="gone"

@@ -246,4 +246,9 @@ class HomeFragment : Fragment() {
         adapter!!.updateList(filteredList)
         adapter!!.notifyDataSetChanged()
     }
+
+    override fun onResume() {
+        super.onResume()
+        fetchDataFromFirebase()
+    }
 }
