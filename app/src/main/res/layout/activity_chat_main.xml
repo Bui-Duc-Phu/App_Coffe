@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/toolbar"
+        android:elevation="4dp"
+        android:backgroundTint="@color/toolbar"
+        android:layout_alignParentTop="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextAppearance="@style/ToolbarTitleText"
+        android:title=""
+        ><RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_arrow_back_24"
+            />
+
+    </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/messageTill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:boxCornerRadiusTopStart="5sp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_marginTop="5dp"
+        app:boxCornerRadiusTopEnd="5sp"
+        app:boxCornerRadiusBottomStart="5sp"
+        app:boxStrokeColor="@color/black"
+        app:boxStrokeWidth="1dp"
+        app:hintTextColor="@color/black"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        app:hintEnabled="true"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="5sp">
+        <EditText
+            android:id="@+id/mesageEdt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/signup_hint_ten_dang_nhap"
+            android:paddingStart="30dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/hint"
+            tools:ignore="TouchTargetSizeCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recylerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:layout_above="@id/messageTill"
+        />
+
+
+
+</RelativeLayout>

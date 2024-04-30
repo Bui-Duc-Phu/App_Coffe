@@ -53,6 +53,10 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        if (productModelList.isEmpty()) {
+            fetchDataFromFirebase()
+        }
         view = inflater.inflate(R.layout.fragment_home, container, false)
         setControl()
         fetchDataFromFirebase()

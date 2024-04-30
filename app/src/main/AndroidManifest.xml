@@ -21,6 +21,9 @@
         android:theme="@style/Base.Theme.Light"
         tools:targetApi="31">
         <activity
+            android:name=".Chats.ChatMain"
+            android:exported="false" />
+        <activity
             android:name=".Administrator.Activitys.BillList"
             android:exported="false" />
         <activity
@@ -49,6 +52,9 @@
             android:exported="false" />
         <activity
             android:name=".Activitys.InputEmailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.ChangePassword"
             android:exported="false" />
         <activity
             android:name=".Activitys.OrderConfirm"
