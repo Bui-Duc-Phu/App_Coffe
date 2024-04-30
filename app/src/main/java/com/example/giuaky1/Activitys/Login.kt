@@ -76,9 +76,11 @@ class Login : AppCompatActivity() {
                   progressDialog!!.dismiss()
                   startActivity(Intent(this, MainAdmin::class.java))
 
-              }else {
+              }else if(user.typeAccount.equals("1")) {
                   progressDialog!!.dismiss()
                   startActivity(Intent(this, Main::class.java))
+              }else{
+                  progressDialog!!.dismiss()
               }
           }
 
