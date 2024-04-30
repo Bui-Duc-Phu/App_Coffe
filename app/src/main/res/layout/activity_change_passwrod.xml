@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/back_changePass"
-    tools:context=".Activitys.ChangePasswrod">
+    tools:context=".Activitys.ChangePassword">
 
     <RelativeLayout
         android:id="@+id/toolbar"
@@ -78,6 +78,8 @@
             app:boxCornerRadiusBottomStart="15sp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxStrokeWidth="2dp"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/black"
             app:boxCornerRadiusBottomEnd="15sp">
             <EditText
                 android:id="@+id/oldPasswrodEdt"
@@ -124,6 +126,8 @@
             app:boxCornerRadiusBottomStart="15sp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxStrokeWidth="2dp"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/black"
             app:boxCornerRadiusBottomEnd="15sp">
             <EditText
                 android:id="@+id/newPassLayoutEdt"
@@ -165,6 +169,8 @@
             app:boxCornerRadiusBottomStart="15sp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxStrokeWidth="2dp"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/black"
             app:boxCornerRadiusBottomEnd="15sp">
             <EditText
                 android:id="@+id/confirmPasswordEdt"
@@ -174,7 +180,7 @@
                 android:paddingStart="30dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/hint"
-                tools:ignore="TouchTargetSizeCheck" />
+                tools:ignore="RtlSymmetry,TouchTargetSizeCheck" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 

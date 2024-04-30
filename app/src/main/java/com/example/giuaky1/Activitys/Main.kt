@@ -1,7 +1,6 @@
 package com.example.giuaky1.Activitys
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -9,8 +8,6 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.WindowManager
-import android.widget.RadioButton
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -18,16 +15,17 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.example.giuaky1.Firebase.FirebaseFunction
 import com.example.giuaky1.Models.ModeTheme
 import com.example.giuaky1.R
 
 import com.example.giuaky1.databinding.ActivityMainBinding
-import com.example.giuaky1.databinding.DialogChoseTypeAuthenBinding
 import com.example.sqlite.DBHelper
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import java.util.Locale
 
 
@@ -101,7 +99,9 @@ class Main : AppCompatActivity(){
         binding.navView.setNavigationItemSelectedListener { menu ->
             when (menu.itemId) {
               R.id.changePassword ->  {
-
+                  isAccountGoogle {
+                      if(!it)startActivity(Intent(this@Main,ChangePassword::class.java))
+                  }
 
               }
               R.id.setLanguage ->{
@@ -137,6 +137,17 @@ class Main : AppCompatActivity(){
             true
         }
 
+    }
+    private fun isAccountGoogle(callback : (Boolean)->Unit){
+        val firebaseUser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+        FirebaseFunction.getUserDataWithUid(firebaseUser.uid){
+            if(it.typeAccount.equals("3")){
+                Toast.makeText(applicationContext, "Account google, not changed password", Toast.LENGTH_SHORT).show()
+                callback(true)
+            }else{
+                callback(false)
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

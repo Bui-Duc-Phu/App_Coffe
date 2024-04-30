@@ -59,7 +59,7 @@ class FirebaseFunction {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val password  = snapshot.child("password").value.toString()
                     if(password.isNotEmpty()) callback(password)
-                    else callback("")
+                    else callback("isNotEmpty05012002")
                 }
 
                 override fun onCancelled(error: DatabaseError) {
