@@ -76,12 +76,12 @@ class FirebaseUpdate {
         }
 
 
-        fun updateDataProfile(context:Context,phone:String,location:String,date:String) {
+        fun updateDataProfile(context:Context,phone:String,location:String,date:String,name:String) {
             val firebaseUser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
             val databaseReference = FirebaseDatabase.getInstance()
                 .getReference("ProfileUser")
                 .child(firebaseUser.uid)
-
+            
             databaseReference.child("phoneNumber").setValue(phone).addOnFailureListener {
                 Toast.makeText(context, "false to update from updateDataProfile", Toast.LENGTH_SHORT).show()
             }
@@ -91,7 +91,9 @@ class FirebaseUpdate {
             databaseReference.child("dateOfBirth").setValue(date).addOnFailureListener {
                 Toast.makeText(context, "false to update from updateDataProfile", Toast.LENGTH_SHORT).show()
             }
-
+            databaseReference.child("name").setValue(name).addOnFailureListener {
+                Toast.makeText(context, "false to update from updateDataProfile", Toast.LENGTH_SHORT).show()
+            }
 
         }
 

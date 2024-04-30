@@ -69,7 +69,9 @@ class MainAdmin : AppCompatActivity() {
                 R.id.orderManager ->  {
                     startActivity(Intent(this@MainAdmin,OrderList::class.java))
                 }
-
+                R.id.billManager ->  {
+                    startActivity(Intent(this@MainAdmin,BillList::class.java))
+                }
                 R.id.nav_logout ->{
                     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                         .requestIdToken(getString(R.string.default_web_client_id))

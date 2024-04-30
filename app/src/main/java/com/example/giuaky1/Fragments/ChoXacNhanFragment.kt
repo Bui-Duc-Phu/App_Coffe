@@ -35,7 +35,7 @@ class ChoXacNhanFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         // Call getOrderWithState function
-        dataHandler.getOrderWithState("Đang chờ xác nhận") { orderList ->
+        dataHandler.getOrderWithStateClient("Đang chờ xác nhận") { orderList ->
             // Update the adapter with the order list
             adapter.submitList(orderList)
 

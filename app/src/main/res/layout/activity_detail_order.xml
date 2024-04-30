@@ -1,44 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingStart="10dp"
     android:background="@color/white"
     android:paddingEnd="10dp"
+    android:orientation="vertical"
     android:layout_height="match_parent">
-    <Button
-        android:id="@+id/btnBack1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Trở về"
-        android:padding="5dp"
-        />
     <TextView
         android:id="@+id/tiltleTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Chi tiết đơn hàng"
         android:textSize="30dp"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
+        android:layout_gravity="center"
         android:textStyle="bold"
-        android:layout_below="@id/btnBack1"
         android:textColor="#EF683D"
         />
-
-
-
 
     <LinearLayout
         android:id="@+id/id_pay_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_below="@id/tiltleTv"
         android:background="@color/white"
+        android:layout_marginStart="10dp"
         android:orientation="vertical">
         <TextView
             android:id="@+id/IDTv1"
@@ -63,26 +53,36 @@
     <LinearLayout
         android:id="@+id/date_time_layout"
         android:layout_width="match_parent"
-        android:layout_below="@id/id_pay_layout"
         android:background="@color/white"
         android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
         android:layout_height="wrap_content">
-
         <TextView
             android:id="@+id/timeTv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/time"
-            android:layout_marginStart="20dp"
             android:textColor="@color/black"
             android:textSize="15dp"
             android:textStyle="bold"
             tools:ignore="TextSizeCheck" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/productTv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Danh sách sản phẩm"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_below="@+id/date_time_layout"
+        android:layout_marginStart="10dp"
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/stt"
@@ -138,21 +138,32 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/product_recylerview1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/date_time_layout"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@color/white"
         android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
         tools:listitem="@layout/item_detail_order_admin"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Phí ship : 20.000"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginStart="10dp"
+        android:textSize="15dp"
+        android:layout_marginTop="10dp"
         />
     <LinearLayout
         android:id="@+id/shiper_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/product_recylerview1"
+        android:layout_marginTop="10dp"
         android:background="@color/white"
         android:orientation="horizontal"
+        android:layout_marginStart="10dp"
         android:gravity="start"
         >
         <ImageView
@@ -160,7 +171,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/truck"
-            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             />
         <TextView
@@ -175,20 +185,7 @@
             android:textSize="16dp"
             />
     </LinearLayout>
-    <TextView
-        android:id="@+id/sumPrice1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/shiper_layout"
-        android:layout_marginTop="10sp"
-        android:textSize="20dp"
-        android:text="Tổng : 35.000"
-        android:textColor="@color/black"
-       android:layout_alignParentEnd="true"
-        android:textStyle="bold"
 
-        android:layout_marginEnd="30dp"
-        />
     <TextView
         android:id="@+id/receiverPhone"
         android:layout_width="wrap_content"
@@ -196,22 +193,9 @@
         android:text="SĐT người nhận : 0332634787"
         android:textStyle="bold"
         android:textColor="@color/black"
-        android:layout_below="@id/sumPrice1"
         android:layout_marginStart="10dp"
-        android:textSize="16dp"
-        android:layout_marginTop="30dp"
-        />
-    <TextView
-        android:id="@+id/receiverEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Email :"
-        android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textSize="15dp"
         android:layout_marginTop="10dp"
-        android:layout_below="@id/receiverPhone"
-        android:layout_marginStart="10dp"
-        android:textSize="16dp"
         />
 
     <TextView
@@ -222,18 +206,34 @@
         android:text="Địa chỉ : 97/man thiện Quân 9"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:layout_below="@id/receiverEmail"
+        android:layout_below="@id/receiverPhone"
         android:layout_marginStart="10dp"
-        android:textSize="16dp"
+        android:textSize="15dp"
         />
 
+    <TextView
+        android:id="@+id/sumPrice1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:layout_marginStart="10dp"
+        android:text="Tổng : 35.000"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        android:fontFamily="@font/archivo_black"
 
+        android:textStyle="bold" />
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="Trở về"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        />
 
-
-
-
-
-
-
-
-</RelativeLayout>
+</LinearLayout>

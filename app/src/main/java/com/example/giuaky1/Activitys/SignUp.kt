@@ -293,7 +293,7 @@ class SignUp : AppCompatActivity() {
                         }, 2000)
                     }
                 }
-                FirebaseUpdate.updateDataProfile(this,phone,"","")
+                FirebaseUpdate.updateDataProfile(this,phone,"","","")
             }else{
                 progressDialog!!.dismiss()
                 Toast.makeText(applicationContext, "signUp false,Email này đã được đăng ký", Toast.LENGTH_SHORT).show()

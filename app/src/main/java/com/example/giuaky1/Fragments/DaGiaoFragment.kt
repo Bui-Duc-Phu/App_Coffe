@@ -33,7 +33,7 @@ class DaGiaoFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         // Call getOrderWithState function
-        dataHandler.getOrderWithState("Đã giao hàng") { orderList ->
+        dataHandler.getOrderWithStateClient("Đã giao hàng") { orderList ->
             // Update the adapter with the order list
             adapter.submitList(orderList)
         }
