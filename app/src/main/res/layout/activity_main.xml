@@ -23,7 +23,7 @@
             app:itemIconTint="@color/botton_icon_text"
             app:itemTextColor="@color/botton_icon_text"
             android:background="@drawable/bottom_navigation" />
-
+<!--
         <fragment
             android:id="@+id/fragmentContainerView"
             android:name="androidx.navigation.fragment.NavHostFragment"
@@ -32,8 +32,15 @@
             android:layout_above="@id/bottomNavigationView"
             android:layout_below="@id/toolbar"
             app:defaultNavHost="true"
-            app:navGraph="@navigation/navigation" />
+            app:navGraph="@navigation/navigation" />-->
 
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/bottomNavigationView"
+            android:layout_below="@id/toolbar"
+            tools:ignore="NotSibling" />
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"

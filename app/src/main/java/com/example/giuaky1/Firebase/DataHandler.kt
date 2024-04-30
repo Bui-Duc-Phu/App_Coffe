@@ -115,27 +115,6 @@ object DataHandler {
         })
     }
 
-    fun readAllOrdersList(onDataReceived: (List<Order>) -> Unit) {
-        val ordersRef = FirebaseDatabase.getInstance().getReference("Orders")
-        ordersRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val orderList = ArrayList<Order>()
-                for (orderSnapshot in snapshot.children) {
-                    for (singleOrderSnapshot in orderSnapshot.children) {
-                        val order = singleOrderSnapshot.getValue(Order::class.java)
-                        if (order != null) {
-                            orderList.add(order)
-                        }
-                    }
-                }
-                onDataReceived(orderList)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("HomeDoanhThu", "onCancelled: " + error.message)
-            }
-        })
-    }
 
     fun getOrderWithState(state: String, callback: (List<Order>) -> Unit) {
         val ordersRef = FirebaseDatabase.getInstance().getReference("Orders")
@@ -527,5 +506,28 @@ object DataHandler {
                 Log.e("HomeDoanhThu", "onCancelled: " + error.message)
             }
         })
+    }
+    fun countItemsInCart(callback: CartItemCountCallback) {
+        val cartReference =
+            FirebaseDatabase.getInstance().getReference("Carts").child(getUID())
+        cartReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var cartItemCount = 0
+                for (snapshot in dataSnapshot.getChildren()) {
+                    val cartModel = snapshot.getValue(CartModel::class.java)
+                    if (cartModel != null) {
+                        cartItemCount += cartModel.quantity
+                    }
+                }
+                callback.onCartItemCount(cartItemCount)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("DataHandler", "countItemsInCart onCancelled: " + databaseError.message)
+            }
+        })
+    }
+    fun interface CartItemCountCallback {
+        fun onCartItemCount(count: Int)
     }
 }

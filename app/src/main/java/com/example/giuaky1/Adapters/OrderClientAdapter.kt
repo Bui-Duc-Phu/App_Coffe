@@ -33,7 +33,6 @@ class OrderClientAdapter(private var orderList: List<Order>) : RecyclerView.Adap
             holder.cancelButton.visibility = View.GONE
         }
         if(order.state == "Đã giao hàng") {
-            holder.resetButton.visibility = View.VISIBLE
             holder.cancelButton.visibility = View.GONE
         }
         holder.cancelButton.setOnClickListener {
@@ -63,7 +62,6 @@ class OrderClientAdapter(private var orderList: List<Order>) : RecyclerView.Adap
         val dateAndTimeTextView: TextView = view.findViewById(R.id.dateAndTime)
         val detailsButton: Button = view.findViewById(R.id.detailsButton)
         val cancelButton: Button = view.findViewById(R.id.cancelButton)
-        val resetButton: Button = view.findViewById(R.id.resetButton)
 
     }
 }

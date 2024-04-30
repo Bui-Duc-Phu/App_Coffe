@@ -182,8 +182,8 @@ class HistoryFragment : Fragment() {
             }
         }
     }
-    @SuppressLint("NotifyDataSetChanged")
-    fun createPdf(startDate : String, endDate : String) {
+    @SuppressLint("NotifyDataSetChanged", "SuspiciousIndentation")
+    /*fun createPdf(startDate : String, endDate : String) {
     DataHandler.getInforPDF{userInfo ->
         DataHandler.getBillByDate(startDate,endDate) { billList ->
             if (billList.isEmpty()) {
@@ -199,7 +199,7 @@ class HistoryFragment : Fragment() {
                     try {
                         val view = LayoutInflater.from(requireActivity())
                             .inflate(R.layout.layout_file_pdf, null)
-                        requireActivity().runOnUiThread {
+                            requireActivity().runOnUiThread {
                             val pdfName: TextView = view.findViewById(R.id.pdf_name)
                             val pdfPhone: TextView = view.findViewById(R.id.pdf_phone)
                             val pdfMail: TextView = view.findViewById(R.id.pdf_mail)
@@ -212,7 +212,6 @@ class HistoryFragment : Fragment() {
                             pdfMail.text = userInfo.email
                             pdfTime.text = "$startDate - $endDate"
                             pdfPrice.text = "Tổng thanh toán: ${billList.sumOf { it.price }}"
-                            Log.d("billList", billList.toString())
                             recycler_pdf.adapter = ItemBillAdapter(billList)
                             recycler_pdf.adapter?.notifyDataSetChanged()
                         }
@@ -246,7 +245,7 @@ class HistoryFragment : Fragment() {
                         val viewHeight = 1920
 
                         val pageInfo =
-                            PdfDocument.PageInfo.Builder(viewWidth, viewHeight, 2).create()
+                            PdfDocument.PageInfo.Builder(viewWidth, viewHeight, 1).create()
 
                         val page = document.startPage(pageInfo)
 
@@ -273,7 +272,7 @@ class HistoryFragment : Fragment() {
                             fos.close()
                             requireActivity().runOnUiThread {
                                 val snackbar = Snackbar.make(
-                                    requireView(), // Thay đổi này thành view chứa Snackbar
+                                    requireView(),
                                     "Xuất file PDF thành công!",
                                     Snackbar.LENGTH_LONG
                                 )
@@ -284,7 +283,89 @@ class HistoryFragment : Fragment() {
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        // Show an error message
+                        requireActivity().runOnUiThread {
+                            Toast.makeText(
+                                requireActivity(),
+                                "Error: ${e.message}",
+                                Toast.LENGTH_LONG
+                            )
+                                .show()
+                        }
+                    }
+                }.start()
+            }
+        }
+    }
+}*/
+fun createPdf(startDate: String, endDate: String) {
+    DataHandler.getInforPDF { userInfo ->
+        DataHandler.getBillByDate(startDate, endDate) { billList ->
+            if (billList.isEmpty()) {
+                requireActivity().runOnUiThread {
+                    Snackbar.make(
+                        requireView(),
+                        "Không có đơn hàng nào trong khoảng thời gian này!",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+            } else {
+                Thread {
+                    try {
+                        val document = PdfDocument()
+
+                        val pageInfo =
+                            PdfDocument.PageInfo.Builder(595, 842, 1).create()
+
+                        val page = document.startPage(pageInfo)
+
+                        val canvas = page.canvas
+                        val paint = Paint()
+                        paint.color = Color.BLACK
+                        paint.textSize = 14f
+
+                        var y = 50
+
+                        canvas.drawText("Tên: ${userInfo.name}", 50f, y.toFloat(), paint)
+                        y += 50
+                        canvas.drawText("Số điện thoại: ${userInfo.phone}", 50f, y.toFloat(), paint)
+                        y += 50
+                        canvas.drawText("Email: ${userInfo.email}", 50f, y.toFloat(), paint)
+                        y += 50
+                        canvas.drawText("Thời gian: $startDate - $endDate", 50f, y.toFloat(), paint)
+                        y += 50
+
+                        for (bill in billList) {
+                            canvas.drawText("Ngày: ${bill.date}, Tên: ${bill.name}, Tổng tiền: ${bill.price}", 50f, y.toFloat(), paint)
+                            y += 50
+                        }
+
+                        document.finishPage(page)
+
+                        val downloadsDir =
+                            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                        val sdf1 = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault())
+                        val namePdf = sdf1.format(Date())
+                        val fileName = "Đơn_hàng_Coffe_Hub$namePdf.pdf"
+                        val filePath = File(downloadsDir, fileName)
+
+                        try {
+                            val fos = FileOutputStream(filePath)
+                            document.writeTo(fos)
+                            document.close()
+                            fos.close()
+                            requireActivity().runOnUiThread {
+                                val snackbar = Snackbar.make(
+                                    requireView(),
+                                    "Xuất file PDF thành công!",
+                                    Snackbar.LENGTH_LONG
+                                )
+                                snackbar.show()
+                            }
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                         requireActivity().runOnUiThread {
                             Toast.makeText(
                                 requireActivity(),

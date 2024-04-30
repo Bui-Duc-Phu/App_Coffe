@@ -16,9 +16,17 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import androidx.viewpager2.widget.ViewPager2
+import com.example.giuaky1.Adapters.AdapterViewPager
 import com.example.giuaky1.Firebase.DataHandler
+import com.example.giuaky1.Firebase.DataHandler.countItemsInCart
+import com.example.giuaky1.Fragments.CartFragment
+import com.example.giuaky1.Fragments.HistoryFragment
+import com.example.giuaky1.Fragments.HomeFragment
+import com.example.giuaky1.Fragments.ProfileFragment
 import com.example.giuaky1.Models.ModeTheme
 import com.example.giuaky1.R
 
@@ -28,6 +36,7 @@ import com.example.sqlite.DBHelper
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import java.util.Locale
 
@@ -41,7 +50,7 @@ class Main : AppCompatActivity(){
 
 
 
-
+    private val fragmentArrayList = ArrayList<Fragment>()
 
     private val binding : ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
@@ -68,10 +77,47 @@ class Main : AppCompatActivity(){
 
     private fun init_() {
         navigationDrawer()
-        buttonNavigation()
+     //   buttonNavigation()
         setSupportActionBar(binding.toolbar)
+        setupViewPagerAndBottomNav()
+        setUpBadge()
+    }
+
+    private fun setUpBadge() {
+        val badgeDrawable = binding.bottomNavigationView!!.getOrCreateBadge(R.id.cartFragment)
+        countItemsInCart(DataHandler.CartItemCountCallback { count: Int ->
+            if (count > 0) {
+                badgeDrawable.number = count
+                badgeDrawable.isVisible = true
+            } else {
+                badgeDrawable.isVisible = false
+            }
+        })
+    }
 
 
+    private fun setupViewPagerAndBottomNav() {
+        fragmentArrayList.add(HomeFragment())
+        fragmentArrayList.add(CartFragment())
+        fragmentArrayList.add(HistoryFragment())
+        fragmentArrayList.add(ProfileFragment())
+        binding.viewPager2!!.setAdapter(AdapterViewPager(this, fragmentArrayList))
+        binding.viewPager2!!.setUserInputEnabled(false)
+        binding.bottomNavigationView!!.setOnItemSelectedListener { item: MenuItem ->
+            if (item.itemId == R.id.homeFragment) {
+                binding.viewPager2!!.setCurrentItem(0, true)
+            }
+            if (item.itemId == R.id.cartFragment) {
+                binding.viewPager2!!.setCurrentItem(1, true)
+            }
+            if (item.itemId == R.id.historyFragment) {
+                binding.viewPager2!!.setCurrentItem(2, true)
+            }
+            if (item.itemId == R.id.profileFragment) {
+                binding.viewPager2!!.setCurrentItem(3, true)
+            }
+            true
+        }
     }
 
     private fun buttonNavigation() {

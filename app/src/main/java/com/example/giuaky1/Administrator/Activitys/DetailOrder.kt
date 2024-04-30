@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -27,7 +28,7 @@ class DetailOrder : AppCompatActivity() {
         val receiverPhone = findViewById<TextView>(R.id.receiverPhone)
         val receiverLocation = findViewById<TextView>(R.id.receiverLocation)
         val productRecylerview = findViewById<RecyclerView>(R.id.product_recylerview1)
-        val btnBack = findViewById<Button>(R.id.btnBack)
+        val btnBack = findViewById<ImageView>(R.id.backImage)
         IDTv.text = "ID: #${orderDetail.orderID}"
         payTv.text = "Phương thức thanh toán :${orderDetail.pay}"
         timeTv.text = "Thời gian: ${orderDetail.time}"

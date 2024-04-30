@@ -15,39 +15,43 @@
         android:background="@drawable/back_viewpaper"
         android:contentDescription="@string/app_name" />
 
-    <ImageButton
-        android:id="@+id/printf_pdf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:backgroundTint="#9C644E"
-        android:src="@drawable/pdf_print" />
-    <com.google.android.material.tabs.TabLayout
-        android:layout_marginTop="10dp"
-        android:paddingBottom="4dp"
-        android:paddingTop="4dp"
-        android:paddingStart="6dp"
-        android:paddingEnd="6dp"
-        app:tabPaddingEnd="6dp"
-        android:id="@+id/tab_layout"
-        android:layout_below="@id/printf_pdf"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:contentDescription="@string/app_name"
-        app:tabMode="fixed"
-        app:tabIndicatorGravity="stretch"
-        app:tabSelectedTextColor="@color/tablayout_text_select"
-        app:tabTextColor="@color/tablayout_text"
-        app:tabGravity="fill"
-        app:tabIndicatorColor="@null"
-        app:tabIndicatorAnimationMode="elastic"
-        app:tabIndicator="@drawable/custom_tablayout"
-        android:background="@drawable/custom_tablayout2"
-        app:tabTextAppearance="@style/MyCustomTabText"
-        app:tabIndicatorFullWidth="true"
-         />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.google.android.material.tabs.TabLayout
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            app:tabPaddingEnd="6dp"
+            android:id="@+id/tab_layout"
+            android:layout_marginStart="10dp"
+               android:layout_marginEnd="10dp"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/app_name"
+            app:tabMode="fixed"
+            app:tabIndicatorGravity="stretch"
+            app:tabSelectedTextColor="@color/tablayout_text_select"
+            app:tabTextColor="@color/tablayout_text"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@null"
+            app:tabIndicatorAnimationMode="elastic"
+            app:tabIndicator="@drawable/custom_tablayout"
+            android:background="@drawable/custom_tablayout2"
+            app:tabTextAppearance="@style/MyCustomTabText"
+            app:tabIndicatorFullWidth="true"
+            />
+        <ImageButton
+            android:id="@+id/printf_pdf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#9C644E"
+            android:src="@drawable/pdf_print" />
+    </LinearLayout>
+
 
 
 </RelativeLayout>
