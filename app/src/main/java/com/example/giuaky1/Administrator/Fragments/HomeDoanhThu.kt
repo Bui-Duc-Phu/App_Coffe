@@ -22,10 +22,12 @@ import com.example.giuaky1.Firebase.DataHandler
 import com.example.giuaky1.Models.Order
 import com.example.giuaky1.R
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.LegendEntry
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.utils.ColorTemplate
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -83,6 +85,10 @@ class HomeDoanhThu : Fragment() {
             }
         }
         DoanhThuChartButton.setOnClickListener {
+            if(startDateEditText.text.toString().isEmpty() || endDateEditText.text.toString().isEmpty()) {
+                Toast.makeText(view.context, "Vui lòng chọn ngày bắt đầu và ngày kết thúc", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             DoanhThuRecyclerView.visibility = View.GONE
             DoanhThuHeader.visibility = View.GONE
             barChart.visibility = View.VISIBLE
@@ -105,11 +111,35 @@ class HomeDoanhThu : Fragment() {
         // Tạo một BarDataSet với entries
         val barDataSet = BarDataSet(entries, "Doanh Thu")
 
+        // Tạo một danh sách màu
+        val colors = ArrayList<Int>()
+        for (i in listDoanhThu.indices) {
+            colors.add(ColorTemplate.MATERIAL_COLORS[i % ColorTemplate.MATERIAL_COLORS.size])
+        }
+
+        // Thiết lập màu cho BarDataSet
+        barDataSet.colors = colors
+
         // Tạo một BarData với barDataSet
         val barData = BarData(barDataSet)
 
         // Thiết lập dữ liệu cho biểu đồ và làm mới biểu đồ
         barChart.data = barData
+
+        // Tạo một danh sách LegendEntry
+        val legendEntries = listDoanhThu.mapIndexed { index, doanhThu ->
+            LegendEntry().apply {
+                formColor = colors[index]
+                label = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).run {
+                    val date = parse(doanhThu.date)
+                    SimpleDateFormat("dd/MM", Locale.getDefault()).format(date)
+                }
+            }
+        }
+
+        // Thiết lập danh sách LegendEntry cho chú thích của biểu đồ
+        barChart.legend.setCustom(legendEntries)
+
         barChart.invalidate()
     }
 

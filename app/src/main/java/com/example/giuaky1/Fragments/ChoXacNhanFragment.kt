@@ -25,22 +25,15 @@ class ChoXacNhanFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_cho_xac_nhan, container, false)
-
-        // Initialize RecyclerView
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
         val adapter = OrderClientAdapter(emptyList())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
-
-        // Call getOrderWithState function
         dataHandler.getOrderWithStateClient("Đang chờ xác nhận") { orderList ->
-            // Update the adapter with the order list
             adapter.submitList(orderList)
 
         }
-
         return view
     }
 }

@@ -322,8 +322,8 @@ object DataHandler {
         startDate: String,
         endDate: String,
         orderList: List<Order>
-    ): Int {
-        var soLuong = 0
+    ): HashMap<String, Int> {
+        val productQuantityMap = HashMap<String, Int>()
         val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
         val start = sdf.parse("$startDate 00:00:00")
         val end = sdf.parse("$endDate 23:59:59")
@@ -332,11 +332,13 @@ object DataHandler {
 
             if (orderDate.after(start) && orderDate.before(end)) {
                 for (product in order.products) {
-                    soLuong += product.quantity
+                    val currentQuantity = productQuantityMap.getOrDefault(product.name, 0)
+                    val name = product.name+"("+product.size+")"
+                    productQuantityMap[name] = currentQuantity + product.quantity
                 }
             }
         }
-        return soLuong
+        return productQuantityMap
     }
 
     fun getUID(): String {
@@ -406,16 +408,16 @@ object DataHandler {
         val end = sdf.parse(endDate)
         val calendar = Calendar.getInstance()
         calendar.time = start
-        val sanPhamList = mutableListOf<SanPham>()
+        val productQuantityList = mutableListOf<SanPham>()
         while (!calendar.time.after(end)) {
             val dateStr = sdf.format(calendar.time)
-            val soLuong = getSanPhamTheoNgay(dateStr, dateStr, listOrder)
-            if (soLuong > 0) { // Only add the day to the list if the revenue is greater than 0
-                sanPhamList.add(SanPham(dateStr, soLuong))
+            val productQuantityMap = getSanPhamTheoNgay(dateStr, dateStr, listOrder)
+            for ((productName, quantity) in productQuantityMap) {
+                productQuantityList.add(SanPham(dateStr,quantity, productName))
             }
             calendar.add(Calendar.DATE, 1)
         }
-        callback(sanPhamList)
+        callback(productQuantityList)
     }
 
 
@@ -524,6 +526,55 @@ object DataHandler {
 
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e("DataHandler", "countItemsInCart onCancelled: " + databaseError.message)
+            }
+        })
+    }
+
+    fun getAllOrders(callback: (Int) -> Unit) {
+        val ordersRef = FirebaseDatabase.getInstance().getReference("Orders")
+        ordersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var count = 0
+                for (userSnapshot in dataSnapshot.children) {
+                    for (orderSnapshot in userSnapshot.children) {
+                        val order = orderSnapshot.getValue(Order::class.java)
+                        if (order != null && order.state == "Đã giao hàng") {
+                            count++
+                        }
+                    }
+                }
+                callback(count)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Handle error here
+            }
+        })
+    }
+
+    fun getAllCompletedOrderProducts(callback: (Pair<Int, Double>) -> Unit) {
+        val ordersRef = FirebaseDatabase.getInstance().getReference("Orders")
+        ordersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var sumProduct = 0
+                var sumPrice = 0.0
+                for (userSnapshot in dataSnapshot.children) {
+                    for (orderSnapshot in userSnapshot.children) {
+                        val order = orderSnapshot.getValue(Order::class.java)
+                        if (order != null && order.state == "Đã giao hàng") {
+                            sumPrice += order.sumPrice.toDouble()
+                            for (product in order.products) {
+                                sumProduct += product.quantity
+
+                            }
+                        }
+                    }
+                }
+                callback(Pair(sumProduct, sumPrice))
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Handle error here
             }
         })
     }

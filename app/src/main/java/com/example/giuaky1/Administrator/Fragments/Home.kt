@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.example.giuaky1.Firebase.DataHandler
 import com.example.giuaky1.databinding.FragmentHomeAdminBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -41,6 +42,17 @@ class Home : Fragment() {
                 tablayout.getTabAt(position)!!.select()
             }
         })
+        setThongKeAll()
         return binding.root
+    }
+
+    private fun setThongKeAll() {
+        DataHandler.getAllOrders { count->
+            binding.tvTotalOrders.text = "Sum Order: "+ count.toString()
+        }
+        DataHandler.getAllCompletedOrderProducts { result->
+            binding.tvTotalProducts.text ="Sum Product: "+ result.first
+            binding.tvTotalRevenue.text ="Sum Price :" + result.second
+        }
     }
 }

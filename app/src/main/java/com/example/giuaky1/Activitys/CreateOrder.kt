@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -41,8 +40,6 @@ import com.bumptech.glide.Glide
 import com.example.giuaky1.Adapters.CartAdapter
 import com.example.giuaky1.Firebase.DataHandler
 import com.example.giuaky1.Interfaces.OnTaskCompleted
-import com.example.giuaky1.Models.CartModel
-import com.example.giuaky1.Models.Order
 import com.example.giuaky1.Paid.GoogleSheetsTask
 import com.example.giuaky1.R
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -55,7 +52,6 @@ import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
-import java.sql.Time
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -132,9 +128,29 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
                     getAddressFromCoordinates(location.latitude, location.longitude)
                 }
             }
-
     }
-
+    /*private fun getAddressFromCoordinates(latitude: Double, longitude: Double) {
+        val apiKey = "smp1TPaRzNQmKeb-bUrN6ENRfUZhjc9O_dBUMDGYhpY"
+        val url = "https://revgeocode.search.hereapi.com/v1/revgeocode?at=$latitude,$longitude&apiKey=$apiKey"
+        val jsonObjectRequest =
+            JsonObjectRequest(Request.Method.GET, url, null, { response: JSONObject ->
+                try {
+                    val itemsArray = response.getJSONArray("items")
+                    val firstItemObject = itemsArray.getJSONObject(0)
+                    val addressObject = firstItemObject.getJSONObject("address")
+                    val label = addressObject.getString("label")
+                    edtAddress!!.setText(label)
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                    Toast.makeText(this@CreateOrder, "Không thể lấy địa chỉ", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }) { error: VolleyError ->
+                Log.d("Error.Response", error.toString())
+                Toast.makeText(this@CreateOrder, "Không thể lấy địa chỉ", Toast.LENGTH_SHORT).show()
+            }
+        Volley.newRequestQueue(this).add(jsonObjectRequest)
+    }*/
     private fun getAddressFromCoordinates(latitude: Double, longitude: Double) {
         val url =
             "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=$latitude&lon=$longitude"
@@ -158,12 +174,12 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
                     edtAddress!!.setText(address)
                 } catch (e: JSONException) {
                     e.printStackTrace()
-                    Toast.makeText(this@CreateOrder, "Không thể lấy địa chỉ", Toast.LENGTH_SHORT)
+                    Toast.makeText(this, "Không thể lấy địa chỉ", Toast.LENGTH_SHORT)
                         .show()
                 }
             }) { error: VolleyError ->
                 Log.d("Error.Response", error.toString())
-                Toast.makeText(this@CreateOrder, "Không thể lấy địa chỉ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Không thể lấy địa chỉ", Toast.LENGTH_SHORT).show()
             }
         Volley.newRequestQueue(this).add(jsonObjectRequest)
     }

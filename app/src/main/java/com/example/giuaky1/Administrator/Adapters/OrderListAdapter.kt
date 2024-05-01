@@ -33,6 +33,7 @@ class OrderListAdapter(private var orderList: List<Order>) : RecyclerView.Adapte
             holder.changeStateButton.text = "Xác nhận"
         } else if (order.state == "Đang giao hàng") {
             holder.changeStateButton.text = "Giao hàng"
+            holder.cancelButton.visibility = View.GONE
         } else {
             holder.changeStateButton.visibility = View.GONE
             holder.cancelButton.visibility = View.GONE

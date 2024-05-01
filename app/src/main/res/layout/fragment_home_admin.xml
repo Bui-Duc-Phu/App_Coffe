@@ -4,14 +4,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Administrator.Fragments.Home">
-    <TextView
+    <LinearLayout
+        android:id="@+id/ThongKeLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:id="@+id/ThongKeLabel"
-        android:text="@string/frag_TK_label"
-        android:textSize="30dp"
-        android:textStyle="bold"/>
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tvTotalOrders"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Tổng đơn hàng: "
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvTotalRevenue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Doanh thu: "
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvTotalProducts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Tổng sản phẩm: "
+            android:textSize="16sp" />
+    </LinearLayout>
 
     <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
