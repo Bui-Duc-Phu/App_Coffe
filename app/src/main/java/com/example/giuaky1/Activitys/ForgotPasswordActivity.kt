@@ -9,6 +9,7 @@ import android.os.Handler
 import android.text.TextUtils
 import android.view.WindowManager
 import android.widget.Toast
+import com.example.giuaky1.Firebase.FirebaseFunction
 import com.example.giuaky1.Models.Users
 import com.example.giuaky1.databinding.ActivityForgotPasswordBinding
 import com.example.giuaky1.databinding.DialogCustomForgotPasswordTrueBinding
@@ -115,6 +116,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
                                                             dialog_(1)
                                                             Handler().postDelayed({
                                                                 dialog_(0)
+                                                                FirebaseFunction.WriteDeviceId(applicationContext,  auth.currentUser!!.uid.toString() )
                                                                 startActivity(Intent(this@ForgotPasswordActivity, Main::class.java))
                                                                 finish()
                                                             }, 2000)

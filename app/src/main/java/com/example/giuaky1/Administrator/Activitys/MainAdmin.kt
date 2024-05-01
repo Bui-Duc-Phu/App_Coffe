@@ -9,12 +9,14 @@ import androidx.core.view.GravityCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.giuaky1.Activitys.LoginOrSignUp
+import com.example.giuaky1.Firebase.FirebaseFunction
 import com.example.giuaky1.R
 import com.example.giuaky1.databinding.ActivityMainAdminBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 class MainAdmin : AppCompatActivity() {
     private val binding : ActivityMainAdminBinding by lazy {
@@ -28,6 +30,7 @@ class MainAdmin : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
+        devices()
         init_()
     }
 
@@ -101,6 +104,23 @@ class MainAdmin : AppCompatActivity() {
             binding.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
+        }
+    }
+
+    private fun  devices(){
+        val firebaseUser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+        FirebaseFunction.evenLogOut(applicationContext,firebaseUser.uid.toString()){
+            if(!it){
+                val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestEmail()
+                    .build()
+                googleSignInClient = GoogleSignIn.getClient(this, gso)
+                googleSignInClient.revokeAccess().addOnCompleteListener(this) {}
+                googleSignInClient.signOut().addOnCompleteListener(this){}
+                auth.signOut()
+                startActivity(Intent(this, LoginOrSignUp::class.java))
+            }
         }
     }
 

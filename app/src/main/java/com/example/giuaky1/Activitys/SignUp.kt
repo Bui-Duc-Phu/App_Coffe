@@ -8,11 +8,13 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Handler
 import android.text.TextUtils
 import android.util.Patterns
 import android.view.WindowManager
 import android.widget.RadioButton
+import android.widget.TextView
 import android.widget.Toast
 
 import com.chaos.view.PinView
@@ -56,6 +58,7 @@ class SignUp : AppCompatActivity() {
     lateinit var databaseReference : DatabaseReference
     lateinit var otp_Key :String
     lateinit var otp_User:String
+    lateinit var countDownTimer: CountDownTimer
 
 
 
@@ -192,6 +195,9 @@ class SignUp : AppCompatActivity() {
             layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
             layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
             dialog.window?.attributes = layoutParams
+            countDownTime(dialogView.countdownTextview)
+
+
 
             dialogView.exit.setOnClickListener {
                 dialog.dismiss()
@@ -216,6 +222,51 @@ class SignUp : AppCompatActivity() {
             }
         }
     }
+
+    private fun dialog_OTP(a: Int,callback: (Boolean) -> Unit) {
+        println("otp_key :  "+ otp_Key)
+        if (!isFinishing) {
+            val dialog = Dialog(this)
+            val dialogView = DialogCustomOtpBinding.inflate(layoutInflater)
+            dialog.setContentView(dialogView.root)
+            dialog.setCancelable(false)
+
+            val layoutParams = WindowManager.LayoutParams()
+            layoutParams.copyFrom(dialog.window?.attributes)
+            layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+            layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
+            dialog.window?.attributes = layoutParams
+
+            countDownTime(dialogView.countdownTextview)
+
+
+            dialogView.exit.setOnClickListener {
+                dialog.dismiss()
+                callback(false)
+            }
+            dialogView.XacthucBtn.setOnClickListener {
+                val otp  = dialogView.pinview.text.toString()
+                println("otp :  "+ otp)
+                if(otp.isEmpty() || otp.length > 6){
+                    Toast.makeText(applicationContext, "Hãy nhập đầy đủ otp", Toast.LENGTH_SHORT).show()
+                }else{
+                    if(otp_Key.equals(otp)){
+                        dialog.dismiss()
+                        callback(true)
+                    }else{
+                        Toast.makeText(applicationContext, "OTP chưu chính xác", Toast.LENGTH_SHORT).show()
+                        dialogView.pinview.setText("")
+                    }
+                }
+            }
+            if (a == 1) {
+                dialog.show()
+            } else {
+                dialog.dismiss()
+            }
+        }
+    }
+
 
 
 
@@ -312,46 +363,6 @@ class SignUp : AppCompatActivity() {
             }
         }
     }
-    private fun dialog_OTP(a: Int,callback: (Boolean) -> Unit) {
-        println("otp_key :  "+ otp_Key)
-        if (!isFinishing) {
-            val dialog = Dialog(this)
-            val dialogView = DialogCustomOtpBinding.inflate(layoutInflater)
-            dialog.setContentView(dialogView.root)
-            dialog.setCancelable(false)
-
-            val layoutParams = WindowManager.LayoutParams()
-            layoutParams.copyFrom(dialog.window?.attributes)
-            layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
-            layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
-            dialog.window?.attributes = layoutParams
-
-            dialogView.exit.setOnClickListener {
-                dialog.dismiss()
-                callback(false)
-            }
-            dialogView.XacthucBtn.setOnClickListener {
-                val otp  = dialogView.pinview.text.toString()
-                println("otp :  "+ otp)
-                if(otp.isEmpty() || otp.length > 6){
-                    Toast.makeText(applicationContext, "Hãy nhập đầy đủ otp", Toast.LENGTH_SHORT).show()
-                }else{
-                    if(otp_Key.equals(otp)){
-                        dialog.dismiss()
-                        callback(true)
-                    }else{
-                        Toast.makeText(applicationContext, "OTP chưu chính xác", Toast.LENGTH_SHORT).show()
-                        dialogView.pinview.setText("")
-                    }
-                }
-            }
-            if (a == 1) {
-                dialog.show()
-            } else {
-                dialog.dismiss()
-            }
-        }
-    }
 
     private fun checkUserName(userName_:String,email:String, callback: (Int) -> Unit) {
         val ref = FirebaseDatabase
@@ -432,6 +443,24 @@ class SignUp : AppCompatActivity() {
             }
         }
         thread.start()
+    }
+
+    private fun countDownTime(countdownTextview:TextView) {
+        runOnUiThread {
+            val countdownMillis: Long = 120000
+            countDownTimer = object : CountDownTimer(countdownMillis, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    countdownTextview.text = "Thời gian còn lại: ${millisUntilFinished / 1000} giây"
+                }
+
+                override fun onFinish() {
+                    val randomDigits = (1..6).map { Random.nextInt(0, 10) }.joinToString("")
+                    otp_Key = randomDigits
+                    countdownTextview.text = "OTP đã hết hạn,hãy tạo tại OTP!"
+                }
+            }
+            countDownTimer.start()
+        }
     }
 
 

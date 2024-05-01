@@ -36,6 +36,7 @@ class otpsendActivity : AppCompatActivity(){
     lateinit var OTP: String
     lateinit var receiver: String
     lateinit var type: String
+    lateinit var phone: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +45,7 @@ class otpsendActivity : AppCompatActivity(){
         OTP  = intent.getStringExtra("OTP").toString()
         receiver = intent.getStringExtra("receiver").toString()
         type = intent.getStringExtra("type").toString()
+        phone = intent.getStringExtra("phone").toString()
 
 
 
@@ -54,12 +56,19 @@ class otpsendActivity : AppCompatActivity(){
        binding.xacNhanOTPBtn.setOnClickListener {
            oTPProcessing()
        }
-       binding.guiLaiTv.setOnClickListener {  creatOtp(receiver)}
+       binding.guiLaiTv.setOnClickListener {
+           if (type.equals("mail")){
+               creatOtp(receiver)
+           }else{
+               sendOTPPhone(phone,receiver)
+           }
+       }
         if(OTP.isNotEmpty()) countDownTime()
     }
 
 
     private fun oTPProcessing() {
+        progressDialog = ProgressDialog.show(this@otpsendActivity, "App", "Loading...", true)
         val otp = binding.pinview.text.toString()
         if(TextUtils.isEmpty(otp) || otp.length < 6){
            binding.pinview.setError("bạn chưa nhập mã OTP")
@@ -68,10 +77,12 @@ class otpsendActivity : AppCompatActivity(){
                 println("otp send : " + OTP)
                 println("otp nhap vao  : " + OTP)
                 if(otp.equals(OTP)){
+                    progressDialog?.dismiss()
                     startActivity(
                         Intent(this@otpsendActivity, ForgotPasswordActivity::class.java)
                             .putExtra("receiver",receiver))
                 }else{
+                    progressDialog?.dismiss()
                     binding.pinview.setText("")
                     Toast.makeText(applicationContext, "OTP không chính xác", Toast.LENGTH_SHORT).show()
                 }
@@ -79,13 +90,30 @@ class otpsendActivity : AppCompatActivity(){
 
                 OTP_Athen_Phone.OTPAuthenAndRegister(OTP,otp,this){
                     if(true) {
+                        progressDialog?.dismiss()
                         startActivity(
                             Intent(this@otpsendActivity, ForgotPasswordActivity::class.java)
                                 .putExtra("receiver",receiver))
+                    }else{
+                        progressDialog?.dismiss()
                     }
                 }
 
             }
+        }
+    }
+
+    fun sendOTPPhone(receiver: String,mail:String){
+        progressDialog = ProgressDialog.show(this@otpsendActivity, "App", "Loading...", true)
+        OTP_Athen_Phone.sendOtp(receiver,this){OTP_key->
+            val intent = Intent(this, otpsendActivity::class.java)
+            intent.putExtra("OTP",OTP_key)
+            intent.putExtra("type","phone")
+            intent.putExtra("receiver",mail)
+            intent.putExtra("phone",receiver)
+            startActivity(intent)
+            finish()
+            progressDialog!!.dismiss()
         }
     }
 
@@ -157,7 +185,9 @@ class otpsendActivity : AppCompatActivity(){
                 }
 
                 override fun onFinish() {
-                    binding.countdownTextview.text = "Hoàn thành!"
+                    val randomDigits = (1..6).map { Random.nextInt(0, 10) }.joinToString("")
+                    OTP = randomDigits
+                    binding.countdownTextview.text = "OTP đã hết hạn,hãy tạo tại OTP!"
                 }
             }
             countDownTimer.start()

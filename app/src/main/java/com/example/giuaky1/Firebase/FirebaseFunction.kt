@@ -21,6 +21,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.getValue
+import com.google.firebase.messaging.FirebaseMessaging
 
 class FirebaseFunction {
 
@@ -93,6 +95,53 @@ class FirebaseFunction {
             })
         }
 
+        fun CurrentDeviseId(context: Context,callback: (String) -> Unit){
+            FirebaseMessaging.getInstance().token
+                .addOnSuccessListener { token -> callback(token) }
+                .addOnFailureListener { e -> Toast.makeText(context, "Not get deviceId", Toast.LENGTH_SHORT).show() }
+        }
+
+        fun WriteDeviceId(context: Context,uid : String){
+            val ref = FirebaseDatabase
+                .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference("Devices").child(uid)
+            CurrentDeviseId(context){idCurrentDevice->
+                ref.setValue(idCurrentDevice)
+                    .addOnCompleteListener {
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(context, "not write data on Devices, fun getDeviceId ", Toast.LENGTH_SHORT).show()
+                    }
+            }
+        }
+
+        fun evenLogOut(context: Context,uid : String,callback: (Boolean) -> Unit){
+            val ref = FirebaseDatabase
+                .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference("Devices").child(uid)
+            ref.addValueEventListener(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val id = snapshot.getValue(String::class.java)
+                    if(id != null && id.isNotEmpty()){
+                        CurrentDeviseId(context){idCurrentDevice->
+                            if(id.equals(idCurrentDevice)) {
+                                callback(true)
+                            }else{
+                                callback(false)
+                            }
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(context, "not get data from Devices ->  evenLogOut fun", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
+
+
+
+
         fun getUidWithPhone(phone_:String,callback: (String) -> Unit){
             val databaseReference = FirebaseDatabase.getInstance()
                 .getReference("ProfileUser")
@@ -116,6 +165,8 @@ class FirebaseFunction {
             })
 
         }
+
+
 
 
 
@@ -152,22 +203,29 @@ class FirebaseFunction {
 
 
 
-        fun getUserDataWithUid(uid : String,callback: (Users)->Unit){
+        fun getUserDataWithUid(uid: String, callback: (Users) -> Unit) {
             val ref = FirebaseDatabase
                 .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
                 .getReference("Users").child(uid)
-            ref.addListenerForSingleValueEvent(object : ValueEventListener{
+            ref.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val user = snapshot.getValue(Users::class.java)
-                    callback(user!!)
+                    if (user != null) {
+                        callback(user)
+                    } else {
+                        // Không có dữ liệu, bạn có thể gửi một dữ liệu mặc định hoặc null
+                        // Trong trường hợp này, tôi gửi một đối tượng Users rỗng
+                        callback(Users())
+                    }
                 }
+
                 override fun onCancelled(error: DatabaseError) {
+                    // Xử lý khi truy vấn bị hủy
+                    // Trong trường hợp này, tôi gửi một đối tượng Users rỗng
                     callback(Users())
                 }
             })
         }
-
-
 
         fun getID(): String {
             val auth: FirebaseAuth = FirebaseAuth.getInstance()

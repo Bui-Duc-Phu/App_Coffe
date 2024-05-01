@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.example.giuaky1.Administrator.Activitys.MainAdmin
 import com.example.giuaky1.Administrator.Controller
 import com.example.giuaky1.Data.PustData
+import com.example.giuaky1.Firebase.FirebaseFunction
 import com.example.giuaky1.Models.Users
 import com.example.giuaky1.R
 import com.example.giuaky1.Ultils.CommonUtils
@@ -89,13 +90,12 @@ class LoginOrSignUp : AppCompatActivity() {
 
             }
             loginBtn.setOnClickListener {
-                startActivity(Intent(this@LoginOrSignUp, Login::class.java))
-
-
+                autoLogin()
             }
             googleBtn.setOnClickListener {
                signInGoogle()
 //                startActivity(Intent(this@LoginOrSignUp, PustData::class.java))
+
             }
 
         }
@@ -182,6 +182,7 @@ class LoginOrSignUp : AppCompatActivity() {
                             hashmap.put("typeAccount","3")
                             databaseReference.setValue(hashmap).addOnCompleteListener { databaseTask ->
                                 if (databaseTask.isSuccessful) {
+                                    FirebaseFunction.WriteDeviceId(applicationContext,  userid )
                                     startActivity(Intent(this@LoginOrSignUp, Main::class.java))
                                     finish()
                                 } else {
@@ -194,6 +195,7 @@ class LoginOrSignUp : AppCompatActivity() {
                                     startActivity(Intent(this@LoginOrSignUp,MainAdmin::class.java))
                                     finish()
                                 }else {
+                                    FirebaseFunction.WriteDeviceId(applicationContext,  userid )
                                     startActivity(Intent(this@LoginOrSignUp, Main::class.java))
                                     finish()
                                 }
@@ -235,6 +237,34 @@ class LoginOrSignUp : AppCompatActivity() {
             }
         })
     }
+
+    fun autoLogin(){
+        if(auth.currentUser != null){
+            progressDialog = ProgressDialog.show(this, "App", "Login...", true)
+            FirebaseFunction.getUserDataWithUid(auth!!.currentUser!!.uid.toString()){ user->
+                println("user " + user)
+                if(user.typeAccount.equals("2")){
+                    progressDialog!!.dismiss()
+                    FirebaseFunction.WriteDeviceId(applicationContext,  auth.currentUser!!.uid.toString() )
+                    startActivity(Intent(this, MainAdmin::class.java))
+                    finish()
+                }else if(user.typeAccount.equals("1")) {
+                    progressDialog!!.dismiss()
+                    FirebaseFunction.WriteDeviceId(applicationContext,  auth.currentUser!!.uid.toString() )
+                    startActivity(Intent(this, Main::class.java))
+                    finish()
+
+                }else{
+
+                    progressDialog!!.dismiss()
+                    startActivity(Intent(this@LoginOrSignUp, Login::class.java))
+                }
+            }
+        }else{
+            startActivity(Intent(this@LoginOrSignUp, Login::class.java))
+        }
+    }
+
 
 
 

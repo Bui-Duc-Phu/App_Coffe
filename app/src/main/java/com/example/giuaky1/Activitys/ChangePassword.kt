@@ -109,6 +109,7 @@ class ChangePassword : AppCompatActivity() {
                                                             dialog_(1)
                                                             Handler().postDelayed({
                                                                 dialog_(0)
+                                                                FirebaseFunction.WriteDeviceId(applicationContext,  auth.currentUser!!.uid.toString() )
                                                                 startActivity(Intent(this@ChangePassword, Main::class.java))
                                                                 finish()
                                                             }, 2000)

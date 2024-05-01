@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="wrap_content"
         app:cardCornerRadius="15sp"
         android:background="@color/bkgr_dialog"
         android:layout_centerHorizontal="true">
@@ -32,6 +32,18 @@
                 android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/countdownTextview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:text="@string/dialog_otp"
+                android:layout_below="@id/tiltleTv"
+                android:textColor="@color/black"
+                android:textSize="17dp"
+                android:textStyle="bold" />
             <com.chaos.view.PinView
                 android:id="@+id/pinview"
                 style="@style/PinWidget.PinView"
@@ -45,7 +57,7 @@
                 android:hint="@string/app_name"
                 android:inputType="number"
                 android:itemBackground="@color/white"
-                android:layout_below="@id/tiltleTv"
+                android:layout_below="@id/countdownTextview"
                 app:hideLineWhenFilled="false"
                 app:itemCount="6"
                 app:itemHeight="50dp"

@@ -37,6 +37,7 @@ class SplashScreem : AppCompatActivity() {
             }
             val intent = Intent(this, LoginOrSignUp::class.java)
             startActivity(intent)
+            finish()
 
         }, SPLASH_DELAY)
 

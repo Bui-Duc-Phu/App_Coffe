@@ -52,7 +52,7 @@ class Login : AppCompatActivity() {
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
 
-        autoLogin()
+
 
 
 
@@ -68,24 +68,6 @@ class Login : AppCompatActivity() {
         init_()
     }
 
-   fun autoLogin(){
-       if(auth.currentUser != null){
-           progressDialog = ProgressDialog.show(this, "App", "Login...", true)
-          FirebaseFunction.getUserDataWithUid(auth!!.currentUser!!.uid.toString()){user->
-              if(user.typeAccount.equals("2")){
-                  progressDialog!!.dismiss()
-                  startActivity(Intent(this, MainAdmin::class.java))
-
-              }else if(user.typeAccount.equals("1")) {
-                  progressDialog!!.dismiss()
-                  startActivity(Intent(this, Main::class.java))
-              }else{
-                  progressDialog!!.dismiss()
-              }
-          }
-
-       }
-   }
 
 
 
@@ -166,13 +148,18 @@ class Login : AppCompatActivity() {
 
         auth.signInWithEmailAndPassword(email,password)
             .addOnCompleteListener {
-
                 if(it.isSuccessful){
-                    progressDialog = ProgressDialog.show(this, "App", "Login...", true)
-                    binding.emailEdt.setText("")
-                    binding.passwordEdt.setText("")
-                    progressDialog!!.dismiss()
-                    checkTypeAccount(email)
+                    auth.signOut()
+                    auth.signInWithEmailAndPassword(email,password)
+                        .addOnCompleteListener {
+                            if(it.isSuccessful){
+                                progressDialog = ProgressDialog.show(this, "App", "Login...", true)
+                                binding.emailEdt.setText("")
+                                binding.passwordEdt.setText("")
+                                progressDialog!!.dismiss()
+                                FirebaseFunction.WriteDeviceId(applicationContext,  auth.currentUser!!.uid.toString() )
+                                checkTypeAccount(email)
+                            }}
                 }
             }.addOnFailureListener { e ->
 
@@ -198,18 +185,15 @@ class Login : AppCompatActivity() {
                             DataHandler.setTypeAccount("2")
                             startActivity(Intent(this@Login, MainAdmin::class.java))
                             finish()
-
                         } else {
                             DataHandler.setTypeAccount("1")
                             val intent = Intent(this@Login, Main::class.java)
                             startActivity(intent)
                             finish()
-
                         }
                     }
                 }
             }
-
             override fun onCancelled(databaseError: DatabaseError) {
                 // Handle possible errors.
             }

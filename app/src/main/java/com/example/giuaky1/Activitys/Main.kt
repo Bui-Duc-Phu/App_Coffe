@@ -63,6 +63,7 @@ class Main : AppCompatActivity(){
         DataHandler.getInforPDF {
             DataHandler.userInfo=it
         }
+        devices()
 
 
 
@@ -286,9 +287,22 @@ class Main : AppCompatActivity(){
 
 
 
-    private fun changePassword(){
-
-    }
+   private fun  devices(){
+       val firebaseUser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+        FirebaseFunction.evenLogOut(applicationContext,firebaseUser.uid.toString()){
+            if(!it){
+                val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestEmail()
+                    .build()
+                googleSignInClient = GoogleSignIn.getClient(this, gso)
+                googleSignInClient.revokeAccess().addOnCompleteListener(this) {}
+                googleSignInClient.signOut().addOnCompleteListener(this){}
+                auth.signOut()
+                startActivity(Intent(this, LoginOrSignUp::class.java))
+            }
+        }
+   }
 
 
 

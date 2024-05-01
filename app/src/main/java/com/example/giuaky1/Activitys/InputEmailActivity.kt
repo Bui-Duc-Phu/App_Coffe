@@ -79,6 +79,7 @@ class InputEmailActivity : AppCompatActivity() {
             intent.putExtra("OTP",OTP_key)
             intent.putExtra("type","phone")
             intent.putExtra("receiver",mail)
+            intent.putExtra("phone",receiver)
             startActivity(intent)
             finish()
             progressDialog!!.dismiss()
