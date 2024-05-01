@@ -581,4 +581,18 @@ object DataHandler {
     fun interface CartItemCountCallback {
         fun onCartItemCount(count: Int)
     }
+    fun getUserNameAndDate(callback: (String) -> Unit) {
+        val ref = FirebaseDatabase.getInstance().getReference("Users").child(getUID())
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val phoneNumber = snapshot.child("phoneNumber").value.toString()
+                val date = SimpleDateFormat("ddMMyyyyHHmmss", Locale.getDefault()).format(Calendar.getInstance().time)
+                callback(phoneNumber + date)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("HomeDoanhThu", "onCancelled: " + error.message)
+            }
+        })
+    }
 }

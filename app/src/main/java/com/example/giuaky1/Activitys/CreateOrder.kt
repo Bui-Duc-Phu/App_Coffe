@@ -88,7 +88,9 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
         super.onCreate(savedInstanceState)
         this.enableEdgeToEdge()
         setContentView(R.layout.activity_create_order)
-        randomDescription = generateRandomDescription()
+        DataHandler.getUserNameAndDate { res->
+            randomDescription = res
+        }
         setControl()
         setButtonOrder()
         setDataForOrder()
@@ -343,19 +345,6 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
             clearCart()
             finish()
         }
-    }
-
-    private fun generateRandomDescription(): String {
-        val descriptionLength = 20
-        val alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-        val random = Random()
-        val description = StringBuilder(descriptionLength)
-        for (i in 0 until descriptionLength) {
-            val index = random.nextInt(alphabet.length)
-            val randomChar = alphabet[index]
-            description.append(randomChar)
-        }
-        return description.toString()
     }
 
     private fun setEdit() {
