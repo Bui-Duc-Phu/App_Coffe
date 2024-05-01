@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.giuaky1.Activitys.CreateOrder
+import com.example.giuaky1.Activitys.AddOrder
 import com.example.giuaky1.Adapters.CartAdapter
 import com.example.giuaky1.Firebase.DataHandler
 import com.example.giuaky1.Firebase.DataHandler.fetchDataForCart
@@ -37,7 +37,7 @@ class CartFragment : Fragment() {
         setRecyclerView()
         setDataForCart()
         btnCreateOrder!!.setOnClickListener { v: View? ->
-            val intent = Intent(activity, CreateOrder::class.java)
+            val intent = Intent(activity, AddOrder::class.java)
             startActivity(intent)
         }
         val simpleItemTouchCallback: ItemTouchHelper.SimpleCallback =

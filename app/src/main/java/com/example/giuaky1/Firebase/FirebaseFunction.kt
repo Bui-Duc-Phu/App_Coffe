@@ -153,19 +153,19 @@ class FirebaseFunction {
 
 
         fun getUserDataWithUid(uid : String,callback: (Users)->Unit){
-            val ref = FirebaseDatabase
-                .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
-                .getReference("Users").child(uid)
-            ref.addListenerForSingleValueEvent(object : ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val user = snapshot.getValue(Users::class.java)
-                    callback(user!!)
-                }
-                override fun onCancelled(error: DatabaseError) {
-                    callback(Users())
-                }
-            })
+    val ref = FirebaseDatabase
+        .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
+        .getReference("Users").child(uid)
+    ref.addListenerForSingleValueEvent(object : ValueEventListener{
+        override fun onDataChange(snapshot: DataSnapshot) {
+            val user = snapshot.getValue(Users::class.java)
+            callback(user!!)
         }
+        override fun onCancelled(error: DatabaseError) {
+            callback(Users())
+        }
+    })
+}
 
 
 

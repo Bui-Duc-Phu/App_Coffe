@@ -80,18 +80,7 @@ dependencies {
     implementation ("com.airbnb.android:lottie:6.0.0")
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
-
-
     implementation ("com.googlecode.libphonenumber:libphonenumber:8.12.36")
-
-
-    implementation(fileTree(mapOf(
-        "dir" to "A:\\",
-        "include" to listOf("*.aar", "*.jar")
-    )))
-
-
-
     implementation("com.squareup.okhttp3:okhttp:4.9.2")
     implementation("commons-codec:commons-codec:1.15")
 
@@ -110,6 +99,8 @@ dependencies {
     implementation("com.google.android.flexbox:flexbox:3.0.0")
     implementation("com.itextpdf:itextg:5.5.10")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
+
 
 
 
