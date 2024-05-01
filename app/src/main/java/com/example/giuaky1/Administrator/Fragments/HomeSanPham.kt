@@ -21,16 +21,21 @@ import com.example.giuaky1.Firebase.DataHandler
 import com.example.giuaky1.Models.Order
 import com.example.giuaky1.R
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.utils.ColorTemplate
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
 class HomeSanPham : Fragment() {
 
-    private lateinit var barChart: BarChart
+    private lateinit var pieChart: PieChart
     private lateinit var startDateEditText: EditText
     private lateinit var endDateEditText: EditText
     private lateinit var view: View
@@ -64,42 +69,48 @@ class HomeSanPham : Fragment() {
             }
             SanPhamRecyclerView.visibility = View.VISIBLE
             SanPhamHeader.visibility = View.VISIBLE
-            barChart.visibility = View.GONE
+            pieChart.visibility = View.GONE
             DataHandler.getListSanPhamTheoNgay(startDateEditText.text.toString(), endDateEditText.text.toString(), listOrder) { listSanPham ->
-                this.listSanPham = listSanPham // Initialize listSanPham here
-                Log.d("listSanPham", listSanPham.toString())
+                this.listSanPham = listSanPham
                 SanPhamRecyclerView.adapter = ItemSanPhamAdapter(listSanPham)
                 SanPhamRecyclerView.adapter?.notifyDataSetChanged()
             }
         }
         SanPhamChartButton.setOnClickListener {
+            if(startDateEditText.text.toString().isEmpty() || endDateEditText.text.toString().isEmpty()) {
+                Toast.makeText(view.context, "Vui lòng chọn ngày bắt đầu và ngày kết thúc", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             SanPhamRecyclerView.visibility = View.GONE
             SanPhamHeader.visibility = View.GONE
-            barChart.visibility = View.VISIBLE
+            pieChart.visibility = View.VISIBLE
             if (listSanPham.isEmpty()) {
                 Toast.makeText(view.context, "Không có dữ liệu để hiển thị", Toast.LENGTH_SHORT).show()
             } else {
-                createChart(listSanPham)
+                setPieChart(listSanPham)
             }
         }
     }
+    private fun setPieChart(listSanPham: List<SanPham>) {
+        val productQuantityMap = HashMap<String, Float>()
 
-
-    private fun createChart(listSanPham: List<SanPham>) {
-        // Tạo dữ liệu cho biểu đồ từ listSanPham
-        val entries = listSanPham.mapIndexed { index, SanPham ->
-            BarEntry(index.toFloat(), SanPham.quantity.toFloat())
+        for (sanPham in listSanPham) {
+            val currentQuantity = productQuantityMap.getOrDefault(sanPham.name, 0f)
+            productQuantityMap[sanPham.name] = currentQuantity + sanPham.quantity.toFloat()
         }
 
-        // Tạo một BarDataSet với entries
-        val barDataSet = BarDataSet(entries, "Sản phẩm")
+        val entries = ArrayList<PieEntry>()
+        for ((productName, quantity) in productQuantityMap) {
+            entries.add(PieEntry(quantity, productName))
+        }
 
-        // Tạo một BarData với barDataSet
-        val barData = BarData(barDataSet)
+        val dataSet = PieDataSet(entries, "Sản phẩm")
+        dataSet.colors = ColorTemplate.COLORFUL_COLORS.toList()
 
-        // Thiết lập dữ liệu cho biểu đồ và làm mới biểu đồ
-        barChart.data = barData
-        barChart.invalidate()
+        val data = PieData(dataSet)
+        pieChart.data = data
+        pieChart.setDrawEntryLabels(false)
+        pieChart.invalidate()
     }
 
     private fun setControl() {
@@ -110,7 +121,7 @@ class HomeSanPham : Fragment() {
         SanPhamRecyclerView = view.findViewById(R.id.SanPhamRecyclerView)
         SanPhamRecyclerView.layoutManager = LinearLayoutManager(view.context)
         SanPhamHeader = view.findViewById(R.id.SanPhamHeader)
-        barChart = view.findViewById(R.id.SanPhamBarChart)
+        pieChart = view.findViewById(R.id.SanPhamBarChart)
     }
 
     private fun setDate() {

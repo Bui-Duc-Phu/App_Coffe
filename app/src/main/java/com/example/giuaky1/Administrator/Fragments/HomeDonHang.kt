@@ -24,10 +24,12 @@ import com.example.giuaky1.Firebase.DataHandler
 import com.example.giuaky1.Models.Order
 import com.example.giuaky1.R
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.LegendEntry
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.utils.ColorTemplate
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -75,6 +77,10 @@ class HomeDonHang : Fragment() {
             }
         }
         DonHangChartButton.setOnClickListener {
+            if(startDateEditText.text.toString().isEmpty() || endDateEditText.text.toString().isEmpty()) {
+                Toast.makeText(view.context, "Vui lòng chọn ngày bắt đầu và ngày kết thúc", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             DonHangRecyclerView.visibility = View.GONE
             DonHangHeader.visibility = View.GONE
             barChart.visibility = View.VISIBLE
@@ -88,22 +94,45 @@ class HomeDonHang : Fragment() {
 
 
     private fun createChart(listDonHang: List<DonHang>) {
-        // Tạo dữ liệu cho biểu đồ từ listDoanhThu
-        val entries = listDonHang.mapIndexed { index, DonHang ->
-            BarEntry(index.toFloat(), DonHang.quantity.toFloat())
+        // Tạo dữ liệu cho biểu đồ từ listDonHang
+        val entries = listDonHang.mapIndexed { index, donHang ->
+            BarEntry(index.toFloat(), donHang.quantity.toFloat())
         }
 
         // Tạo một BarDataSet với entries
         val barDataSet = BarDataSet(entries, "Đơn hàng")
+
+        // Tạo một danh sách màu
+        val colors = ArrayList<Int>()
+        for (i in listDonHang.indices) {
+            colors.add(ColorTemplate.MATERIAL_COLORS[i % ColorTemplate.MATERIAL_COLORS.size])
+        }
+
+        // Thiết lập màu cho BarDataSet
+        barDataSet.colors = colors
 
         // Tạo một BarData với barDataSet
         val barData = BarData(barDataSet)
 
         // Thiết lập dữ liệu cho biểu đồ và làm mới biểu đồ
         barChart.data = barData
+
+        // Tạo một danh sách LegendEntry
+        val legendEntries = listDonHang.mapIndexed { index, donHang ->
+            LegendEntry().apply {
+                formColor = colors[index]
+                label = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).run {
+                    val date = parse(donHang.date)
+                    SimpleDateFormat("dd/MM", Locale.getDefault()).format(date)
+                }
+            }
+        }
+
+        // Thiết lập danh sách LegendEntry cho chú thích của biểu đồ
+        barChart.legend.setCustom(legendEntries)
+
         barChart.invalidate()
     }
-
     private fun setControl() {
         startDateEditText = view.findViewById(R.id.startDateEditText)
         endDateEditText = view.findViewById(R.id.endDateEditText)

@@ -100,6 +100,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="8"
+                        android:textColor="@color/black"
                         android:text="@string/phigiaohang" />
 
                     <TextView
@@ -107,6 +108,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/archivo_black"
                         android:text="@string/phiGiaoHang" />
 
                 </LinearLayout>
@@ -153,6 +156,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:textSize="20sp"
+                        android:textColor="@color/black"
                         android:fontFamily="@font/archivo_black"
                         android:text="@string/tienMat" />
                 </LinearLayout>
@@ -180,6 +184,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="8"
                     android:text="@string/tongThanhToan"
+                    android:textColor="@color/black"
                     android:fontFamily="@font/archivo_black"
                     android:textSize="18sp" />
 

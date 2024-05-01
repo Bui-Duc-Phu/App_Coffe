@@ -16,6 +16,7 @@ class ItemSanPhamAdapter(private val sanPhamList: List<SanPham>) : RecyclerView.
     class DoanhThuViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvDate: TextView = itemView.findViewById(R.id.tvDate)
         val tvQuantity: TextView = itemView.findViewById(R.id.tvQuantity)
+        val tvName: TextView = itemView.findViewById(R.id.tvName)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DoanhThuViewHolder {
@@ -27,6 +28,7 @@ class ItemSanPhamAdapter(private val sanPhamList: List<SanPham>) : RecyclerView.
         val currentItem = sanPhamList[position]
         holder.tvDate.text = currentItem.date
         holder.tvQuantity.text = currentItem.quantity.toString()
+        holder.tvName.text = currentItem.name
     }
 
     override fun getItemCount() = sanPhamList.size
