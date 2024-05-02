@@ -9,14 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/DoanhThuChartLable"
-            android:text="Thống Kê Đơn Hàng"
-            android:textSize="20dp"
-            android:gravity="center"
-            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/startDateEditText"
@@ -78,7 +70,7 @@
             android:visibility="gone"
             android:id="@+id/DonHangBarChart"
             android:layout_width="match_parent"
-            android:layout_height="350dp"/>
+            android:layout_height="300dp"/>
 
     </LinearLayout>
 

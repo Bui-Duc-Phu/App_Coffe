@@ -51,12 +51,12 @@ class Home : Fragment() {
         val decimalFormat = DecimalFormat("#.#")
 
         DataHandler.getAllOrders { count->
-            binding.tvTotalOrders.text = "Sum Order: "+ count.toString()
+            binding.tvTotalOrders.text = "Tổng đơn hàng đã hoàn thành: "+ count.toString()
         }
         DataHandler.getAllCompletedOrderProducts { result->
-            binding.tvTotalProducts.text ="Sum Product: "+ result.first
+            binding.tvTotalProducts.text ="Tổng sản phẩm đã đặt: "+ result.first
             val formattedSumPrice = decimalFormat.format(result.second)
-            binding.tvTotalRevenue.text ="Sum Price :" + formattedSumPrice
+            binding.tvTotalRevenue.text ="Tổng doanh thu:" + formattedSumPrice
         }
     }
 }

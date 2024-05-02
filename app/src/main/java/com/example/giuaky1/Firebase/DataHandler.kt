@@ -333,7 +333,12 @@ object DataHandler {
             if (orderDate.after(start) && orderDate.before(end)) {
                 for (product in order.products) {
                     val currentQuantity = productQuantityMap.getOrDefault(product.name, 0)
-                    val name = product.name+"("+product.size+")"
+                    var count = 0
+                    var name = "${product.name}(${product.size})-$count"
+                    while (productQuantityMap.containsKey(name)) {
+                        count++
+                        name = "${product.name}(${product.size})-$count"
+                    }
                     productQuantityMap[name] = currentQuantity + product.quantity
                 }
             }
@@ -413,7 +418,8 @@ object DataHandler {
             val dateStr = sdf.format(calendar.time)
             val productQuantityMap = getSanPhamTheoNgay(dateStr, dateStr, listOrder)
             for ((productName, quantity) in productQuantityMap) {
-                productQuantityList.add(SanPham(dateStr,quantity, productName))
+                val productNameWithoutSuffix = productName.split("-")[0]
+productQuantityList.add(SanPham(dateStr, quantity, productNameWithoutSuffix))
             }
             calendar.add(Calendar.DATE, 1)
         }
@@ -565,7 +571,6 @@ object DataHandler {
                             sumPrice += order.sumPrice.toDouble()
                             for (product in order.products) {
                                 sumProduct += product.quantity
-
                             }
                         }
                     }
