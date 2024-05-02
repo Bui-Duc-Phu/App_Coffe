@@ -40,85 +40,65 @@ class Login : AppCompatActivity() {
     private var progressDialog: ProgressDialog? = null
 
 
-
-
-
-
     private val binding: ActivityLoginBinding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         init_()
     }
 
 
-
-
-
     private fun init_() {
         binding.apply {
-            backBtn.setOnClickListener{
+            backBtn.setOnClickListener {
                 onBackPressed()
             }
             dangKyTv.setOnClickListener {
                 startActivity(Intent(this@Login, SignUp::class.java))
             }
-
-            dangNhapBtn.setOnClickListener {checked()}
-
-
+            dangNhapBtn.setOnClickListener { checked() }
             quyenMatKhauTv.setOnClickListener {
-                startActivity(Intent(this@Login,InputEmailActivity::class.java))
+                startActivity(Intent(this@Login, InputEmailActivity::class.java))
             }
-
-
-
         }
     }
 
 
-
-
-
-
-
-    private fun checked(){
+    // Kiểm tra thông tin đăng nhập
+    private fun checked() {
         var email = binding.emailEdt.text.toString().trim()
-        var password =  binding.passwordEdt.text.toString().trim()
+        var password = binding.passwordEdt.text.toString().trim()
         when {
-            TextUtils.isEmpty(email) -> Toast.makeText(this, "Email not null", Toast.LENGTH_SHORT).show()
-            TextUtils.isEmpty(password) -> Toast.makeText(this, "Password not null", Toast.LENGTH_SHORT).show()
+            TextUtils.isEmpty(email) -> Toast.makeText(this, "Email not null", Toast.LENGTH_SHORT)
+                .show()
+
+            TextUtils.isEmpty(password) -> Toast.makeText(
+                this,
+                "Password not null",
+                Toast.LENGTH_SHORT
+            ).show()
+
             else -> {
-                if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) loginWithUsername(email,password)
-                else  loginWithEmail(email,password)
+                // Kiểm tra email có đúng định dạng không, nếu không thì đăng nhập bằng tên đăng nhập
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) loginWithUsername(
+                    email,
+                    password
+                )
+                else loginWithEmail(email, password)
             }
         }
     }
 
 
-
-    private fun loginWithUsername(username:String,password: String){
-        val ref  =  FirebaseDatabase
+    private fun loginWithUsername(username: String, password: String) {
+        val ref = FirebaseDatabase
             .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
             .getReference("Users")
-        ref.addListenerForSingleValueEvent(object : ValueEventListener{
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (!isFinishing) {
                     progressDialog = ProgressDialog.show(this@Login, "App", "Loading...", true)
@@ -126,47 +106,59 @@ class Login : AppCompatActivity() {
 
                 for (snapshot in snapshot.children) {
                     val user = snapshot.getValue(Users::class.java)
-                    if(user!!.userName.equals(username) ) {
-                            println("checked usser successfull")
-                            loginWithEmail(user.email,password)
-                            progressDialog!!.dismiss()
-                            return
+                    if (user!!.userName.equals(username)) {
+                        println("checked usser successfull")
+                        loginWithEmail(user.email, password)
+                        progressDialog!!.dismiss()
+                        return
                     }
                 }
                 progressDialog!!.dismiss()
-                Toast.makeText(applicationContext, "Tên đăng nhập không tồn tại!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext,
+                    "Tên đăng nhập không tồn tại!",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
+
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(applicationContext, "Login with username, connect database faile!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext,
+                    "Login with username, connect database faile!",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
     }
 
 
     @SuppressLint("NotConstructor")
-    private fun loginWithEmail(email:String, password:String){
+    private fun loginWithEmail(email: String, password: String) {
 
-        auth.signInWithEmailAndPassword(email,password)
+        auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener {
-                if(it.isSuccessful){
+                if (it.isSuccessful) {
                     auth.signOut()
-                    auth.signInWithEmailAndPassword(email,password)
+                    auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener {
-                            if(it.isSuccessful){
+                            if (it.isSuccessful) {
                                 progressDialog = ProgressDialog.show(this, "App", "Login...", true)
                                 binding.emailEdt.setText("")
                                 binding.passwordEdt.setText("")
                                 progressDialog!!.dismiss()
-                                FirebaseFunction.WriteDeviceId(applicationContext,  auth.currentUser!!.uid.toString() )
+                                FirebaseFunction.WriteDeviceId(
+                                    applicationContext,
+                                    auth.currentUser!!.uid
+                                )
                                 checkTypeAccount(email)
-                            }}
+                            }
+                        }
                 }
             }.addOnFailureListener { e ->
 
                 Toast.makeText(this, "Login failed: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
-
 
 
     private fun checkTypeAccount(email: String) {
@@ -194,13 +186,12 @@ class Login : AppCompatActivity() {
                     }
                 }
             }
+
             override fun onCancelled(databaseError: DatabaseError) {
                 // Handle possible errors.
             }
         })
     }
-
-
 
 
 }

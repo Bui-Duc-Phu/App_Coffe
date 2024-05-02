@@ -11,6 +11,7 @@ import com.example.giuaky1.Firebase.DataHandler
 import com.example.giuaky1.databinding.FragmentHomeAdminBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import java.text.DecimalFormat
 
 
 class Home : Fragment() {
@@ -47,12 +48,15 @@ class Home : Fragment() {
     }
 
     private fun setThongKeAll() {
+        val decimalFormat = DecimalFormat("#.#")
+
         DataHandler.getAllOrders { count->
             binding.tvTotalOrders.text = "Sum Order: "+ count.toString()
         }
         DataHandler.getAllCompletedOrderProducts { result->
             binding.tvTotalProducts.text ="Sum Product: "+ result.first
-            binding.tvTotalRevenue.text ="Sum Price :" + result.second
+            val formattedSumPrice = decimalFormat.format(result.second)
+            binding.tvTotalRevenue.text ="Sum Price :" + formattedSumPrice
         }
     }
 }

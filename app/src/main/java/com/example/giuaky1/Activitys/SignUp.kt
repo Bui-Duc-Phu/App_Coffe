@@ -254,7 +254,7 @@ class SignUp : AppCompatActivity() {
                         dialog.dismiss()
                         callback(true)
                     }else{
-                        Toast.makeText(applicationContext, "OTP chưu chính xác", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, "OTP chưa chính xác", Toast.LENGTH_SHORT).show()
                         dialogView.pinview.setText("")
                     }
                 }

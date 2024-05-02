@@ -47,6 +47,7 @@ class HomeFragment : Fragment() {
     private var currentProduct = 0
     private var tvHello: TextView? = null
     private var recyclerViewBanner: RecyclerView? = null
+
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -87,13 +88,13 @@ class HomeFragment : Fragment() {
         val calendar = Calendar.getInstance()
         val hour = calendar[Calendar.HOUR_OF_DAY]
         if (hour in 5..9) {
-            tvHello!!.setText( R.string.goodmorning)
+            tvHello!!.setText(R.string.goodmorning)
         } else if (hour in 10..12) {
-            tvHello!!.setText( R.string.goodluch)
+            tvHello!!.setText(R.string.goodluch)
         } else if (hour in 13..17) {
-            tvHello!!.setText( R.string.goodafternoon)
-        }  else {
-            tvHello!!.setText( R.string.goodnight)
+            tvHello!!.setText(R.string.goodafternoon)
+        } else {
+            tvHello!!.setText(R.string.goodnight)
         }
     }
 
