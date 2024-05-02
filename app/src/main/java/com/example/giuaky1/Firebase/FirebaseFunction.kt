@@ -26,41 +26,45 @@ import com.google.firebase.messaging.FirebaseMessaging
 
 class FirebaseFunction {
 
-    companion object{
+    companion object {
         var orderModelArrayList: ArrayList<CartModel> = ArrayList()
         fun getOMAL(): ArrayList<CartModel> {
             return orderModelArrayList
         }
+
         fun addToOrder(
             orderId: String?,
             orderTotalPrice: TextView,
             dateTime: String?,
             s: ArrayList<CartModel>,
-            method:String
+            method: String
         ) {
             val ordersRef = FirebaseDatabase.getInstance().getReference("Order-confirm")
             val orderKey = ordersRef.push().key
             val orderModel = OrderModel()
-            orderModel.orderId=orderId
-            orderModel.totalPrice=orderTotalPrice.text.toString()
-            orderModel.dateTime=dateTime
-            orderModel.orderDetails=s
-            Log.d("addToOrder", "orderId: $orderId, totalPrice: ${orderTotalPrice.text}, dateTime: $dateTime, orderDetails: $s")
+            orderModel.orderId = orderId
+            orderModel.totalPrice = orderTotalPrice.text.toString()
+            orderModel.dateTime = dateTime
+            orderModel.orderDetails = s
+            Log.d(
+                "addToOrder",
+                "orderId: $orderId, totalPrice: ${orderTotalPrice.text}, dateTime: $dateTime, orderDetails: $s"
+            )
             ordersRef.child(orderKey!!).setValue(orderModel)
             ordersRef.child(orderKey!!).child("method").setValue(method)
         }
 
-        fun getPasswrodWithUid(context: Context,callback: (String) -> Unit){
+        fun getPasswrodWithUid(context: Context, callback: (String) -> Unit) {
 
-            val firebaseUser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+            val firebaseUser: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
             val ref = FirebaseDatabase
                 .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
                 .getReference("Users").child(firebaseUser.uid.toString())
 
-            ref.addListenerForSingleValueEvent(object  : ValueEventListener{
+            ref.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val password  = snapshot.child("password").value.toString()
-                    if(password.isNotEmpty()) callback(password)
+                    val password = snapshot.child("password").value.toString()
+                    if (password.isNotEmpty()) callback(password)
                     else callback("isNotEmpty05012002")
                 }
 
@@ -72,61 +76,74 @@ class FirebaseFunction {
         }
 
 
-        fun phoneAlreadyExists(context: Context,phoneUser:String, callback: (Boolean) -> Unit){
+        fun phoneAlreadyExists(context: Context, phoneUser: String, callback: (Boolean) -> Unit) {
             val databaseReference = FirebaseDatabase.getInstance()
                 .getReference("ProfileUser")
-            databaseReference.addListenerForSingleValueEvent(object :ValueEventListener{
+            databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     var cnt = false
-                    for (profileSnapshot in snapshot.children){
-                        val phone = profileSnapshot.child("phoneNumber").getValue(String::class.java)
-                        if(phone != null && phone.isNotEmpty()){
-                            if(phoneUser.equals(phone)){
-                                cnt=true
+                    for (profileSnapshot in snapshot.children) {
+                        val phone =
+                            profileSnapshot.child("phoneNumber").getValue(String::class.java)
+                        if (phone != null && phone.isNotEmpty()) {
+                            if (phoneUser.equals(phone)) {
+                                cnt = true
                                 break // Thêm break để dừng vòng lặp khi đã tìm thấy số điện thoại
                             }
                         }
                     }
                     callback(cnt)
                 }
+
                 override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(context, "bug on fun phoneAlreadyExists ", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "bug on fun phoneAlreadyExists ", Toast.LENGTH_SHORT)
+                        .show()
                 }
             })
         }
 
-        fun CurrentDeviseId(context: Context,callback: (String) -> Unit){
+        fun CurrentDeviseId(context: Context, callback: (String) -> Unit) {
             FirebaseMessaging.getInstance().token
                 .addOnSuccessListener { token -> callback(token) }
-                .addOnFailureListener { e -> Toast.makeText(context, "Not get deviceId", Toast.LENGTH_SHORT).show() }
+                .addOnFailureListener { e ->
+                    Toast.makeText(
+                        context,
+                        "Not get deviceId",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
         }
 
-        fun WriteDeviceId(context: Context,uid : String){
+        fun WriteDeviceId(context: Context, uid: String) {
             val ref = FirebaseDatabase
                 .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
                 .getReference("Devices").child(uid)
-            CurrentDeviseId(context){idCurrentDevice->
+            CurrentDeviseId(context) { idCurrentDevice ->
                 ref.setValue(idCurrentDevice)
                     .addOnCompleteListener {
                     }
                     .addOnFailureListener {
-                        Toast.makeText(context, "not write data on Devices, fun getDeviceId ", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            "not write data on Devices, fun getDeviceId ",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
             }
         }
 
-        fun evenLogOut(context: Context,uid : String,callback: (Boolean) -> Unit){
+        fun evenLogOut(context: Context, uid: String, callback: (Boolean) -> Unit) {
             val ref = FirebaseDatabase
                 .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
                 .getReference("Devices").child(uid)
-            ref.addValueEventListener(object : ValueEventListener{
+            ref.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val id = snapshot.getValue(String::class.java)
-                    if(id != null && id.isNotEmpty()){
-                        CurrentDeviseId(context){idCurrentDevice->
-                            if(id.equals(idCurrentDevice)) {
+                    if (id != null && id.isNotEmpty()) {
+                        CurrentDeviseId(context) { idCurrentDevice ->
+                            if (id.equals(idCurrentDevice)) {
                                 callback(true)
-                            }else{
+                            } else {
                                 callback(false)
                             }
                         }
@@ -134,24 +151,27 @@ class FirebaseFunction {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(context, "not get data from Devices ->  evenLogOut fun", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        "not get data from Devices ->  evenLogOut fun",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             })
         }
 
 
-
-
-        fun getUidWithPhone(phone_:String,callback: (String) -> Unit){
+        fun getUidWithPhone(phone_: String, callback: (String) -> Unit) {
             val databaseReference = FirebaseDatabase.getInstance()
                 .getReference("ProfileUser")
-            databaseReference.addListenerForSingleValueEvent(object : ValueEventListener{
+            databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    for(profileSnapshot in snapshot.children){
-                        val phone = profileSnapshot.child("phoneNumber").getValue(String::class.java)
-                        val uid= profileSnapshot.key.toString()
-                        if(phone != null && phone.isNotEmpty()){
-                            if(phone_.equals(phone)){
+                    for (profileSnapshot in snapshot.children) {
+                        val phone =
+                            profileSnapshot.child("phoneNumber").getValue(String::class.java)
+                        val uid = profileSnapshot.key.toString()
+                        if (phone != null && phone.isNotEmpty()) {
+                            if (phone_.equals(phone)) {
                                 callback(uid)
 
                             }
@@ -167,23 +187,23 @@ class FirebaseFunction {
         }
 
 
-
-
-
-
-
-
         @SuppressLint("SuspiciousIndentation")
-        fun getPhoneProfile(context: Context, callback: (String) -> Unit, callback2: (String) -> Unit, callback3: (String)->Unit,callback4:(String) -> Unit)  {
-            val firebaseUser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+        fun getPhoneProfile(
+            context: Context,
+            callback: (String) -> Unit,
+            callback2: (String) -> Unit,
+            callback3: (String) -> Unit,
+            callback4: (String) -> Unit
+        ) {
+            val firebaseUser: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
             val databaseReference = FirebaseDatabase.getInstance()
                 .getReference("ProfileUser")
                 .child(firebaseUser.uid)
-                databaseReference
-                .addValueEventListener(object :ValueEventListener{
+            databaseReference
+                .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        val phone:String = snapshot.child("phoneNumber").value.toString()
-                        val location  = snapshot.child("location").value.toString()
+                        val phone: String = snapshot.child("phoneNumber").value.toString()
+                        val location = snapshot.child("location").value.toString()
                         val date = snapshot.child("dateOfBirth").value.toString()
                         val name = snapshot.child("name").value.toString()
                         callback(phone)
@@ -193,14 +213,16 @@ class FirebaseFunction {
                     }
 
                     override fun onCancelled(error: DatabaseError) {
-                        Toast.makeText(context, "false get data form getPhoneProfile", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            "false get data form getPhoneProfile",
+                            Toast.LENGTH_SHORT
+                        ).show()
 
                     }
                 })
 
         }
-
-
 
 
         fun getUserDataWithUid(uid: String, callback: (Users) -> Unit) {
@@ -225,9 +247,28 @@ class FirebaseFunction {
                     callback(Users())
                 }
             })
+
+            fun getUserDataWithUid(uid: String, callback: (Users) -> Unit) {
+                val ref = FirebaseDatabase
+                    .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                    .getReference("Users").child(uid)
+                ref.addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val user = snapshot.getValue(Users::class.java)
+                        callback(user!!)
+
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        callback(Users())
+                    }
+                })
+            }
+
+
+
+
         }
-
-
 
         fun getID(): String {
             val auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -238,8 +279,6 @@ class FirebaseFunction {
             return ""
         }
 
+
     }
-
-
-
 }

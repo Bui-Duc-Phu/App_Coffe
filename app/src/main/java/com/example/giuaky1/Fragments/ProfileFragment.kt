@@ -140,7 +140,7 @@ class ProfileFragment : Fragment() {
             checked()
         }
         binding.edtName.setOnClickListener {
-            binding.userName.isEnabled = true
+            binding.nameEdt.isEnabled = true
             viewLifecycleOwner.lifecycleScope.launch {
                 openKeyboardAndSetCursorPosition(requireContext(), binding.nameEdt)
             }

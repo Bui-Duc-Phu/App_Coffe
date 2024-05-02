@@ -15,6 +15,8 @@ import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Environment
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
@@ -42,22 +44,25 @@ import com.example.giuaky1.Firebase.DataHandler
 import com.example.giuaky1.Interfaces.OnTaskCompleted
 import com.example.giuaky1.Paid.GoogleSheetsTask
 import com.example.giuaky1.R
+import com.example.giuaky1.zaloPay.Api.CreateOrder
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.FirebaseDatabase
 import org.json.JSONException
 import org.json.JSONObject
-
+import vn.zalopay.sdk.ZaloPayError
+import vn.zalopay.sdk.ZaloPaySDK
+import vn.zalopay.sdk.listeners.PayOrderListener
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import java.util.Random
 
-class CreateOrder : AppCompatActivity(), OnTaskCompleted {
+
+class AddOrder : AppCompatActivity(), OnTaskCompleted {
     var alertDialog: AlertDialog? = null
     var address =""
     var phone=""
@@ -88,7 +93,9 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
         super.onCreate(savedInstanceState)
         this.enableEdgeToEdge()
         setContentView(R.layout.activity_create_order)
-        randomDescription = generateRandomDescription()
+        DataHandler.getUserNameAndDate { res->
+            randomDescription = res
+        }
         setControl()
         setButtonOrder()
         setDataForOrder()
@@ -269,7 +276,7 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
     @SuppressLint("SetTextI18n")
     fun thanhToanHoaDon() {
         if (paymentMethods1!!.getText() == getString(R.string.scan_qr)) {
-            val inflater = LayoutInflater.from(this@CreateOrder)
+            val inflater = LayoutInflater.from(this@AddOrder)
             val overlayView = inflater.inflate(R.layout.qr, null)
             val nameTextView = overlayView.findViewById<TextView>(R.id.nameTextView)
             val amountTextView = overlayView.findViewById<TextView>(R.id.amountTextView)
@@ -332,8 +339,11 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
                     alertDialog!!.dismiss()
                 }
             }.start()
-        } else {
-            val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+        } else if (paymentMethods1!!.getText() == "Thanh toán ZaloPay") {
+            zaloPay()
+
+        }else{
+             val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
             dateTime = sdf.format(Date())
             val sdf1 = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault())
             orderId = sdf1.format(Date())
@@ -344,20 +354,69 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
             finish()
         }
     }
+    private fun zaloPay(){
+        val policy = ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
+        ZaloPaySDK.init(554, vn.zalopay.sdk.Environment.SANDBOX)
+        try {
+            val orderApi = CreateOrder()
+            val data = orderApi.createOrder(tvTotalPrice!!.getText().toString().replace(".", ""))
+            val code = data.getString("returncode")
 
-    private fun generateRandomDescription(): String {
-        val descriptionLength = 20
-        val alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-        val random = Random()
-        val description = StringBuilder(descriptionLength)
-        for (i in 0 until descriptionLength) {
-            val index = random.nextInt(alphabet.length)
-            val randomChar = alphabet[index]
-            description.append(randomChar)
+            if (code == "1") {
+                val token = data.getString("zptranstoken")
+                ZaloPaySDK.getInstance()
+                    .payOrder(this, token, "demozpdk://app", object : PayOrderListener {
+                        override fun onPaymentSucceeded(
+                            transactionId: String,
+                            transToken: String,
+                            appTransID: String
+                        ) {
+                            val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+                            dateTime = sdf.format(Date())
+                            val sdf1 = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault())
+                            orderId = sdf1.format(Date())
+                            name=DataHandler.userInfo.name
+                            orderId?.let { orderId ->
+                                dateTime?.let { dateTime ->
+                                    paymentMethods1?.let { paymentMethods1 ->
+                                        tvTotalPrice?.let { tvTotalPrice ->
+                                            DataHandler.addOrderToFirebase("Đã thanh toán", orderId, paymentMethods1.text.toString(), dateTime, DataHandler.shipper, phone,address, DataHandler.orderModelArrayList, tvTotalPrice.text.toString(),name!!)
+                                            clearCart()
+                                            thongBaoThanhCong("Thanh toán thành công")
+                                            alertDialog?.dismiss()
+                                            finish()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        override fun onPaymentCanceled(s: String, s1: String) {
+                            Toast.makeText(
+                                this@AddOrder,
+                                "Thanh toán bị hủy",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                        override fun onPaymentError(
+                            zaloPayError: ZaloPayError,
+                            s: String,
+                            s1: String
+                        ) {
+                            Toast.makeText(
+                                this@AddOrder,
+                                "Thanh toán thất bại",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+            }
+        } catch (e: Exception) {
+            Toast.makeText(this@AddOrder, "Error: " + e.message, Toast.LENGTH_LONG).show()
         }
-        return description.toString()
     }
-
     private fun setEdit() {
         ivEditAddress!!.setOnClickListener(object : View.OnClickListener {
             var isEditing = false
@@ -370,7 +429,7 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
                     isEditing = true
                 } else {
                     if (edtAddress!!.getText().toString().isEmpty()) {
-                        Toast.makeText(this@CreateOrder, R.string.nhap_dia_chi, Toast.LENGTH_SHORT)
+                        Toast.makeText(this@AddOrder, R.string.nhap_dia_chi, Toast.LENGTH_SHORT)
                             .show()
                     } else {
                         edtAddress!!.setEnabled(false)
@@ -446,5 +505,10 @@ class CreateOrder : AppCompatActivity(), OnTaskCompleted {
                 .child(DataHandler.getUID())
             userCart.removeValue()
         }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        ZaloPaySDK.getInstance().onResult(intent)
     }
 }
