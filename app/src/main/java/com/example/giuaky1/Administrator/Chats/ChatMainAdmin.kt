@@ -54,8 +54,13 @@ class ChatMainAdmin : AppCompatActivity() {
     private fun init_() {
 
 
+
+
         messageEdt(userId)
         readMessager(adminKey,userId)
+        binding.backBtn.setOnClickListener {
+            onBackPressed()
+        }
 
 
 

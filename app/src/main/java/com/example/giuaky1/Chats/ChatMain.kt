@@ -46,6 +46,11 @@ class ChatMain : AppCompatActivity() {
     private fun init_() {
         MessageEdt(adminKey)
         readMessager(firebaseUser.uid!!,adminKey)
+        binding.backBtn.setOnClickListener {
+            onBackPressed()
+        }
+
+
 
 
 
