@@ -64,7 +64,7 @@ class HomeSanPham : Fragment() {
     private fun setSanPham() {
         SanPhamButton.setOnClickListener {
             if(startDateEditText.text.toString().isEmpty() || endDateEditText.text.toString().isEmpty()) {
-                Toast.makeText(view.context, "Vui lòng chọn ngày bắt đầu và ngày kết thúc", Toast.LENGTH_SHORT).show()
+                Toast.makeText(view.context,   getString(R.string.vui_l_ng_ch_n_ng_y_b_t_u_v_ng_y_k_t_th_c), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             SanPhamRecyclerView.visibility = View.VISIBLE
@@ -78,14 +78,14 @@ class HomeSanPham : Fragment() {
         }
         SanPhamChartButton.setOnClickListener {
             if(startDateEditText.text.toString().isEmpty() || endDateEditText.text.toString().isEmpty()) {
-                Toast.makeText(view.context, "Vui lòng chọn ngày bắt đầu và ngày kết thúc", Toast.LENGTH_SHORT).show()
+                Toast.makeText(view.context,   getString(R.string.vui_l_ng_ch_n_ng_y_b_t_u_v_ng_y_k_t_th_c), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             SanPhamRecyclerView.visibility = View.GONE
             SanPhamHeader.visibility = View.GONE
             pieChart.visibility = View.VISIBLE
             if (listSanPham.isEmpty()) {
-                Toast.makeText(view.context, "Không có dữ liệu để hiển thị", Toast.LENGTH_SHORT).show()
+                Toast.makeText(view.context,   getString(R.string.kh_ng_c_d_li_u_hi_n_th), Toast.LENGTH_SHORT).show()
             } else {
                 setPieChart(listSanPham)
             }
@@ -146,7 +146,7 @@ class HomeSanPham : Fragment() {
                         if (selectedDate.time.after(endDate)) {
                             Toast.makeText(
                                 view.context,
-                                "Ngày bắt đầu không thể sau ngày kết thúc",
+                                getString(R.string.ng_y_b_t_u_kh_ng_th_sau_ng_y_k_t_th_c),
                                 Toast.LENGTH_SHORT
                             ).show()
                             return@DatePickerDialog
@@ -180,7 +180,7 @@ class HomeSanPham : Fragment() {
                         if (selectedDate.time.before(startDate)) {
                             Toast.makeText(
                                 view.context,
-                                "Ngày kết thúc không thể trước ngày bắt đầu",
+                                getString(R.string.ng_y_k_t_th_c_kh_ng_th_tr_c_ng_y_b_t_u),
                                 Toast.LENGTH_SHORT
                             ).show()
                             return@DatePickerDialog

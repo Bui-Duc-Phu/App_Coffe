@@ -78,7 +78,8 @@ class BillList : AppCompatActivity() {
             STORAGE_PERMISSION_CODE -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) { createPdf()
                 } else {
-                    Toast.makeText(this, "Permission denied to read your External storage", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,
+                        getString(R.string.permission_denied_to_read_your_external_storage), Toast.LENGTH_SHORT).show()
                 }
                 return
             }
@@ -98,14 +99,14 @@ class BillList : AppCompatActivity() {
             val mHeadingFont = Font(Font.FontFamily.TIMES_ROMAN, 20.0f, Font.BOLD)
             val mValueFont = Font(Font.FontFamily.TIMES_ROMAN, 18.0f, Font.NORMAL)
 
-            val heading = Paragraph("DANH SACH HOA DON", mHeadingFont)
+            val heading = Paragraph(getString(R.string.danh_s_ch_h_a_n), mHeadingFont)
             heading.alignment = Element.ALIGN_CENTER
             pdfDoc.add(heading)
 
             val billList = billList1
             for (bill in billList) {
                 val billParagraph = Paragraph(
-                    "Ngay: ${bill.date}, Ten: ${bill.name}, Tong tien: ${bill.price}", mValueFont
+                    "Ngày: ${bill.date}, Tên: ${bill.name}, Tổng tiền: ${bill.price}", mValueFont
                 )
                 pdfDoc.add(billParagraph)
             }

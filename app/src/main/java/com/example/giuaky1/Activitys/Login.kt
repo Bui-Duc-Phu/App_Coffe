@@ -73,12 +73,13 @@ class Login : AppCompatActivity() {
         var email = binding.emailEdt.text.toString().trim()
         var password = binding.passwordEdt.text.toString().trim()
         when {
-            TextUtils.isEmpty(email) -> Toast.makeText(this, "Email not null", Toast.LENGTH_SHORT)
+            TextUtils.isEmpty(email) -> Toast.makeText(this,
+                getString(R.string.email_not_null), Toast.LENGTH_SHORT)
                 .show()
 
             TextUtils.isEmpty(password) -> Toast.makeText(
                 this,
-                "Password not null",
+                getString(R.string.password_not_null),
                 Toast.LENGTH_SHORT
             ).show()
 
@@ -107,7 +108,7 @@ class Login : AppCompatActivity() {
                 for (snapshot in snapshot.children) {
                     val user = snapshot.getValue(Users::class.java)
                     if (user!!.userName.equals(username)) {
-                        println("checked usser successfull")
+                        println(getString(R.string.checked_usser_successfull))
                         loginWithEmail(user.email, password)
                         progressDialog!!.dismiss()
                         return
@@ -116,7 +117,7 @@ class Login : AppCompatActivity() {
                 progressDialog!!.dismiss()
                 Toast.makeText(
                     applicationContext,
-                    "Tên đăng nhập không tồn tại!",
+                    getString(R.string.t_n_ng_nh_p_kh_ng_t_n_t_i),
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -124,7 +125,7 @@ class Login : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(
                     applicationContext,
-                    "Login with username, connect database faile!",
+                    getString(R.string.login_with_username_connect_database_faile),
                     Toast.LENGTH_SHORT
                 ).show()
             }

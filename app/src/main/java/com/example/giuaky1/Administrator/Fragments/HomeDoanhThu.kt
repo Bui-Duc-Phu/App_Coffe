@@ -66,7 +66,7 @@ class HomeDoanhThu : Fragment() {
             ) {
                 Toast.makeText(
                     view.context,
-                    "Vui lòng chọn ngày bắt đầu và ngày kết thúc",
+                    getString(R.string.vui_l_ng_ch_n_ng_y_b_t_u_v_ng_y_k_t_th_c),
                     Toast.LENGTH_SHORT
                 ).show()
                 return@setOnClickListener
@@ -86,14 +86,15 @@ class HomeDoanhThu : Fragment() {
         }
         DoanhThuChartButton.setOnClickListener {
             if(startDateEditText.text.toString().isEmpty() || endDateEditText.text.toString().isEmpty()) {
-                Toast.makeText(view.context, "Vui lòng chọn ngày bắt đầu và ngày kết thúc", Toast.LENGTH_SHORT).show()
+                Toast.makeText(view.context, getString(R.string.vui_l_ng_ch_n_ng_y_b_t_u_v_ng_y_k_t_th_c), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             DoanhThuRecyclerView.visibility = View.GONE
             DoanhThuHeader.visibility = View.GONE
             barChart.visibility = View.VISIBLE
             if (listDoanhThu.isEmpty()) {
-                Toast.makeText(view.context, "Không có dữ liệu để hiển thị", Toast.LENGTH_SHORT)
+                Toast.makeText(view.context,
+                    getString(R.string.kh_ng_c_d_li_u_hi_n_th), Toast.LENGTH_SHORT)
                     .show()
             } else {
                 createChart(listDoanhThu)
@@ -109,7 +110,7 @@ class HomeDoanhThu : Fragment() {
         }
 
         // Tạo một BarDataSet với entries
-        val barDataSet = BarDataSet(entries, "Doanh Thu")
+        val barDataSet = BarDataSet(entries, getString(R.string.doanh_thu))
 
         // Tạo một danh sách màu
         val colors = ArrayList<Int>()
@@ -176,7 +177,7 @@ class HomeDoanhThu : Fragment() {
                         if (selectedDate.time.after(endDate)) {
                             Toast.makeText(
                                 view.context,
-                                "Ngày bắt đầu không thể sau ngày kết thúc",
+                                getString(R.string.ng_y_b_t_u_kh_ng_th_sau_ng_y_k_t_th_c),
                                 Toast.LENGTH_SHORT
                             ).show()
                             return@DatePickerDialog
@@ -210,7 +211,7 @@ class HomeDoanhThu : Fragment() {
                         if (selectedDate.time.before(startDate)) {
                             Toast.makeText(
                                 view.context,
-                                "Ngày kết thúc không thể trước ngày bắt đầu",
+                                getString(R.string.ng_y_k_t_th_c_kh_ng_th_tr_c_ng_y_b_t_u),
                                 Toast.LENGTH_SHORT
                             ).show()
                             return@DatePickerDialog

@@ -46,14 +46,14 @@ class AddCategory() : AppCompatActivity() {
         adapter!!.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerCategory!!.setAdapter(adapter)
         loadCategories()
-        btnAddCategory!!.setOnClickListener(View.OnClickListener { v: View? -> addCategoryToDatabase() })
-        btnEditCategory!!.setOnClickListener(View.OnClickListener { v: View? ->
+        btnAddCategory!!.setOnClickListener { addCategoryToDatabase() }
+        btnEditCategory!!.setOnClickListener {
             editCategoryInDatabase(
                 spinnerCategory!!.getSelectedItem().toString()
             )
-        })
-        btnDeleteCategory!!.setOnClickListener(View.OnClickListener { v: View? -> deleteCategoryFromDatabase() })
-        btnBack!!.setOnClickListener(View.OnClickListener { v: View? -> onBackPressed() })
+        }
+        btnDeleteCategory!!.setOnClickListener { v: View? -> deleteCategoryFromDatabase() }
+        btnBack!!.setOnClickListener { v: View? -> onBackPressed() }
         spinnerCategory!!.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
@@ -95,7 +95,7 @@ class AddCategory() : AppCompatActivity() {
     private fun addCategoryToDatabase() {
         val categoryName = edtCategory!!.text.toString().trim { it <= ' ' }
         if (categoryName.isEmpty()) {
-            Toast.makeText(this, "Please enter a category", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_a_category), Toast.LENGTH_SHORT).show()
             return
         }
         val categoryReference = FirebaseDatabase.getInstance().getReference().child("Categories")
@@ -108,12 +108,13 @@ class AddCategory() : AppCompatActivity() {
             category,
             DatabaseReference.CompletionListener { databaseError, databaseReference ->
                 if (databaseError != null) {
-                    Toast.makeText(this@AddCategory, "Failed to add category", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@AddCategory,
+                        getString(R.string.failed_to_add_category), Toast.LENGTH_SHORT)
                         .show()
                 } else {
                     Toast.makeText(
                         this@AddCategory,
-                        "Category added successfully",
+                        getString(R.string.category_added_successfully),
                         Toast.LENGTH_SHORT
                     ).show()
                     edtCategory!!.setText("")
@@ -123,7 +124,7 @@ class AddCategory() : AppCompatActivity() {
     private fun editCategoryInDatabase(oldCategory: String) {
         val newCategory = edtCategory!!.getText().toString().trim { it <= ' ' }
         if (newCategory.isEmpty()) {
-            Toast.makeText(this, "Please enter a category", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.please_enter_a_category), Toast.LENGTH_SHORT).show()
             return
         }
         val categoryReference = FirebaseDatabase.getInstance().getReference().child("Categories")
@@ -146,13 +147,13 @@ class AddCategory() : AppCompatActivity() {
                                             Log.e("Firebase", "Error: " + databaseError.message)
                                             Toast.makeText(
                                                 this@AddCategory,
-                                                "Failed to edit category",
+                                                getString(R.string.failed_to_edit_category),
                                                 Toast.LENGTH_SHORT
                                             ).show()
                                         } else {
                                             Toast.makeText(
                                                 this@AddCategory,
-                                                "Category edited successfully",
+                                                getString(R.string.category_edited_successfully),
                                                 Toast.LENGTH_SHORT
                                             ).show()
                                             edtCategory!!.setText("")
@@ -161,7 +162,8 @@ class AddCategory() : AppCompatActivity() {
                                 })
                         }
                     } else {
-                        Toast.makeText(this@AddCategory, "Category not found", Toast.LENGTH_SHORT)
+                        Toast.makeText(this@AddCategory,
+                            getString(R.string.category_not_found), Toast.LENGTH_SHORT)
                             .show()
                     }
                 }
@@ -191,13 +193,13 @@ class AddCategory() : AppCompatActivity() {
                                         Log.e("Firebase", "Error: " + databaseError.message)
                                         Toast.makeText(
                                             this@AddCategory,
-                                            "Failed to delete category",
+                                            getString(R.string.failed_to_delete_category),
                                             Toast.LENGTH_SHORT
                                         ).show()
                                     } else {
                                         Toast.makeText(
                                             this@AddCategory,
-                                            "Category deleted successfully",
+                                            getString(R.string.category_deleted_successfully),
                                             Toast.LENGTH_SHORT
                                         ).show()
                                     }
@@ -205,7 +207,7 @@ class AddCategory() : AppCompatActivity() {
                             })
                         }
                     } else {
-                        Toast.makeText(this@AddCategory, "Category not found", Toast.LENGTH_SHORT)
+                        Toast.makeText(this@AddCategory,  getString(R.string.category_not_found), Toast.LENGTH_SHORT)
                             .show()
                     }
                 }

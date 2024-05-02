@@ -45,13 +45,14 @@ class DetailOrder : AppCompatActivity() {
         val btnBack = findViewById<ImageView>(R.id.backImage)
         val btnPDF = findViewById<Button>(R.id.btnPDF)
         val btnReset = findViewById<Button>(R.id.btnReset)
-        IDTv.text = "ID: #${orderDetail.orderID}"
-        payTv.text = "Phương thức thanh toán :${orderDetail.pay}"
-        timeTv.text = "Thời gian: ${orderDetail.time}"
-        shiperTv.text = "Shipper: ${orderDetail.shipper.name}\nSĐT: ${orderDetail.shipper.sDT}"
-        sumPrice.text = "Tổng: ${orderDetail.sumPrice}"
-        receiverPhone.text = "SĐT người nhận: ${orderDetail.receiverPhone}"
-        receiverLocation.text = "Địa chỉ: ${orderDetail.receiverLocation}"
+        IDTv.text = getString(R.string.id, orderDetail.orderID)
+        payTv.text = getString(R.string.ph_ng_th_c_thanh_to_n, orderDetail.pay)
+        timeTv.text = getString(R.string.th_i_gian, orderDetail.time)
+        shiperTv.text =
+            getString(R.string.shipper_s_t, orderDetail.shipper.name, orderDetail.shipper.sDT)
+        sumPrice.text = getString(R.string.t_ng, orderDetail.sumPrice)
+        receiverPhone.text = getString(R.string.s_t_ng_i_nh_n, orderDetail.receiverPhone)
+        receiverLocation.text = getString(R.string.a_ch, orderDetail.receiverLocation)
 
         val adapter = ItemDetailAdapter(this, orderDetail.products)
         productRecylerview.adapter = adapter
@@ -76,13 +77,13 @@ class DetailOrder : AppCompatActivity() {
 
                     var y = 50
 
-                    canvas.drawText("Tên: ${userInfo.name}", 50f, y.toFloat(), paint)
+                    canvas.drawText(getString(R.string.t_n, userInfo.name), 50f, y.toFloat(), paint)
                     y += 50
-                    canvas.drawText("Số điện thoại: ${userInfo.phone}", 50f, y.toFloat(), paint)
+                    canvas.drawText(getString(R.string.s_i_n_tho_i, userInfo.phone), 50f, y.toFloat(), paint)
                     y += 50
-                    canvas.drawText("Email: ${userInfo.email}", 50f, y.toFloat(), paint)
+                    canvas.drawText(getString(R.string.email, userInfo.email), 50f, y.toFloat(), paint)
                     y += 50
-                    canvas.drawText("Thời gian: ${timeTv.text}", 50f, y.toFloat(), paint)
+                    canvas.drawText(getString(R.string.th_i_gian, timeTv.text), 50f, y.toFloat(), paint)
                     y += 50
                     var STT=0
                     for (bill in orderDetail.products) {
@@ -137,7 +138,8 @@ class DetailOrder : AppCompatActivity() {
                 val productID = productModel.name + "_" + productModel.size
                cartReference.child(productID).setValue(productModel)
             }
-            Toast.makeText(this, "Đã thêm lại tất cả sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.th_m_l_i_t_t_c_s_n_ph_m_v_o_gi_h_ng), Toast.LENGTH_SHORT).show()
             finish()
         }
     }

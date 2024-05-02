@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.giuaky1.Firebase.FirebaseFunction
 import com.example.giuaky1.Firebase.OTP_Athen_Phone
 import com.example.giuaky1.Interfaces.OTPEven
+import com.example.giuaky1.R
 
 import com.example.giuaky1.databinding.ActivityOtpsendBinding
 import java.util.Properties
@@ -71,7 +72,7 @@ class otpsendActivity : AppCompatActivity(){
         progressDialog = ProgressDialog.show(this@otpsendActivity, "App", "Loading...", true)
         val otp = binding.pinview.text.toString()
         if(TextUtils.isEmpty(otp) || otp.length < 6){
-           binding.pinview.setError("bạn chưa nhập mã OTP")
+           binding.pinview.setError(getString(R.string.b_n_ch_a_nh_p_m_otp))
         }else{
             if(type.equals("mail")){
                 println("otp send : " + OTP)
@@ -84,7 +85,8 @@ class otpsendActivity : AppCompatActivity(){
                 }else{
                     progressDialog?.dismiss()
                     binding.pinview.setText("")
-                    Toast.makeText(applicationContext, "OTP không chính xác", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext,
+                        getString(R.string.otp_kh_ng_ch_nh_x_c), Toast.LENGTH_SHORT).show()
                 }
             }else{
 
@@ -187,7 +189,7 @@ class otpsendActivity : AppCompatActivity(){
                 override fun onFinish() {
                     val randomDigits = (1..6).map { Random.nextInt(0, 10) }.joinToString("")
                     OTP = randomDigits
-                    binding.countdownTextview.text = "OTP đã hết hạn,hãy tạo tại OTP!"
+                    binding.countdownTextview.text = getString(R.string.otp_h_t_h_n_h_y_t_o_t_i_otp)
                 }
             }
             countDownTimer.start()

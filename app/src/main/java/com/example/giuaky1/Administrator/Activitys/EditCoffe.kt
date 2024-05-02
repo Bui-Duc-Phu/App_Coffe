@@ -79,7 +79,8 @@ class EditCoffe : AppCompatActivity() {
             product.imageUrl = imageUri.toString()
             mDatabase.child(tenSp!!).removeValue()
             mDatabase.child(product.name!!).setValue(product)
-            Toast.makeText(this@EditCoffe, "Sửa sản phẩm thành công", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@EditCoffe,
+                getString(R.string.s_a_s_n_ph_m_th_nh_c_ng), Toast.LENGTH_SHORT).show()
             onBackPressed()
         }
         btnDelEdit!!.setOnClickListener { v: View? ->

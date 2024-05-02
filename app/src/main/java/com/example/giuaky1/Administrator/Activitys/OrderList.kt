@@ -22,25 +22,25 @@ class OrderList : AppCompatActivity() {
         tabWidget = findViewById(R.id.tabWidget)
         mTabHost?.setup(this, supportFragmentManager, R.id.tabContent)
 
-        mTabHost?.newTabSpec("tab1")?.setIndicator("Chờ xác nhận")?.let {
+        mTabHost?.newTabSpec("tab1")?.setIndicator(getString(R.string.ch_x_c_nh_n))?.let {
             mTabHost?.addTab(
                 it,
                 ChoXacNhanFragment::class.java, null
             )
         }
-        mTabHost?.newTabSpec("tab2")?.setIndicator("Chờ giao hàng")?.let {
+        mTabHost?.newTabSpec("tab2")?.setIndicator(getString(R.string.ch_giao_h_ng))?.let {
             mTabHost?.addTab(
                 it,
                 ChoGiaoHangFragment::class.java, null
             )
         }
-        mTabHost?.newTabSpec("tab3")?.setIndicator("Đã giao")?.let {
+        mTabHost?.newTabSpec("tab3")?.setIndicator(getString(R.string.giao))?.let {
             mTabHost?.addTab(
                 it,
                 DaGiaoFragment::class.java, null
             )
         }
-        mTabHost?.newTabSpec("tab4")?.setIndicator("Đã hủy")?.let {
+        mTabHost?.newTabSpec("tab4")?.setIndicator(getString(R.string.h_y))?.let {
             mTabHost?.addTab(
                 it,
                 DaHuyFragment::class.java, null

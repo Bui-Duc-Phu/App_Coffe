@@ -181,12 +181,13 @@ class AddOrder : AppCompatActivity(), OnTaskCompleted {
                     edtAddress!!.setText(address)
                 } catch (e: JSONException) {
                     e.printStackTrace()
-                    Toast.makeText(this, "Không thể lấy địa chỉ", Toast.LENGTH_SHORT)
+                    Toast.makeText(this,
+                        getString(R.string.khong_the_lay_dia_chi), Toast.LENGTH_SHORT)
                         .show()
                 }
             }) { error: VolleyError ->
                 Log.d("Error.Response", error.toString())
-                Toast.makeText(this, "Không thể lấy địa chỉ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.khong_the_lay_dia_chi), Toast.LENGTH_SHORT).show()
             }
         Volley.newRequestQueue(this).add(jsonObjectRequest)
     }
@@ -260,7 +261,7 @@ class AddOrder : AppCompatActivity(), OnTaskCompleted {
                 )
                 isQrSaved = true
                 val snackbar = Snackbar.make(v!!, R.string.qr_save, Snackbar.LENGTH_LONG)
-                snackbar.setAction("Xem") {
+                snackbar.setAction(getString(R.string.xem)) {
                     val intent = Intent()
                     intent.setAction(Intent.ACTION_VIEW)
                     intent.setDataAndType(Uri.fromFile(file), "image/*")
@@ -317,7 +318,7 @@ class AddOrder : AppCompatActivity(), OnTaskCompleted {
                     orderId = sdf1.format(Date())
                     name=DataHandler.userInfo.name
                     DataHandler.addOrderToFirebase("Đã thanh toán", orderId!!, paymentMethods1!!.text.toString(), dateTime!!, DataHandler.shipper, phone,address, DataHandler.orderModelArrayList, tvTotalPrice!!.text.toString(),name!!)
-                    thongBaoThanhCong("Thanh toán thành công")
+                    thongBaoThanhCong(getString(R.string.thanh_toan_thanh_cong))
                     alertDialog!!.dismiss()
                     clearCart()
                     finish()
@@ -339,7 +340,7 @@ class AddOrder : AppCompatActivity(), OnTaskCompleted {
                     alertDialog!!.dismiss()
                 }
             }.start()
-        } else if (paymentMethods1!!.getText() == "Thanh toán ZaloPay") {
+        } else if (paymentMethods1!!.getText() == getString(R.string.thanh_toan_zalopay)) {
             zaloPay()
 
         }else{
@@ -349,7 +350,7 @@ class AddOrder : AppCompatActivity(), OnTaskCompleted {
             orderId = sdf1.format(Date())
             name=DataHandler.userInfo.name
             DataHandler.addOrderToFirebase("Chưa thanh toán", orderId!!, paymentMethods1!!.text.toString(), dateTime!!, DataHandler.shipper, phone, address, DataHandler.orderModelArrayList, tvTotalPrice!!.text.toString(),name!!)
-            thongBaoThanhCong("Đơn hàng của bạn đã được tạo")
+            thongBaoThanhCong(getString(R.string.create_order_success))
             clearCart()
             finish()
         }
@@ -383,7 +384,7 @@ class AddOrder : AppCompatActivity(), OnTaskCompleted {
                                         tvTotalPrice?.let { tvTotalPrice ->
                                             DataHandler.addOrderToFirebase("Đã thanh toán", orderId, paymentMethods1.text.toString(), dateTime, DataHandler.shipper, phone,address, DataHandler.orderModelArrayList, tvTotalPrice.text.toString(),name!!)
                                             clearCart()
-                                            thongBaoThanhCong("Thanh toán thành công")
+                                            thongBaoThanhCong(getString(R.string.thanh_toan_thanh_cong))
                                             alertDialog?.dismiss()
                                             finish()
                                         }
@@ -395,7 +396,7 @@ class AddOrder : AppCompatActivity(), OnTaskCompleted {
                         override fun onPaymentCanceled(s: String, s1: String) {
                             Toast.makeText(
                                 this@AddOrder,
-                                "Thanh toán bị hủy",
+                                getString(R.string.thanh_toan_bi_huy),
                                 Toast.LENGTH_LONG
                             ).show()
                         }
@@ -407,7 +408,7 @@ class AddOrder : AppCompatActivity(), OnTaskCompleted {
                         ) {
                             Toast.makeText(
                                 this@AddOrder,
-                                "Thanh toán thất bại",
+                                getString(R.string.tt_fail),
                                 Toast.LENGTH_LONG
                             ).show()
                         }
@@ -450,9 +451,9 @@ class AddOrder : AppCompatActivity(), OnTaskCompleted {
             val selectedPaymentMethod = paymentMethods[which]
             paymentMethods1!!.text = selectedPaymentMethod
             when (selectedPaymentMethod) {
-                "Thanh toán khi nhận hàng" -> ivPayment!!.setImageResource(R.drawable.cash)
-                "Quét mã QR" -> ivPayment!!.setImageResource(R.drawable.qrcode)
-                "Thanh toán ZaloPay" -> ivPayment!!.setImageResource(R.drawable.zalo)
+                getString(R.string.thanh_toan_khi_nhan_hang) -> ivPayment!!.setImageResource(R.drawable.cash)
+                getString(R.string.scan_qr) -> ivPayment!!.setImageResource(R.drawable.qrcode)
+                getString(R.string.thanh_toan_zalopay) -> ivPayment!!.setImageResource(R.drawable.zalo)
                 else -> {}
             }
             dialog.dismiss()

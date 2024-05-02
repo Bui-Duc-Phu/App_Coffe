@@ -11,6 +11,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import com.example.giuaky1.Firebase.FirebaseFunction
 import com.example.giuaky1.Models.Users
+import com.example.giuaky1.R
 import com.example.giuaky1.databinding.ActivityForgotPasswordBinding
 import com.example.giuaky1.databinding.DialogCustomForgotPasswordTrueBinding
 import com.google.firebase.auth.EmailAuthProvider
@@ -55,9 +56,9 @@ class ForgotPasswordActivity : AppCompatActivity() {
         val retypePassword = binding.retypePassword.text.toString()
 
         when {
-            TextUtils.isEmpty(newPassword) -> binding.passwordEdt.setError("Chưa nhập mật khẩu")
-            TextUtils.isEmpty(retypePassword) -> binding.retypePassword.setError("Chưa nhập mật khẩu")
-            !newPassword.equals(retypePassword) -> binding.retypePassword.setError("chưa đồng bộ")
+            TextUtils.isEmpty(newPassword) -> binding.passwordEdt.setError(getString(R.string.chua_nhap_pass))
+            TextUtils.isEmpty(retypePassword) -> binding.retypePassword.setError(getString(R.string.chua_nhap_pass))
+            !newPassword.equals(retypePassword) -> binding.retypePassword.setError(getString(R.string.chua_dong_bo))
             else -> {
                 progressDialog = ProgressDialog.show(this, "App", "Loading...", true)
                 val ref = FirebaseDatabase
