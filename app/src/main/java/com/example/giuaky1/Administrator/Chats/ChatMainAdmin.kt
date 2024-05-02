@@ -1,15 +1,13 @@
-package com.example.giuaky1.Chats
+package com.example.giuaky1.Administrator.Chats
 
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.giuaky1.R
+import com.example.giuaky1.Chats.Chat
+import com.example.giuaky1.Chats.ChatAdapter
 import com.example.giuaky1.databinding.ActivityChatMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -19,7 +17,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class ChatMain : AppCompatActivity() {
+class ChatMainAdmin : AppCompatActivity() {
      val  adminKey = "ACCOUNT_ADMIN_TYPE_2"
 
     private val binding: ActivityChatMainBinding by lazy {
@@ -28,9 +26,14 @@ class ChatMain : AppCompatActivity() {
     lateinit var firebaseUser: FirebaseUser
     lateinit var reference: DatabaseReference
     lateinit var listChat: ArrayList<Chat>
+
+    lateinit var userId :String
+    lateinit var userName :String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
 
         firebaseUser =FirebaseAuth.getInstance().currentUser!!
         reference = FirebaseDatabase
@@ -40,39 +43,43 @@ class ChatMain : AppCompatActivity() {
         listChat = ArrayList()
 
 
+        userId = intent.getStringExtra("userId").toString()
+        userName = intent.getStringExtra("userName").toString()
+
+
+
         init_()
     }
 
     private fun init_() {
-        MessageEdt(adminKey)
-        readMessager(firebaseUser.uid!!,adminKey)
+
+
+        messageEdt(userId)
+        readMessager(adminKey,userId)
 
 
 
     }
 
-    private fun MessageEdt(userId: String) {
-        binding.mesageEdt.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_NULL) {
+    private fun messageEdt(receiver:String){
+        binding.mesageEdt.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEND ||
+                (event != null && event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER)) {
                 // Xử lý sự kiện ở đây
                 val message = binding.mesageEdt.text.toString()
-                if (message.isEmpty()) {
+                if(message.isEmpty()){
                     Toast.makeText(applicationContext, "Text is empty", Toast.LENGTH_SHORT).show()
-                } else {
-                    sendMessage(firebaseUser.uid!!, userId, message)
+                }else {
+                    sendMessage(adminKey,receiver,message)
                 }
                 val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                inputMethodManager.hideSoftInputFromWindow(binding.mesageEdt.windowToken, 0)
+                inputMethodManager.hideSoftInputFromWindow(v.windowToken, 0)
                 true // Trả về true để xác nhận rằng sự kiện đã được xử lý
             } else {
                 false
             }
         }
     }
-
-
-
-
 
 
 
@@ -102,20 +109,17 @@ class ChatMain : AppCompatActivity() {
             .getReference("Chats")
         ref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-
                 listChat.clear()
                 for (dataSnapshot: DataSnapshot in snapshot.children) {
                     val chat = dataSnapshot.getValue(Chat::class.java)
-                    println(chat)
                     if (chat!!.senderId.equals(senderId) && chat!!.receiverId.equals(receiverId) ||
                         chat!!.senderId.equals(receiverId) && chat!!.receiverId.equals(senderId)
                     ) {
                         listChat.add(chat)
                     }
                 }
-                val adapter = ChatAdapter(this@ChatMain, listChat)
+                val adapter = ChatAdapterAdmin(this@ChatMainAdmin, listChat)
                 binding.recylerview.adapter = adapter
-                println(listChat)
                 val lastItemPosition = adapter.itemCount - 1
                 if (lastItemPosition >= 0) {
                     binding.recylerview.scrollToPosition(lastItemPosition)

@@ -45,13 +45,16 @@
         android:gravity="center_vertical"
         app:hintEnabled="true"
         app:boxBackgroundMode="outline"
+
         app:boxCornerRadiusBottomEnd="5sp">
         <EditText
             android:id="@+id/mesageEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/signup_hint_ten_dang_nhap"
+            android:hint="Enter Message"
             android:paddingStart="30dp"
+            android:imeOptions="actionSend"
+            android:inputType="text"
             android:textColor="@color/black"
             android:textColorHint="@color/hint"
             tools:ignore="TouchTargetSizeCheck" />
@@ -63,6 +66,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
         android:layout_above="@id/messageTill"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         />
 
 

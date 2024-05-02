@@ -21,6 +21,12 @@
         android:theme="@style/Base.Theme.Light"
         tools:targetApi="31">
         <activity
+            android:name=".Administrator.Chats.ChatList"
+            android:exported="false" />
+        <activity
+            android:name=".Administrator.Chats.ChatMainAdmin"
+            android:exported="false" />
+        <activity
             android:name=".Chats.ChatMain"
             android:exported="false" />
         <activity

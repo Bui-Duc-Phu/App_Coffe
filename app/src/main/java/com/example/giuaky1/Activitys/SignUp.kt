@@ -452,7 +452,6 @@ class SignUp : AppCompatActivity() {
                 override fun onTick(millisUntilFinished: Long) {
                     countdownTextview.text = "Thời gian còn lại: ${millisUntilFinished / 1000} giây"
                 }
-
                 override fun onFinish() {
                     val randomDigits = (1..6).map { Random.nextInt(0, 10) }.joinToString("")
                     otp_Key = randomDigits

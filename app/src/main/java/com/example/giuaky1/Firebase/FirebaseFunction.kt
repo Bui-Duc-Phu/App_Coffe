@@ -227,6 +227,8 @@ class FirebaseFunction {
             })
         }
 
+
+
         fun getID(): String {
             val auth: FirebaseAuth = FirebaseAuth.getInstance()
             val firebaseUser = auth.currentUser

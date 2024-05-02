@@ -9,6 +9,7 @@ import androidx.core.view.GravityCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.giuaky1.Activitys.LoginOrSignUp
+import com.example.giuaky1.Administrator.Chats.ChatList
 import com.example.giuaky1.Firebase.FirebaseFunction
 import com.example.giuaky1.R
 import com.example.giuaky1.databinding.ActivityMainAdminBinding
@@ -37,6 +38,9 @@ class MainAdmin : AppCompatActivity() {
     private fun init_() {
         navigationDrawer()
         buttonNavigation()
+        binding.chatBtn.setOnClickListener {
+            startActivity(Intent(this@MainAdmin,ChatList::class.java))
+        }
 
     }
 

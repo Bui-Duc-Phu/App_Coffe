@@ -21,6 +21,7 @@ import com.example.giuaky1.Firebase.FirebaseFunction
 
 import androidx.viewpager2.widget.ViewPager2
 import com.example.giuaky1.Adapters.AdapterViewPager
+import com.example.giuaky1.Chats.ChatMain
 import com.example.giuaky1.Firebase.DataHandler
 import com.example.giuaky1.Firebase.DataHandler.countItemsInCart
 import com.example.giuaky1.Fragments.CartFragment
@@ -79,10 +80,15 @@ class Main : AppCompatActivity(){
 
     private fun init_() {
         navigationDrawer()
-     //   buttonNavigation()
+
         setSupportActionBar(binding.toolbar)
         setupViewPagerAndBottomNav()
         setUpBadge()
+
+        binding.chatBtn.setOnClickListener {
+            startActivity(Intent(this@Main,ChatMain::class.java))
+        }
+
     }
 
     private fun setUpBadge() {
