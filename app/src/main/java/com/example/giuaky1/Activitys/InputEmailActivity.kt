@@ -108,22 +108,16 @@ class InputEmailActivity : AppCompatActivity() {
         properties["mail.smtp.ssl.enable"] = "true"
         properties["mail.smtp.auth"] = "true"
         properties["mail.smtp.socketFactory.class"] = "javax.net.ssl.SSLSocketFactory"
-
         val session = Session.getInstance(properties, object : Authenticator() {
             override fun getPasswordAuthentication(): PasswordAuthentication {
-                return PasswordAuthentication(stringSenderEmail, stringPasswordSenderEmail)
-            }
+                return PasswordAuthentication(stringSenderEmail, stringPasswordSenderEmail) }
         })
-
         val mimeMessage = MimeMessage(session)
-        try {
-            mimeMessage.setRecipient(Message.RecipientType.TO, InternetAddress(stringReceiverEmail))
+        try { mimeMessage.setRecipient(Message.RecipientType.TO, InternetAddress(stringReceiverEmail))
             mimeMessage.subject = "send otp:"
             mimeMessage.setText("OTP : "+ otp)
             mimeMessage.setFrom(InternetAddress(stringSenderEmail, "APP COFFE PTIT"))
-        } catch (e: MessagingException) {
-            e.printStackTrace()
-        }
+        } catch (e: MessagingException) { e.printStackTrace() }
         val thread = Thread {
             try {
                 Transport.send(mimeMessage)
@@ -131,7 +125,6 @@ class InputEmailActivity : AppCompatActivity() {
                 intent.putExtra("OTP",otp)
                 intent.putExtra("type","mail")
                 intent.putExtra("receiver",receiver)
-
                 progressDialog!!.dismiss()
                 startActivity(intent)
                 finish()

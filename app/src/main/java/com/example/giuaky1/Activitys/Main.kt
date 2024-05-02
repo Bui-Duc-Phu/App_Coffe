@@ -24,6 +24,8 @@ import com.example.giuaky1.Adapters.AdapterViewPager
 import com.example.giuaky1.Chats.ChatMain
 import com.example.giuaky1.Firebase.DataHandler
 import com.example.giuaky1.Firebase.DataHandler.countItemsInCart
+import com.example.giuaky1.Firebase.FirebaseService
+import com.example.giuaky1.Firebase.FirebaseUpdate
 import com.example.giuaky1.Fragments.CartFragment
 import com.example.giuaky1.Fragments.HistoryFragment
 import com.example.giuaky1.Fragments.HomeFragment
@@ -40,6 +42,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.messaging.FirebaseMessaging
 import java.util.Locale
 
 
@@ -65,6 +68,20 @@ class Main : AppCompatActivity(){
             DataHandler.userInfo=it
         }
         devices()
+//        FirebaseService.sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
+//        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+//            if (task.isSuccessful) {
+//                FirebaseService.token = task.result
+//            } else {
+//                // Handle token retrieval failure here
+//                Toast.makeText(applicationContext, "get token Fail..", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//
+//        val fireBase: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+//        var userid = fireBase.uid
+//        FirebaseMessaging.getInstance().subscribeToTopic("/topics/$userid")
+
 
 
 
@@ -145,11 +162,7 @@ class Main : AppCompatActivity(){
             themeItem.title = getString(R.string.dark_mode)
             themeItem.setIcon(R.drawable.moon)
         }
-
         val languageItem  = binding.navView.menu.findItem(R.id.setLanguage)
-
-
-
         setSupportActionBar(binding.toolbar)
         toggle = ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close)
         binding.drawerLayout.addDrawerListener(toggle)
@@ -187,6 +200,10 @@ class Main : AppCompatActivity(){
                   googleSignInClient.revokeAccess().addOnCompleteListener(this) {}
                   googleSignInClient.signOut().addOnCompleteListener(this){}
                   auth.signOut()
+                  val firebaseUser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+                  FirebaseUpdate.deleteDriver(firebaseUser.uid.toString()){
+                      if(!it) Toast.makeText(applicationContext, "delete driver failse", Toast.LENGTH_SHORT).show()
+                  }
                   startActivity(Intent(this, LoginOrSignUp::class.java))
               }
             }
@@ -305,6 +322,9 @@ class Main : AppCompatActivity(){
                 googleSignInClient.revokeAccess().addOnCompleteListener(this) {}
                 googleSignInClient.signOut().addOnCompleteListener(this){}
                 auth.signOut()
+                FirebaseUpdate.deleteDriver(firebaseUser.uid.toString()){
+                    if(!it) Toast.makeText(applicationContext, "delete driver failse", Toast.LENGTH_SHORT).show()
+                }
                 startActivity(Intent(this, LoginOrSignUp::class.java))
             }
         }

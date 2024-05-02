@@ -149,7 +149,6 @@ class FirebaseFunction {
                         }
                     }
                 }
-
                 override fun onCancelled(error: DatabaseError) {
                     Toast.makeText(
                         context,
@@ -248,6 +247,8 @@ class FirebaseFunction {
                 }
             })
 
+
+
             fun getUserDataWithUid(uid: String, callback: (Users) -> Unit) {
                 val ref = FirebaseDatabase
                     .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
@@ -277,6 +278,30 @@ class FirebaseFunction {
                 return firebaseUser.uid
             }
             return ""
+        }
+
+        fun getAdmin(context: Context,callback: (ArrayList<Users>) -> Unit){
+            val ref = FirebaseDatabase
+                .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference("Users")
+            ref.addValueEventListener(object : ValueEventListener{
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val list = arrayListOf<Users>()
+                    for(userSnapshot in snapshot.children ){
+                        val usder = userSnapshot.getValue(Users::class.java)
+                        if(usder!!.typeAccount.equals("2") ){
+                            list.add(usder)
+                        }
+                    }
+                    callback(list)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(context, "Get data false . fun getAdmin", Toast.LENGTH_SHORT).show()
+                }
+            })
+
         }
 
 

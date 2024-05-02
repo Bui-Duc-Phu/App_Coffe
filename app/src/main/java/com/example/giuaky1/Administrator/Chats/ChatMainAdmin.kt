@@ -1,6 +1,7 @@
 package com.example.giuaky1.Administrator.Chats
 
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -8,7 +9,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.giuaky1.Chats.Chat
 import com.example.giuaky1.Chats.ChatAdapter
+import com.example.giuaky1.Ultils.RetrofitInstance
 import com.example.giuaky1.databinding.ActivityChatMainBinding
+import com.example.messengerapp.model.NotificationData
+import com.example.messengerapp.model.PushNotification
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -16,9 +20,12 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ChatMainAdmin : AppCompatActivity() {
-     val  adminKey = "ACCOUNT_ADMIN_TYPE_2"
+    val adminKey = "ACCOUNT_ADMIN_TYPE_2"
 
     private val binding: ActivityChatMainBinding by lazy {
         ActivityChatMainBinding.inflate(layoutInflater)
@@ -27,15 +34,17 @@ class ChatMainAdmin : AppCompatActivity() {
     lateinit var reference: DatabaseReference
     lateinit var listChat: ArrayList<Chat>
 
-    lateinit var userId :String
-    lateinit var userName :String
+    lateinit var userId: String
+    lateinit var userName: String
+
+    var topic = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
 
-        firebaseUser =FirebaseAuth.getInstance().currentUser!!
+        firebaseUser = FirebaseAuth.getInstance().currentUser!!
         reference = FirebaseDatabase
             .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
             .getReference("Users")
@@ -54,30 +63,34 @@ class ChatMainAdmin : AppCompatActivity() {
     private fun init_() {
 
 
-
-
         messageEdt(userId)
-        readMessager(adminKey,userId)
+        readMessager(adminKey, userId)
         binding.backBtn.setOnClickListener {
             onBackPressed()
         }
 
 
-
     }
 
-    private fun messageEdt(receiver:String){
+    private fun messageEdt(receiver: String) {
         binding.mesageEdt.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEND ||
-                (event != null && event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER)) {
+                (event != null && event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER)
+            ) {
                 // Xử lý sự kiện ở đây
                 val message = binding.mesageEdt.text.toString()
-                if(message.isEmpty()){
+                if (message.isEmpty()) {
                     Toast.makeText(applicationContext, "Text is empty", Toast.LENGTH_SHORT).show()
-                }else {
-                    sendMessage(adminKey,receiver,message)
+                } else {
+                    sendMessage(adminKey, receiver, message)
+//
+//                    topic = "/topics/$receiver"
+//                    PushNotification(NotificationData( userName!!,message), topic).also {
+//                        sendNotification(it)
+//                    }
                 }
-                val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                val inputMethodManager =
+                    getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMethodManager.hideSoftInputFromWindow(v.windowToken, 0)
                 true // Trả về true để xác nhận rằng sự kiện đã được xử lý
             } else {
@@ -87,18 +100,17 @@ class ChatMainAdmin : AppCompatActivity() {
     }
 
 
-
-    private fun sendMessage(senderId:String,receiverId:String,message:String) {
-        val firebaseUser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+    private fun sendMessage(senderId: String, receiverId: String, message: String) {
+        val firebaseUser: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
         val ref = FirebaseDatabase
             .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
             .getReference("Chats")
-        var handMap : HashMap<String,String> = HashMap()
-        handMap.put("senderId",senderId)
-        handMap.put("receiverId",receiverId)
-        handMap.put("message",message)
-        handMap.put("forDay",message)
-        handMap.put("realtime",message)
+        var handMap: HashMap<String, String> = HashMap()
+        handMap.put("senderId", senderId)
+        handMap.put("receiverId", receiverId)
+        handMap.put("message", message)
+        handMap.put("forDay", message)
+        handMap.put("realtime", message)
         ref.push()
             .setValue(handMap!!)
             .addOnSuccessListener {
@@ -139,4 +151,22 @@ class ChatMainAdmin : AppCompatActivity() {
         })
     }
 
+    private fun sendNotification(notification: PushNotification) = CoroutineScope(Dispatchers.IO).launch {
+        try {
+            val response = RetrofitInstance.api.postNotification(notification)
+            if(response.isSuccessful) {
+                println("notification sucessfull ")
+
+            } else {
+                Log.e("TAG", response.errorBody()!!.string())
+            }
+        } catch(e: Exception) {
+            Log.e("TAG", e.toString())
+            println("notification : " + e.message)
+        }
+
+
+    }
+
 }
+

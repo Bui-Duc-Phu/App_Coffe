@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.navigation.fragment.NavHostFragment
@@ -11,6 +12,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.giuaky1.Activitys.LoginOrSignUp
 import com.example.giuaky1.Administrator.Chats.ChatList
 import com.example.giuaky1.Firebase.FirebaseFunction
+import com.example.giuaky1.Firebase.FirebaseUpdate
 import com.example.giuaky1.R
 import com.example.giuaky1.databinding.ActivityMainAdminBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -31,7 +33,13 @@ class MainAdmin : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
+
         devices()
+
+
+
+
+
         init_()
     }
 
@@ -80,6 +88,7 @@ class MainAdmin : AppCompatActivity() {
                     startActivity(Intent(this@MainAdmin,BillList::class.java))
                 }
                 R.id.nav_logout ->{
+                    val firebaseUser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
                     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                         .requestIdToken(getString(R.string.default_web_client_id))
                         .requestEmail()
@@ -88,6 +97,9 @@ class MainAdmin : AppCompatActivity() {
                     googleSignInClient.revokeAccess().addOnCompleteListener(this) {}
                     googleSignInClient.signOut().addOnCompleteListener(this){}
                     auth.signOut()
+                    FirebaseUpdate.deleteDriver(firebaseUser.uid.toString()){
+                        if(!it) Toast.makeText(applicationContext, "delete driver failse", Toast.LENGTH_SHORT).show()
+                    }
                     startActivity(Intent(this, LoginOrSignUp::class.java))
                 }
             }
@@ -123,6 +135,9 @@ class MainAdmin : AppCompatActivity() {
                 googleSignInClient.revokeAccess().addOnCompleteListener(this) {}
                 googleSignInClient.signOut().addOnCompleteListener(this){}
                 auth.signOut()
+                FirebaseUpdate.deleteDriver(firebaseUser.uid.toString()){
+                    if(!it) Toast.makeText(applicationContext, "delete driver failse", Toast.LENGTH_SHORT).show()
+                }
                 startActivity(Intent(this, LoginOrSignUp::class.java))
             }
         }

@@ -29,13 +29,7 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.viewholer>{
         holder.apply {
             val model = list[position]
             holder.userName.text = model.userName
-//            if(model.profileImage == ""){
-//                holder.image.setImageResource(R.drawable.baseline_account_circle_24)
-//            }else{
-//                Glide.with(content)
-//                    .load(model.profileImage)
-//                    .into(holder.image);
-//            }
+
             holder.layoutUser.setOnClickListener {
                 val intent = Intent(content, ChatMainAdmin::class.java)
                 intent.putExtra("userId",model.userID)

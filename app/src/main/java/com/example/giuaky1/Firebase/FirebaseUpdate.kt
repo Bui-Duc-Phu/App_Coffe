@@ -12,51 +12,33 @@ import com.google.firebase.storage.StorageReference
 
 class FirebaseUpdate {
     companion object{
-        final val PICK_IMAGE_REQUEST:Int = 2020
+
          lateinit var storage:FirebaseStorage
 
          lateinit var refStorage: StorageReference
 
-
-
-        fun DeleteChidl(orderID:String, callback: (Boolean) -> Unit){
+        fun deleteDriver(uid: String, callback: (Boolean) -> Unit) {
             val ref = FirebaseDatabase
-                .getInstance()
-                .getReference("Orders")
-                .child(orderID)
+                .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference("Devices").child(uid)
+
             ref.removeValue()
                 .addOnSuccessListener {
+                    // Xóa thành công
                     callback(true)
                 }
-                .addOnFailureListener {
+                .addOnFailureListener { e ->
+                    // Xóa thất bại
                     callback(false)
-                    Log.d("FirebaseUpdate", "DeleteChidl: bug from DeleteChild on FirebaseUpdate")
                 }
         }
 
-        fun updateOrderState(context:Context,orderID: String, state: String) {
-            val databaseReference = FirebaseDatabase.getInstance().getReference("Orders").child(orderID).child("state")
-            databaseReference.setValue(state)
-                .addOnSuccessListener {
-                    Toast.makeText(context, "Update state Sucessfull", Toast.LENGTH_SHORT).show()
-                }
-                .addOnFailureListener {
-                    Toast.makeText(context, "Update state False", Toast.LENGTH_SHORT).show()
-                }
 
-        }
 
-        fun updateOrderCheckout(context:Context,orderID: String) {
-            val databaseReference = FirebaseDatabase.getInstance().getReference("Orders").child(orderID).child("checkout")
-            databaseReference.setValue("1")
-                .addOnSuccessListener {
 
-                }
-                .addOnFailureListener {
-                    Toast.makeText(context, "Update checkOut False", Toast.LENGTH_SHORT).show()
-                }
 
-        }
+
+
 
         fun uploadImage(filePath: Uri,context: Context,callback: (Boolean) -> Unit){
             storage = FirebaseStorage.getInstance()

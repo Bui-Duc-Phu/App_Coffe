@@ -175,7 +175,6 @@ class Login : AppCompatActivity() {
             .getReference("Users")
             .orderByChild("email")
             .equalTo(email)
-
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (snapshot in dataSnapshot.children) {

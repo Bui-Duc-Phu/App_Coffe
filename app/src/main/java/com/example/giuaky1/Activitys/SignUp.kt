@@ -317,8 +317,6 @@ class SignUp : AppCompatActivity() {
 
 
     private fun register(userName:String,email:String,password:String,phone: String){
-
-
         auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener {
             if(it.isSuccessful){
                 val user: FirebaseUser?  = auth.currentUser

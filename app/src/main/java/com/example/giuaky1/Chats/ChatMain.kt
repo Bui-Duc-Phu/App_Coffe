@@ -1,6 +1,7 @@
 package com.example.giuaky1.Chats
 
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -9,8 +10,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.giuaky1.Firebase.FirebaseFunction
 import com.example.giuaky1.R
+import com.example.giuaky1.Ultils.RetrofitInstance
 import com.example.giuaky1.databinding.ActivityChatMainBinding
+import com.example.messengerapp.model.NotificationData
+import com.example.messengerapp.model.PushNotification
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -18,9 +23,15 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ChatMain : AppCompatActivity() {
      val  adminKey = "ACCOUNT_ADMIN_TYPE_2"
+      var topic = ""
+
+
 
     private val binding: ActivityChatMainBinding by lazy {
         ActivityChatMainBinding.inflate(layoutInflater)
@@ -56,7 +67,7 @@ class ChatMain : AppCompatActivity() {
 
     }
 
-    private fun MessageEdt(userId: String) {
+    private fun MessageEdt(receiverId: String) {
         binding.mesageEdt.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_NULL) {
                 // Xử lý sự kiện ở đây
@@ -64,7 +75,7 @@ class ChatMain : AppCompatActivity() {
                 if (message.isEmpty()) {
                     Toast.makeText(applicationContext, "Text is empty", Toast.LENGTH_SHORT).show()
                 } else {
-                    sendMessage(firebaseUser.uid!!, userId, message)
+                    sendMessage(firebaseUser.uid!!, receiverId, message)
                 }
                 val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMethodManager.hideSoftInputFromWindow(binding.mesageEdt.windowToken, 0)
@@ -125,8 +136,6 @@ class ChatMain : AppCompatActivity() {
                 if (lastItemPosition >= 0) {
                     binding.recylerview.scrollToPosition(lastItemPosition)
                 }
-
-
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -134,5 +143,7 @@ class ChatMain : AppCompatActivity() {
             }
         })
     }
+
+
 
 }
