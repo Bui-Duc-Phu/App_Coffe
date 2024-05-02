@@ -86,13 +86,14 @@ class AddProduct : AppCompatActivity() {
             .addOnSuccessListener {
                 fileRef.getDownloadUrl().addOnSuccessListener { uri ->
                     themDataVaoFirebase(uri.toString())
-                    Toast.makeText(this@AddProduct, "Tải lên thành công", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AddProduct,
+                        getString(R.string.t_i_l_n_th_nh_c_ng), Toast.LENGTH_SHORT).show()
                 }
             }
             .addOnFailureListener {
                 Toast.makeText(
                     this@AddProduct,
-                    "Tải lên thất bại",
+                    getString(R.string.t_i_l_n_th_t_b_i),
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -115,15 +116,10 @@ class AddProduct : AppCompatActivity() {
         val mDatabase = FirebaseDatabase.getInstance().getReference().child("Products")
         val product = coffeModel()
         product.imageUrl = imageUrl
-        Log.d("firebase123123", imageUrl)
         product.category = spinnerCategory!!.getSelectedItem().toString()
-        Log.d("firebase123123", product.category.toString())
         product.name = nameProduct!!.getText().toString()
-        Log.d("firebase123123", product.name.toString())
         product.price = priceProduct!!.getText().toString().toInt()
-        Log.d("firebase123123", product.price.toString())
         product.discount = discount!!.getText().toString().toInt()
-        Log.d("firebase123123", product.discount.toString())
         val sizes = mutableMapOf<String, Size>()
         priceSize1!!.text.toString().takeIf { it.isNotEmpty() }?.let {
             sizes["S"] = Size(it.toInt(), "S")
@@ -138,7 +134,6 @@ class AddProduct : AppCompatActivity() {
             sizes["XL"] = Size(it.toInt(), "XL")
         }
         product.sizes = sizes
-        Log.d("firebase123123", sizes.toString())
         mDatabase.child(product.name!!).setValue(product)
     }
 

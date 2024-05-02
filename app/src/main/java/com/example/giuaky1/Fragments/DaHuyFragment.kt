@@ -15,7 +15,8 @@ import com.example.giuaky1.Firebase.DataHandler
 import com.example.giuaky1.R
 import com.example.giuaky1.Administrator.Adapters.OrderListAdapter
 
-class DaHuyFragment : Fragment() {
+class
+DaHuyFragment : Fragment() {
 
     private val dataHandler = DataHandler
 

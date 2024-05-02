@@ -44,62 +44,47 @@ import java.util.Calendar
 import java.util.Locale
 
 class ProfileFragment : Fragment() {
-    lateinit var binding : FragmentProfileBinding
-
+    lateinit var binding: FragmentProfileBinding
     private var fusedLocationClient: FusedLocationProviderClient? = null
-    private  var filePath : Uri? = null
-    final val PICK_IMAGE_REQUEST:Int = 2020
-
-
-
-
-
-
-
+    private var filePath: Uri? = null
+    final val PICK_IMAGE_REQUEST: Int = 2020
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentProfileBinding.inflate(inflater,container,false)
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-
-
         init_()
         return binding.root
     }
-
     private fun init_() {
         profile()
-
-
         binding.profileImage.setOnClickListener {
             chooseImage()
             binding.saveBtn.visibility = View.VISIBLE
         }
         binding.saveBtn.setOnClickListener {
             filePath?.let { it1 ->
-                FirebaseUpdate.uploadImage(it1,requireContext()){
+                FirebaseUpdate.uploadImage(it1, requireContext()) {
                     binding.saveBtn.visibility = View.GONE
                 }
             }
 
         }
-
-        FirebaseFunction.getPhoneProfile(requireContext(),{phone->
+        FirebaseFunction.getPhoneProfile(requireContext(), { phone ->
             binding.phoneEdt.isEnabled = false
             binding.phoneEdt.setText(phone)
-        },{location->
+        }, { location ->
             binding.locationEdt.isEnabled = false
             binding.locationEdt.setText(location)
-        },{dateOfbirth->
+        }, { dateOfbirth ->
             binding.dateEdt.isEnabled = false
             binding.dateEdt.setText(dateOfbirth)
-        },{name->
+        }, { name ->
             binding.nameEdt.isEnabled = false
             binding.nameEdt.setText(name)
         }
         )
-
         binding.editPhone.setOnClickListener {
             binding.phoneEdt.isEnabled = true
             viewLifecycleOwner.lifecycleScope.launch {
@@ -114,28 +99,25 @@ class ProfileFragment : Fragment() {
         }
         binding.editdate.setOnClickListener {
             binding.dateEdt.isEnabled = true
-                val now = Calendar.getInstance()
-                DatePickerDialog(
-                    requireContext(),
-                    { _, year, monthOfYear, dayOfMonth ->
-                        val selectedDate = Calendar.getInstance()
-                        selectedDate.set(Calendar.YEAR, year)
-                        selectedDate.set(Calendar.MONTH, monthOfYear)
-                        selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                        val dateStr = SimpleDateFormat(
-                            "dd/MM/yyyy",
-                            Locale.getDefault()
-                        ).format(selectedDate.time)
-
-                        binding.dateEdt.setText(dateStr)
-                    },
-                    now.get(Calendar.YEAR),
-                    now.get(Calendar.MONTH),
-                    now.get(Calendar.DAY_OF_MONTH)
-                ).show()
-
+            val now = Calendar.getInstance()
+            DatePickerDialog(
+                requireContext(),
+                { _, year, monthOfYear, dayOfMonth ->
+                    val selectedDate = Calendar.getInstance()
+                    selectedDate.set(Calendar.YEAR, year)
+                    selectedDate.set(Calendar.MONTH, monthOfYear)
+                    selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    val dateStr = SimpleDateFormat(
+                        "dd/MM/yyyy",
+                        Locale.getDefault()
+                    ).format(selectedDate.time)
+                    binding.dateEdt.setText(dateStr)
+                },
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
+            ).show()
         }
-
         binding.save.setOnClickListener {
             checked()
         }
@@ -147,25 +129,19 @@ class ProfileFragment : Fragment() {
             binding.save.visibility = View.VISIBLE
         }
         isNotEnableEditText()
-
-
-
-
-
-
     }
-
     fun isNotEnableEditText() {
         binding.mainLayout.setOnTouchListener { v, event ->
             if (requireActivity().currentFocus != null) {
-                val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm =
+                    requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(requireActivity().currentFocus!!.windowToken, 0)
                 requireActivity().currentFocus!!.clearFocus()
             }
             true
         }
-
-        binding.mainLayout.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        binding.mainLayout.viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 val r = Rect()
                 binding.mainLayout.getWindowVisibleDisplayFrame(r)
@@ -173,56 +149,45 @@ class ProfileFragment : Fragment() {
                 val keypadHeight = screenHeight - r.bottom
                 if (keypadHeight > screenHeight * 0.15) {
                 } else {
-
                     binding.phoneEdt.isEnabled = false
                     binding.locationEdt.isEnabled = false
                     binding.dateEdt.isEnabled = false
                     binding.save.visibility = View.GONE
-
                     binding.mainLayout.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 }
 
             }
         })
     }
-
-
     fun openKeyboardAndSetCursorPosition(context: Context, editText: EditText) {
         editText.requestFocus() // Focus vào EditText
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT) // Hiển thị bàn phím
-
-        // Lưu ý rằng đoạn code sau sẽ không được thực hiện ngay lập tức, vì vậy cần sử dụng postDelayed
         editText.postDelayed({
-            editText.setSelection(editText.text.length) // Di chuyển con trỏ đến cuối văn bản trong EditText
-        }, 200) // Đợi 200ms trước khi thực hiện
+            editText.setSelection(editText.text.length)
+        }, 200)
     }
-
-
-    fun checked(){
+    fun checked() {
         var phone = binding.phoneEdt.text.toString().trim()
         var location = binding.locationEdt.text.toString().trim()
         var date = binding.dateEdt.text.toString().trim()
         var name = binding.nameEdt.text.toString().trim()
-        var mail= binding.emailTv.text.toString().trim()
-        if(phone.isEmpty()) phone = ""
-        if(location.isEmpty()) location=""
-        if (date.isEmpty()) date=""
-        FirebaseUpdate.updateDataProfile(requireContext(),phone,location,date,name,mail)
-
-        if(binding.phoneEdt.isEnabled == true){
+        var mail = binding.emailTv.text.toString().trim()
+        if (phone.isEmpty()) phone = ""
+        if (location.isEmpty()) location = ""
+        if (date.isEmpty()) date = ""
+        FirebaseUpdate.updateDataProfile(requireContext(), phone, location, date, name, mail)
+        if (binding.phoneEdt.isEnabled == true) {
             binding.phoneEdt.isEnabled = false
         }
-        if(binding.locationEdt.isEnabled == true){
+        if (binding.locationEdt.isEnabled == true) {
             binding.locationEdt.isEnabled = false
         }
-        if(binding.dateEdt.isEnabled == true){
+        if (binding.dateEdt.isEnabled == true) {
             binding.locationEdt.isEnabled = false
         }
-        binding.save.visibility=View.GONE
+        binding.save.visibility = View.GONE
     }
-
-
     private fun updateAddressFromLocation() {
         if (ActivityCompat.checkSelfPermission(
                 requireActivity(),
@@ -249,7 +214,6 @@ class ProfileFragment : Fragment() {
                     getAddressFromCoordinates(location.latitude, location.longitude)
                 }
             }
-
     }
 
     private fun getAddressFromCoordinates(latitude: Double, longitude: Double) {
@@ -260,7 +224,6 @@ class ProfileFragment : Fragment() {
                 try {
                     val addressObject = response.getJSONObject("address")
                     val road = addressObject.getString("road")
-                    //       String houseNumber = addressObject.optString("house_number", "");
                     val quarter = addressObject.optString("quarter", "")
                     val suburb = addressObject.optString("suburb", "")
                     val city = addressObject.getString("city")
@@ -280,58 +243,48 @@ class ProfileFragment : Fragment() {
                 }
             }) { error: VolleyError ->
                 Log.d("Error.Response", error.toString())
-                Toast.makeText(requireActivity(), "Không thể lấy địa chỉ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), "Không thể lấy địa chỉ", Toast.LENGTH_SHORT)
+                    .show()
             }
         Volley.newRequestQueue(requireActivity()).add(jsonObjectRequest)
     }
-    private fun chooseImage(){
-        val intent : Intent = Intent()
-        intent.type =   "image/*"
+    private fun chooseImage() {
+        val intent: Intent = Intent()
+        intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent,"select Image..."),PICK_IMAGE_REQUEST)
+        startActivityForResult(Intent.createChooser(intent, "select Image..."), PICK_IMAGE_REQUEST)
     }
-
-
-    override fun onActivityResult(requestCode:Int, resultCode:Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == PICK_IMAGE_REQUEST && requestCode != null){
+        if (requestCode == PICK_IMAGE_REQUEST && requestCode != null) {
             filePath = data!!.data
             try {
-                var bitmap : Bitmap = MediaStore.Images.Media.getBitmap(context?.contentResolver,filePath)
+                var bitmap: Bitmap =
+                    MediaStore.Images.Media.getBitmap(context?.contentResolver, filePath)
                 binding.profileImage.setImageBitmap(bitmap)
-            }catch (e: IOException){
+            } catch (e: IOException) {
                 e.printStackTrace()
             }
         }
     }
 
     private fun profile() {
-        val firebaseUser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+        val firebaseUser: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
         val storageRef = FirebaseStorage.getInstance().reference.child("image/")
         val imageRef = storageRef.child(firebaseUser.uid)
         imageRef.downloadUrl.addOnSuccessListener { uri ->
-            if(uri.toString() == null){
+            if (uri.toString() == null) {
                 binding.profileImage.setImageResource(R.drawable.ic_launcher_foreground)
-            }else{
+            } else {
                 Glide.with(this@ProfileFragment)
                     .load(uri.toString())
                     .into(binding.profileImage)
             }
-
         }
         FirebaseFunction
-            .getUserDataWithUid(firebaseUser.uid){
-            binding.userName.text = it.userName
-            binding.emailTv.text = it.email
-        }
-
-
-
-
-
+            .getUserDataWithUid(firebaseUser.uid) {
+                binding.userName.text = it.userName
+                binding.emailTv.text = it.email
+            }
     }
-
-
-
-
 }

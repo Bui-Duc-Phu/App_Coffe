@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingStart="10dp"
+    android:background="@color/white"
+    android:paddingEnd="10dp"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:id="@+id/backImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back"
+            android:layout_gravity="center_vertical"
+            />
+        <TextView
+            android:id="@+id/tiltleTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chi tiết đơn hàng"
+            android:textSize="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center_vertical"
+            android:textStyle="bold"
+            android:textColor="#EF683D"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/id_pay_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:layout_marginStart="10dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/IDTv1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ID: #022345010"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            tools:ignore="TextSizeCheck" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/date_time_layout"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/timeTv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/time"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            tools:ignore="TextSizeCheck" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/productTv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Danh sách đồ uống"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginStart="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/stt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="STT"
+            android:textSize="16dp"
+            android:textColor="@color/nau_nhat"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/productName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:text="Tên Coffe"
+            android:textColor="@color/nau_nhat"
+            />
+        <TextView
+            android:id="@+id/size"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:text="Size"
+            android:textColor="@color/nau_nhat"
+            />
+        <TextView
+            android:id="@+id/quantity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:text="Số lượng"
+            android:textColor="@color/nau_nhat"
+            />
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:text="Giá"
+            android:textColor="@color/nau_nhat"
+            />
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/product_recylerview1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        tools:listitem="@layout/item_detail_order_admin"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Phí ship : 20.000"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginStart="10dp"
+        android:textSize="15dp"
+        android:layout_marginTop="10dp"
+        />
+    <TextView
+        android:id="@+id/payTv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Paid"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        tools:ignore="TextSizeCheck" />
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/shiper_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:layout_marginStart="10dp"
+        android:gravity="start"
+        >
+        <ImageView
+            android:id="@+id/truckImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/truck"
+            android:layout_marginTop="10dp"
+            />
+        <TextView
+            android:id="@+id/shiperTv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:maxLines="2"
+            android:text="Shipper : Nguyễn Văn A\nSĐT : 0947945596"
+            android:textSize="16dp"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/receiverPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SĐT người nhận : 0332634787"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginStart="10dp"
+        android:textSize="15dp"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:id="@+id/receiverLocation"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:text="Địa chỉ : 97/man thiện Quân 9"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_below="@id/receiverPhone"
+        android:layout_marginStart="10dp"
+        android:textSize="15dp"
+        />
+
+    <TextView
+        android:id="@+id/sumPrice1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:layout_marginStart="10dp"
+        android:text="Tổng : 35.000"
+        android:textColor="@color/black"
+        android:fontFamily="@font/archivo_black"
+        android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnPDF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="Tải về hóa đơn"
+            android:textSize="20dp"
+            android:backgroundTint="@color/black"
+            android:background="@drawable/login"
+            android:textStyle="bold"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -113,7 +113,7 @@ class HistoryFragment : Fragment() {
                         if (selectedDate.time.after(endDate)) {
                             Toast.makeText(
                                 view.context,
-                                "Ngày bắt đầu không thể sau ngày kết thúc",
+                                getString(R.string.ng_y_b_t_u_kh_ng_th_sau_ng_y_k_t_th_c),
                                 Toast.LENGTH_SHORT
                             ).show()
                             return@DatePickerDialog
@@ -147,7 +147,7 @@ class HistoryFragment : Fragment() {
                         if (selectedDate.time.before(startDate)) {
                             Toast.makeText(
                                 view.context,
-                                "Ngày kết thúc không thể trước ngày bắt đầu",
+                                getString(R.string.ng_y_k_t_th_c_kh_ng_th_tr_c_ng_y_b_t_u),
                                 Toast.LENGTH_SHORT
                             ).show()
                             return@DatePickerDialog
@@ -304,7 +304,7 @@ fun createPdf(startDate: String, endDate: String) {
                 requireActivity().runOnUiThread {
                     Snackbar.make(
                         requireView(),
-                        "Không có đơn hàng nào trong khoảng thời gian này!",
+                        getString(R.string.kh_ng_c_n_h_ng_n_o_trong_kho_ng_th_i_gian_n_y),
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
@@ -356,7 +356,7 @@ fun createPdf(startDate: String, endDate: String) {
                             requireActivity().runOnUiThread {
                                 val snackbar = Snackbar.make(
                                     requireView(),
-                                    "Xuất file PDF thành công!",
+                                    getString(R.string.xu_t_file_pdf_th_nh_c_ng),
                                     Snackbar.LENGTH_LONG
                                 )
                                 snackbar.show()
@@ -381,10 +381,10 @@ fun createPdf(startDate: String, endDate: String) {
     }
 }
     private fun setUpTabLayout() {
-        tabLayout.addTab(tabLayout.newTab().setText("Chờ xác nhận"))
-        tabLayout.addTab(tabLayout.newTab().setText("Đang giao hàng"))
-        tabLayout.addTab(tabLayout.newTab().setText("Đã giao"))
-        tabLayout.addTab(tabLayout.newTab().setText("Đã hủy"))
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.ch_x_c_nh_n)))
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.ang_giao_h_ng)))
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.giao)))
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.h_y)))
         val adapter = FragmentAdapter(childFragmentManager, lifecycle)
         viewPager.adapter = adapter
 

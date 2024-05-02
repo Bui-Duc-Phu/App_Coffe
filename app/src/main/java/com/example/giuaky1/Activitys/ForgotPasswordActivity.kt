@@ -11,6 +11,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import com.example.giuaky1.Firebase.FirebaseFunction
 import com.example.giuaky1.Models.Users
+import com.example.giuaky1.R
 import com.example.giuaky1.databinding.ActivityForgotPasswordBinding
 import com.example.giuaky1.databinding.DialogCustomForgotPasswordTrueBinding
 import com.google.firebase.auth.EmailAuthProvider
@@ -32,9 +33,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
     lateinit var firebaseUser: FirebaseUser
     private var progressDialog: ProgressDialog? = null
     lateinit var receiver: String
-    lateinit var uri:String
-
-
+    lateinit var uri: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,9 +42,6 @@ class ForgotPasswordActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         receiver = intent.getStringExtra("receiver").toString()
         System.out.println(receiver)
-
-
-
         init_()
     }
 
@@ -59,31 +55,32 @@ class ForgotPasswordActivity : AppCompatActivity() {
         val newPassword = binding.passwordEdt.text.toString()
         val retypePassword = binding.retypePassword.text.toString()
 
-        when{
-            TextUtils.isEmpty(newPassword) -> binding.passwordEdt.setError("Chưa nhập mật khẩu")
-            TextUtils.isEmpty(retypePassword) -> binding.retypePassword.setError("Chưa nhập mật khẩu")
-            !newPassword.equals(retypePassword) -> binding.retypePassword.setError("chưa đồng bộ")
+        when {
+            TextUtils.isEmpty(newPassword) -> binding.passwordEdt.setError(getString(R.string.chua_nhap_pass))
+            TextUtils.isEmpty(retypePassword) -> binding.retypePassword.setError(getString(R.string.chua_nhap_pass))
+            !newPassword.equals(retypePassword) -> binding.retypePassword.setError(getString(R.string.chua_dong_bo))
             else -> {
                 progressDialog = ProgressDialog.show(this, "App", "Loading...", true)
-            val ref  =  FirebaseDatabase
+                val ref = FirebaseDatabase
                     .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
                     .getReference("Users")
-            ref.addValueEventListener(object : ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
+                ref.addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
 
-                    for (snapshot in snapshot.children) {
-                        val user = snapshot.getValue(Users::class.java)
-                        if(user!!.email.equals(receiver)) {
-                            uri = user.userID
-                            updatePassword(receiver, user.password, newPassword)
+                        for (snapshot in snapshot.children) {
+                            val user = snapshot.getValue(Users::class.java)
+                            if (user!!.email.equals(receiver)) {
+                                uri = user.userID
+                                updatePassword(receiver, user.password, newPassword)
+                            }
                         }
                     }
-                }
-                override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(applicationContext, "", Toast.LENGTH_SHORT).show()
 
-                }
-            })
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(applicationContext, "", Toast.LENGTH_SHORT).show()
+
+                    }
+                })
 
             }
         }
@@ -104,24 +101,32 @@ class ForgotPasswordActivity : AppCompatActivity() {
                                     currentUser.updatePassword(newPassword)
                                         .addOnCompleteListener { updatePasswordTask ->
                                             if (updatePasswordTask.isSuccessful) {
-                                                val ref  =  FirebaseDatabase
+                                                val ref = FirebaseDatabase
                                                     .getInstance("https://coffe-app-19ec3-default-rtdb.asia-southeast1.firebasedatabase.app/")
                                                     .getReference("Users")
                                                     .child(currentUser.uid)
                                                     .child("password")
                                                 ref.setValue(newPassword)
-                                                    .addOnCompleteListener {task->
-                                                        if(task.isSuccessful){
+                                                    .addOnCompleteListener { task ->
+                                                        if (task.isSuccessful) {
                                                             progressDialog!!.dismiss()
                                                             dialog_(1)
                                                             Handler().postDelayed({
                                                                 dialog_(0)
-                                                                FirebaseFunction.WriteDeviceId(applicationContext,  auth.currentUser!!.uid.toString() )
-                                                                startActivity(Intent(this@ForgotPasswordActivity, Main::class.java))
+                                                                FirebaseFunction.WriteDeviceId(
+                                                                    applicationContext,
+                                                                    auth.currentUser!!.uid.toString()
+                                                                )
+                                                                startActivity(
+                                                                    Intent(
+                                                                        this@ForgotPasswordActivity,
+                                                                        Main::class.java
+                                                                    )
+                                                                )
                                                                 finish()
                                                             }, 2000)
 
-                                                        }else{
+                                                        } else {
                                                             Toast.makeText(
                                                                 applicationContext,
                                                                 "Failed to set pasword on realtime: ${task.exception?.message}",
@@ -165,14 +170,6 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 }
             }
     }
-
-
-
-
-
-
-
-
 
 
     private fun dialog_(a: Int) {

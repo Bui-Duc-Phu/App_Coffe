@@ -254,15 +254,15 @@ class Main : AppCompatActivity(){
         }
 
         val confirmationDialog = AlertDialog.Builder(this)
-            .setTitle("Cập nhật theme")
-            .setMessage("Bạn có muốn cập nhật theme không?")
-            .setPositiveButton("Yes") { dialog, _ ->
+            .setTitle(getString(R.string.c_p_nh_t_theme))
+            .setMessage(getString(R.string.b_n_c_mu_n_c_p_nh_t_theme_kh_ng))
+            .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
                 dialog.dismiss()
                 AppCompatDelegate.setDefaultNightMode(newNightMode)
                 updateDataMode()
                 recreate()
             }
-            .setNegativeButton("No") { dialog, _ ->
+            .setNegativeButton(getString(R.string.no)) { dialog, _ ->
                 dialog.dismiss()
             }
             .setOnCancelListener {
@@ -275,7 +275,7 @@ class Main : AppCompatActivity(){
 
     private fun updateDataMode(){
         val dbHelper = DBHelper(this,null)
-        if(dbHelper.getModeList()[0].toString().equals(ModeTheme.dark.toString())){
+        if(dbHelper.getModeList()[0] == ModeTheme.dark.toString()){
             dbHelper.updateMode("1", ModeTheme.light.toString())
         }else{
             dbHelper.updateMode("1", ModeTheme.dark.toString())
@@ -312,7 +312,7 @@ class Main : AppCompatActivity(){
 
    private fun  devices(){
        val firebaseUser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
-        FirebaseFunction.evenLogOut(applicationContext,firebaseUser.uid.toString()){
+        FirebaseFunction.evenLogOut(applicationContext, firebaseUser.uid){
             if(!it){
                 val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestIdToken(getString(R.string.default_web_client_id))

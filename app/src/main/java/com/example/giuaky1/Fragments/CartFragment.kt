@@ -26,6 +26,7 @@ class CartFragment : Fragment() {
     private var btnCreateOrder: Button? = null
     private var llBuy: LinearLayout? = null
     private val myCartAdapter = CartAdapter(ArrayList())
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater,

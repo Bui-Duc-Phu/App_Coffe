@@ -136,7 +136,8 @@ class LoginOrSignUp : AppCompatActivity() {
                 if (!email.isNullOrEmpty()) {
                     checkMail(email!!) {
                         if(it){
-                            Toast.makeText(applicationContext, "Email này đã được đăng ký 1", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(applicationContext,
+                                getString(R.string.email_n_y_c_ng_k), Toast.LENGTH_SHORT).show()
                             googleSignInClient = GoogleSignIn.getClient(this, gso)
                             googleSignInClient.revokeAccess().addOnCompleteListener(this) {}
                             googleSignInClient.signOut().addOnCompleteListener(this){}
@@ -146,7 +147,8 @@ class LoginOrSignUp : AppCompatActivity() {
                     }
 
                 } else {
-                    Toast.makeText(this, "Không thể truy cập thông tin email của tài khoản Google này.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,
+                        getString(R.string.kh_ng_th_truy_c_p_th_ng_tin_email_c_a_t_i_kho_n_google_n_y), Toast.LENGTH_SHORT).show()
                 }
             }
         } else {
@@ -232,7 +234,8 @@ class LoginOrSignUp : AppCompatActivity() {
                 callback(isEmailExists)
             }
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(applicationContext, "Lỗi khi truy xuất dữ liệu từ Firebase", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext,
+                    getString(R.string.l_i_khi_truy_xu_t_d_li_u_t_firebase), Toast.LENGTH_SHORT).show()
                 callback(true)
             }
         })

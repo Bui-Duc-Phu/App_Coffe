@@ -10,7 +10,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.giuaky1.Administrator.Activitys.DetailOrder
+import com.example.giuaky1.Administrator.Activitys.DetailOrderAdmin
 import com.example.giuaky1.Firebase.DataHandler
 import com.example.giuaky1.Models.CartModel
 import com.example.giuaky1.Models.Order
@@ -53,7 +53,7 @@ class OrderListAdapter(private var orderList: List<Order>) : RecyclerView.Adapte
         }
         holder.detailsButton.setOnClickListener {
             DataHandler.getOrderDetails(order.orderID, order.uID) { orderDetail ->
-                val intent = Intent(it.context, DetailOrder::class.java)
+                val intent = Intent(it.context, DetailOrderAdmin::class.java)
                 intent.putExtra("orderDetail", orderDetail)
                 it.context.startActivity(intent)
             }

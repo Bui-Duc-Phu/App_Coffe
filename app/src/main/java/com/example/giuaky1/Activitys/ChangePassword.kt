@@ -10,6 +10,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.giuaky1.Firebase.FirebaseFunction
+import com.example.giuaky1.R
 import com.example.giuaky1.databinding.ActivityChangePasswrodBinding
 import com.example.giuaky1.databinding.DialogCustomForgotPasswordTrueBinding
 import com.google.firebase.auth.EmailAuthProvider
@@ -52,16 +53,16 @@ class ChangePassword : AppCompatActivity() {
         val confirmPasswrod = binding.confirmPasswordEdt.text.toString().trim()
         when{
             TextUtils.isEmpty(oldPassword) ->{ progressDialog?.dismiss()
-                Toast.makeText(this, "Vui lòng nhập lại password", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.nhap_lai_pass), Toast.LENGTH_SHORT).show()
             }
             TextUtils.isEmpty(newPasswrod) ->{ progressDialog?.dismiss()
-                Toast.makeText(this, " Hãy nhập mật khẩu mới", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.nhap_pass_new), Toast.LENGTH_SHORT).show()
             }
             TextUtils.isEmpty(confirmPasswrod) ->{ progressDialog?.dismiss()
-                Toast.makeText(this, "Hãy nhập lại mật khẩu", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.pls_write_pass), Toast.LENGTH_SHORT).show()
             }
             !newPasswrod.equals(confirmPasswrod) -> {progressDialog?.dismiss()
-                Toast.makeText(this, "nhập lại mật khẩu không chính xác", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.pass_incorrect), Toast.LENGTH_SHORT).show()
             }
             else -> {
                 changePasswrod(oldPassword,newPasswrod,confirmPasswrod)
@@ -77,7 +78,8 @@ class ChangePassword : AppCompatActivity() {
                     val email = auth.currentUser!!.email.toString()
                     updatePassword(email,oldPassword,newPasswrod)
                 }else{
-                    Toast.makeText(applicationContext, "Password không chính xác!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext,
+                        getString(R.string.pass_not_correct), Toast.LENGTH_SHORT).show()
                 }
         }
     }

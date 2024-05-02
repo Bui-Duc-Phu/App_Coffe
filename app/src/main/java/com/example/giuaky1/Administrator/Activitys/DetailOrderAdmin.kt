@@ -27,12 +27,12 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class DetailOrder : AppCompatActivity() {
+class DetailOrderAdmin : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail_order)
+        setContentView(R.layout.activity_detail_order_admin)
         val orderDetail = intent.getSerializableExtra("orderDetail") as Order
         val IDTv = findViewById<TextView>(R.id.IDTv1)
         val payTv = findViewById<TextView>(R.id.payTv1)
@@ -44,7 +44,6 @@ class DetailOrder : AppCompatActivity() {
         val productRecylerview = findViewById<RecyclerView>(R.id.product_recylerview1)
         val btnBack = findViewById<ImageView>(R.id.backImage)
         val btnPDF = findViewById<Button>(R.id.btnPDF)
-        val btnReset = findViewById<Button>(R.id.btnReset)
         IDTv.text = getString(R.string.id, orderDetail.orderID)
         payTv.text = getString(R.string.ph_ng_th_c_thanh_to_n, orderDetail.pay)
         timeTv.text = getString(R.string.th_i_gian, orderDetail.time)
@@ -128,19 +127,6 @@ class DetailOrder : AppCompatActivity() {
                     }
                 }
             }.start()
-        }
-        btnReset.setOnClickListener {
-            val cartReference = FirebaseDatabase.getInstance().getReference("Carts").child(DataHandler.getUID())
-            cartReference.removeValue().addOnSuccessListener {
-
-            }
-            for(productModel in orderDetail.products) {
-                val productID = productModel.name + "_" + productModel.size
-               cartReference.child(productID).setValue(productModel)
-            }
-            Toast.makeText(this,
-                getString(R.string.th_m_l_i_t_t_c_s_n_ph_m_v_o_gi_h_ng), Toast.LENGTH_SHORT).show()
-            finish()
         }
     }
 

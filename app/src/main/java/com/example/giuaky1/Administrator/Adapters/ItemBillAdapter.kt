@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.giuaky1.Administrator.Activitys.DetailOrder
+import com.example.giuaky1.Administrator.Activitys.DetailOrderAdmin
 import com.example.giuaky1.Administrator.model.ItemBill
 import com.example.giuaky1.Firebase.DataHandler
 import com.example.giuaky1.Models.Order
@@ -33,7 +33,7 @@ class ItemBillAdapter(private var billList: List<ItemBill>) : RecyclerView.Adapt
         holder.tvPrice.text = currentItem.price.toString()
         holder.itemView.setOnClickListener {
             DataHandler.getOrderDetails(currentItem.orderID, currentItem.uID) { orderDetail ->
-                val intent = Intent(it.context, DetailOrder::class.java)
+                val intent = Intent(it.context, DetailOrderAdmin::class.java)
                 intent.putExtra("orderDetail", orderDetail)
                 it.context.startActivity(intent)
             }

@@ -24,6 +24,7 @@ import com.example.giuaky1.Firebase.OTP_Athen_Phone
 import com.example.giuaky1.Interfaces.OTPEven
 
 import com.example.giuaky1.Models.Users
+import com.example.giuaky1.R
 import com.example.giuaky1.databinding.ActivitySignUpBinding
 import com.example.giuaky1.databinding.DialogChoseTypeAuthenBinding
 import com.example.giuaky1.databinding.DialogCustomBinding
@@ -99,36 +100,45 @@ class SignUp : AppCompatActivity() {
                 when{
                     it == 1 -> {
                         progressDialog!!.dismiss()
-                        Toast.makeText(applicationContext, "tên đăng nhập đã tồn tại", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext,
+                            getString(R.string.t_n_ng_nh_p_t_n_t_i), Toast.LENGTH_SHORT).show()
                     }
                     it == 2 ->{
                         progressDialog!!.dismiss()
-                        Toast.makeText(applicationContext, "Email đã được đăng ký", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext,
+                            getString(R.string.email_c_ng_k), Toast.LENGTH_SHORT).show()
                     }
 
                     it>2-> {
                         progressDialog!!.dismiss()
-                        Toast.makeText(applicationContext, "Email & tên đăng nhập đã được đăng ký", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext,
+                            getString(R.string.email_t_n_ng_nh_p_c_ng_k), Toast.LENGTH_SHORT).show()
                     }
                     else -> {
                         when {
                             TextUtils.isEmpty(userName) ->{ progressDialog!!.dismiss()
-                                Toast.makeText(this, "Bạn chưa nhập tên đăng nhập", Toast.LENGTH_SHORT).show()}
+                                Toast.makeText(this,
+                                    getString(R.string.b_n_ch_a_nh_p_t_n_ng_nh_p), Toast.LENGTH_SHORT).show()}
                             TextUtils.isEmpty(Email) -> {progressDialog!!.dismiss()
-                                Toast.makeText(this, "Bạn chưa nhập Email", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this,
+                                    getString(R.string.b_n_ch_a_nh_p_email), Toast.LENGTH_SHORT).show()
                             }
                             TextUtils.isEmpty(phone) -> {progressDialog!!.dismiss()
-                                Toast.makeText(this, "Bạn chưa nhập Số Điện Thoại", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this,
+                                    getString(R.string.b_n_ch_a_nh_p_s_i_n_tho_i), Toast.LENGTH_SHORT).show()
                             }
                             TextUtils.isEmpty(password) ->{ progressDialog!!.dismiss()
-                                Toast.makeText(this, "Password not null", Toast.LENGTH_SHORT).show()}
+                                Toast.makeText(this,
+                                    getString(R.string.password_not_null_1), Toast.LENGTH_SHORT).show()}
                             !Patterns.EMAIL_ADDRESS.matcher(Email).matches() ->{progressDialog!!.dismiss()
-                                Toast.makeText(this,"không đúng định dang mail", Toast.LENGTH_SHORT).show() }
+                                Toast.makeText(this,
+                                    getString(R.string.kh_ng_ng_nh_dang_mail), Toast.LENGTH_SHORT).show() }
                             else -> {
                                 FirebaseFunction.phoneAlreadyExists(this,phone){
                                     if(it){
                                         progressDialog!!.dismiss()
-                                        Toast.makeText(this,"SĐT đã được đăng ký", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(this,
+                                            getString(R.string.s_t_c_ng_k), Toast.LENGTH_SHORT).show()
                                     }else {
                                         choseTypeAuthen(1){
                                             when(it){
@@ -207,7 +217,8 @@ class SignUp : AppCompatActivity() {
             dialogView.XacthucBtn.setOnClickListener {
                 val otp  = dialogView.pinview.text.toString()
                 if(otp.isEmpty() || otp.length > 6){
-                    Toast.makeText(applicationContext, "Hãy nhập đầy đủ otp", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext,
+                        getString(R.string.h_y_nh_p_y_otp), Toast.LENGTH_SHORT).show()
                 }else{
                     otp_User = otp
                     callback(true)
@@ -248,13 +259,14 @@ class SignUp : AppCompatActivity() {
                 val otp  = dialogView.pinview.text.toString()
                 println("otp :  "+ otp)
                 if(otp.isEmpty() || otp.length > 6){
-                    Toast.makeText(applicationContext, "Hãy nhập đầy đủ otp", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, getString(R.string.h_y_nh_p_y_otp), Toast.LENGTH_SHORT).show()
                 }else{
                     if(otp_Key.equals(otp)){
                         dialog.dismiss()
                         callback(true)
                     }else{
-                        Toast.makeText(applicationContext, "OTP chưu chính xác", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext,
+                            getString(R.string.otp_ch_a_ch_nh_x_c), Toast.LENGTH_SHORT).show()
                         dialogView.pinview.setText("")
                     }
                 }
@@ -345,7 +357,8 @@ class SignUp : AppCompatActivity() {
                 FirebaseUpdate.updateDataProfile(this,phone,"","","","")
             }else{
                 progressDialog!!.dismiss()
-                Toast.makeText(applicationContext, "signUp false,Email này đã được đăng ký", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext,
+                    getString(R.string.signup_false_email_n_y_c_ng_k), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -378,7 +391,8 @@ class SignUp : AppCompatActivity() {
                     callback(isEmailExists + isUserNameExists)
                 }
                 override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(applicationContext, "checkUsername connect to firebase false : "+error.message , Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext,
+                        getString(R.string.checkusername_connect_to_firebase_false)+error.message , Toast.LENGTH_SHORT).show()
                     callback(0)
                 }
             })
@@ -453,7 +467,7 @@ class SignUp : AppCompatActivity() {
                 override fun onFinish() {
                     val randomDigits = (1..6).map { Random.nextInt(0, 10) }.joinToString("")
                     otp_Key = randomDigits
-                    countdownTextview.text = "OTP đã hết hạn,hãy tạo tại OTP!"
+                    countdownTextview.text = getString(R.string.otp_h_t_h_n_h_y_t_o_t_i_otp)
                 }
             }
             countDownTimer.start()

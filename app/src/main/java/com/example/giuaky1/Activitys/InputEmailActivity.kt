@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.example.giuaky1.Firebase.FirebaseFunction
 import com.example.giuaky1.Firebase.OTP_Athen_Phone
 import com.example.giuaky1.Interfaces.OTPEven
+import com.example.giuaky1.R
 import com.example.giuaky1.Ultils.MyCategory
 import com.example.giuaky1.databinding.ActivityInputEmailBinding
 import java.util.Properties
@@ -56,18 +57,20 @@ class InputEmailActivity : AppCompatActivity() {
                                     if(user.typeAccount.equals("1")){
                                         sendOTPPhone(receiver,user.email)
                                     }else{
-                                        Toast.makeText(applicationContext, "SDT Đã liên kết google", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(applicationContext,
+                                            getString(R.string.sdt_li_n_k_t_google), Toast.LENGTH_SHORT).show()
                                     }
 
                                 }
                             }
                         }else{
-                            Toast.makeText(applicationContext, "SĐT chưa được đăng ký", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(applicationContext,
+                                getString(R.string.s_t_ch_a_c_ng_k), Toast.LENGTH_SHORT).show()
                         }
                     }
 
                 }
-            } else binding.emailEdt.setError("Bạn chưa nhập thông tin")
+            } else binding.emailEdt.setError(getString(R.string.b_n_ch_a_nh_p_th_ng_tin))
 
         }
     }

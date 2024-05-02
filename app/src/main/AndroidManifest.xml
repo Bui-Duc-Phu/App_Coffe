@@ -45,6 +45,9 @@
             android:name=".Administrator.Activitys.DetailOrder"
             android:exported="false" />
         <activity
+            android:name=".Administrator.Activitys.DetailOrderAdmin"
+            android:exported="false" />
+        <activity
             android:name=".Administrator.Activitys.OrderList"
             android:exported="false" />
         <activity
