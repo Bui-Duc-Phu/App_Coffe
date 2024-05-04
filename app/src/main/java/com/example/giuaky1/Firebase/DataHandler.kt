@@ -426,7 +426,19 @@ productQuantityList.add(SanPham(dateStr, quantity, productNameWithoutSuffix))
         callback(productQuantityList)
     }
 
+    fun getAddress(callback: (String) -> Unit) {
+        val ref = FirebaseDatabase.getInstance().getReference("ProfileUser").child(getUID())
+        ref.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val address = snapshot.child("location").value.toString()
+                callback(address)
+            }
 
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("HomeDoanhThu", "onCancelled: " + error.message)
+            }
+        })
+    }
     fun getAllBill(callback: (List<ItemBill>) -> Unit) {
         val ordersRef = FirebaseDatabase.getInstance().getReference("Orders")
         ordersRef.addValueEventListener(object : ValueEventListener {
@@ -468,20 +480,6 @@ productQuantityList.add(SanPham(dateStr, quantity, productNameWithoutSuffix))
             }
             callback(filteredBills)
         }
-    }
-    fun getAddress(callback: (String) -> Unit) {
-        val ref = FirebaseDatabase.getInstance().getReference("ProfileUser").child(getUID())
-        ref.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val address = snapshot.child("location").value.toString()
-                Log.d("HomeDoanhThu", "onDataChange: $address")
-                callback(address)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("HomeDoanhThu", "onCancelled: " + error.message)
-            }
-        })
     }
 
     fun getPhoneNumber(callback: (String) -> Unit) {
@@ -587,7 +585,7 @@ productQuantityList.add(SanPham(dateStr, quantity, productNameWithoutSuffix))
         fun onCartItemCount(count: Int)
     }
     fun getUserNameAndDate(callback: (String) -> Unit) {
-        val ref = FirebaseDatabase.getInstance().getReference("Users").child(getUID())
+        val ref = FirebaseDatabase.getInstance().getReference("ProfileUser").child(getUID())
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val phoneNumber = snapshot.child("phoneNumber").value.toString()

@@ -12,11 +12,11 @@
         android:layout_height="wrap_content"
         android:icon="@drawable/add_circle"
         android:title="@string/menu_admin_botton_addP_prodct" />
-   <!-- <item
+    <item
         android:id="@+id/setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/setting"
-        android:title="@string/menu_admin_botton_setting" />-->
+        android:title="@string/menu_admin_botton_setting" />
 
 </menu>

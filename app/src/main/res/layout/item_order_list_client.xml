@@ -54,6 +54,16 @@
                 android:background="@drawable/rounded_rectangle"
                 android:backgroundTint="#846046"/>
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/trackOrderButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Theo dõi"
+                android:visibility="gone"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/rounded_rectangle"
+                android:backgroundTint="#846046"/>
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/cancelButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

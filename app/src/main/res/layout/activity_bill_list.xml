@@ -5,22 +5,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginTop="50dp"
-    android:layout_marginBottom="50dp"
     tools:context=".Administrator.Activitys.BillList">
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/toolbar"
+        android:backgroundTint="@color/btn_color"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Danh sách hóa đơn"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:gravity="center_horizontal"
-            android:layout_margin="16dp" />
-    </LinearLayout>
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/backBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/baseline_arrow_back_24"
+                />
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="20dp"
+                android:text="Quản lý hóa đơn"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

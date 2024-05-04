@@ -12,6 +12,7 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -39,7 +40,7 @@ class BillList : AppCompatActivity() {
     private var btnExportPDF: Button? = null
     private val adapter = ItemBillAdapter(emptyList())
     private val billList1 = mutableListOf<ItemBill>()
-
+    private var backBtn:ImageView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bill_list)
@@ -55,6 +56,9 @@ class BillList : AppCompatActivity() {
         btnExportPDF!!.setOnClickListener {
             checkStoragePermission()
         }
+        backBtn?.setOnClickListener {
+            finish()
+        }
     }
 
     private fun setControl() {
@@ -62,6 +66,7 @@ class BillList : AppCompatActivity() {
         recyclerViewBill!!.adapter = adapter
         recyclerViewBill!!.layoutManager = LinearLayoutManager(this)
         btnExportPDF = findViewById(R.id.btnExportPDF)
+        backBtn=findViewById(R.id.backBtn)
     }
 
     private fun checkStoragePermission() {

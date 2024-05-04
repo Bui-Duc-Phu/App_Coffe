@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 
 
 }
@@ -68,6 +69,7 @@ dependencies {
     implementation(files("libs/additionnal.jar"))
     implementation("androidx.activity:activity:1.9.0")
     implementation("com.google.firebase:firebase-messaging-ktx:23.4.1")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -94,14 +96,14 @@ dependencies {
     implementation ("com.saadahmedev.popup-dialog:popup-dialog:1.0.5")
     implementation("com.squareup.okhttp3:okhttp:4.9.2")
     implementation("commons-codec:commons-codec:1.15")
-
+    implementation("com.google.maps.android:android-maps-utils:2.2.6")
     implementation("com.android.volley:volley:1.2.1")
     implementation("com.google.android.gms:play-services-location:21.2.0")
     implementation("com.google.android.flexbox:flexbox:3.0.0")
     implementation("com.itextpdf:itextg:5.5.10")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
-
+    implementation("androidx.core:core-animation:1.0.0")
 
 
 

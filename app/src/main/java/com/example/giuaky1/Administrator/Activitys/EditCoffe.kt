@@ -18,6 +18,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.example.giuaky1.Administrator.model.CategoryModel
+import com.example.giuaky1.Administrator.model.Size
 import com.example.giuaky1.Administrator.model.coffeModel
 import com.example.giuaky1.R
 import com.google.firebase.database.DataSnapshot
@@ -57,24 +58,23 @@ class EditCoffe : AppCompatActivity() {
             product.name = nameProductEdit!!.getText().toString()
             product.price = Integer.valueOf(priceProductEdit!!.getText().toString())
             product.category = spinnerCategoryEdit!!.getSelectedItem().toString()
-            product .sizes?.let { sizes ->
-                sizes["S"]?.let { size ->
-                    sizeSEdit!!.setText(size.size)
-                    priceSizeS!!.setText(size.price.toString())
-                }
-                sizes["M"]?.let { size ->
-                    sizeMEdit!!.setText(size.size)
-                    priceSizeM!!.setText(size.price.toString())
-                }
-                sizes["L"]?.let { size ->
-                    sizeLEdit!!.setText(size.size)
-                    priceSizeL!!.setText(size.price.toString())
-                }
-                sizes["XL"]?.let { size ->
-                    sizeXLEdit!!.setText(size.size)
-                    priceSizeXL!!.setText(size.price.toString())
-                }
+
+            // Update sizes
+            val sizes = mutableMapOf<String, Size>()
+            priceSizeS!!.text.toString().takeIf { it.isNotEmpty() }?.let {
+                sizes["S"] = Size(it.toInt(), "S")
             }
+            priceSizeM!!.text.toString().takeIf { it.isNotEmpty() }?.let {
+                sizes["M"] = Size(it.toInt(), "M")
+            }
+            priceSizeL!!.text.toString().takeIf { it.isNotEmpty() }?.let {
+                sizes["L"] = Size(it.toInt(), "L")
+            }
+            priceSizeXL!!.text.toString().takeIf { it.isNotEmpty() }?.let {
+                sizes["XL"] = Size(it.toInt(), "XL")
+            }
+            product.sizes = sizes
+
             product.discount = Integer.valueOf(discountEdit!!.getText().toString())
             product.imageUrl = imageUri.toString()
             mDatabase.child(tenSp!!).removeValue()

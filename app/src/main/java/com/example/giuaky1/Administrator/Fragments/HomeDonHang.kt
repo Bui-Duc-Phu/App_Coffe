@@ -72,8 +72,12 @@ class HomeDonHang : Fragment() {
             barChart.visibility = View.GONE
             DataHandler.getListDonHangTheoNgay(startDateEditText.text.toString(), endDateEditText.text.toString(), listOrder) { listDonHang ->
                 this.listDonHang = listDonHang // Initialize listDonHang here
-                DonHangRecyclerView.adapter = ItemDonHangAdapter(listDonHang)
-                DonHangRecyclerView.adapter?.notifyDataSetChanged()
+                if(listDonHang.isEmpty()) {
+                    Toast.makeText(view.context,   getString(R.string.kh_ng_c_d_li_u_hi_n_th), Toast.LENGTH_SHORT).show()
+                }else {
+                    DonHangRecyclerView.adapter = ItemDonHangAdapter(listDonHang)
+                    DonHangRecyclerView.adapter?.notifyDataSetChanged()
+                }
             }
         }
         DonHangChartButton.setOnClickListener {
