@@ -10,6 +10,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -35,6 +38,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
+import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
@@ -87,7 +91,7 @@ class AddOrder : AppCompatActivity(), OnTaskCompleted {
     private var tvChangePayment: TextView? = null
     private var recyclerViewOrder: RecyclerView? = null
     private var ivBack: ImageView? = null
-    private var fusedLocationClient: FusedLocationProviderClient? = null
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val myCartAdapter = CartAdapter(DataHandler.orderModelArrayList)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,8 +106,10 @@ class AddOrder : AppCompatActivity(), OnTaskCompleted {
         setRecyclerViewOrder()
         setBack()
         setEdit()
-        DataHandler.getAddress { address1 -> address = address1 }
+        DataHandler.getAddress { address1 -> address = address1
+            edtAddress!!.setText(address)}
         DataHandler.getPhoneNumber { phone1 -> phone = phone1 }
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         ivUpdateAddress!!.setOnClickListener { updateAddressFromLocation() }
         ivEditAddress!!.setOnClickListener { setEdit() }
@@ -130,67 +136,16 @@ class AddOrder : AppCompatActivity(), OnTaskCompleted {
             return
         }
         fusedLocationClient!!.lastLocation
-            .addOnSuccessListener(this) { location ->
-                if (location != null) {
-                    getAddressFromCoordinates(location.latitude, location.longitude)
+            .addOnSuccessListener { location: Location? ->
+                location?.let {
+                    val geocoder = Geocoder(this@AddOrder, Locale.getDefault())
+                    val addresses: MutableList<Address>? = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                    edtAddress!!.setText( addresses?.get(0)?.getAddressLine(0) ?: "")
+                    address = addresses?.get(0)?.getAddressLine(0) ?: ""
                 }
             }
     }
-    /*private fun getAddressFromCoordinates(latitude: Double, longitude: Double) {
-        val apiKey = "smp1TPaRzNQmKeb-bUrN6ENRfUZhjc9O_dBUMDGYhpY"
-        val url = "https://revgeocode.search.hereapi.com/v1/revgeocode?at=$latitude,$longitude&apiKey=$apiKey"
-        val jsonObjectRequest =
-            JsonObjectRequest(Request.Method.GET, url, null, { response: JSONObject ->
-                try {
-                    val itemsArray = response.getJSONArray("items")
-                    val firstItemObject = itemsArray.getJSONObject(0)
-                    val addressObject = firstItemObject.getJSONObject("address")
-                    val label = addressObject.getString("label")
-                    edtAddress!!.setText(label)
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                    Toast.makeText(this@CreateOrder, "Không thể lấy địa chỉ", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }) { error: VolleyError ->
-                Log.d("Error.Response", error.toString())
-                Toast.makeText(this@CreateOrder, "Không thể lấy địa chỉ", Toast.LENGTH_SHORT).show()
-            }
-        Volley.newRequestQueue(this).add(jsonObjectRequest)
-    }*/
-    private fun getAddressFromCoordinates(latitude: Double, longitude: Double) {
-        val url =
-            "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=$latitude&lon=$longitude"
-        val jsonObjectRequest =
-            JsonObjectRequest(Request.Method.GET, url, null, { response: JSONObject ->
-                try {
-                    val addressObject = response.getJSONObject("address")
-                    val road = addressObject.getString("road")
-                    //       String houseNumber = addressObject.optString("house_number", "");
-                    val quarter = addressObject.optString("quarter", "")
-                    val suburb = addressObject.optString("suburb", "")
-                    val city = addressObject.getString("city")
-                    var address = road
-                    if (quarter.isNotEmpty()) {
-                        address += ", $quarter"
-                    }
-                    if (suburb.isNotEmpty()) {
-                        address += ", $suburb"
-                    }
-                    address += ", $city"
-                    edtAddress!!.setText(address)
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                    Toast.makeText(this,
-                        getString(R.string.khong_the_lay_dia_chi), Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }) { error: VolleyError ->
-                Log.d("Error.Response", error.toString())
-                Toast.makeText(this, getString(R.string.khong_the_lay_dia_chi), Toast.LENGTH_SHORT).show()
-            }
-        Volley.newRequestQueue(this).add(jsonObjectRequest)
-    }
+
 
     private fun setBack() {
         ivBack!!.setOnClickListener { finish() }

@@ -70,6 +70,7 @@
             android:text="@string/tro_ve" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:visibility="gone"
             android:src="@drawable/downlod"
             android:id="@+id/btnSaveQR"
             android:layout_width="0dp"

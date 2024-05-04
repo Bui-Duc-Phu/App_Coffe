@@ -72,8 +72,12 @@ class HomeSanPham : Fragment() {
             pieChart.visibility = View.GONE
             DataHandler.getListSanPhamTheoNgay(startDateEditText.text.toString(), endDateEditText.text.toString(), listOrder) { listSanPham ->
                 this.listSanPham = listSanPham
-                SanPhamRecyclerView.adapter = ItemSanPhamAdapter(listSanPham)
-                SanPhamRecyclerView.adapter?.notifyDataSetChanged()
+                if(listSanPham.isEmpty()) {
+                    Toast.makeText(view.context,   getString(R.string.kh_ng_c_d_li_u_hi_n_th), Toast.LENGTH_SHORT).show()
+                }else {
+                    SanPhamRecyclerView.adapter = ItemSanPhamAdapter(listSanPham)
+                    SanPhamRecyclerView.adapter?.notifyDataSetChanged()
+                }
             }
         }
         SanPhamChartButton.setOnClickListener {

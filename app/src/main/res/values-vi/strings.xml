@@ -167,7 +167,7 @@
     <string name="qr_saved">QR Code đã được lưu trước đó</string>
     <string name="qr_save">QR Code đã được lưu</string>
     <string name="scan_qr">Quét mã QR</string>
-    <string name="name_host">Tên người nhận : Nguyễn Tiến Nhật</string>
+    <string name="name_host">Người nhận : Nguyễn Tiến Nhật</string>
     <string name="price_bank">Số tiền :</string>
     <string name="note_bank">"Mô tả : "</string>
     <string name="cantfind">Không tìm thấy giao dịch, hãy kiểm tra kĩ và thử lại !</string>

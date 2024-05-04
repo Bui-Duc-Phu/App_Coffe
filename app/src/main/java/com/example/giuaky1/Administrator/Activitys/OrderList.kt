@@ -2,6 +2,7 @@ package com.example.giuaky1.Administrator.Activitys
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TabWidget
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTabHost
@@ -14,10 +15,14 @@ class OrderList : AppCompatActivity() {
 
     private var mTabHost: FragmentTabHost? = null
     private var tabWidget: TabWidget? = null
+    private var btnBack:ImageView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order_list)
-
+        btnBack=findViewById(R.id.backBtn)
+        btnBack?.setOnClickListener {
+            finish()
+        }
         mTabHost = findViewById(R.id.tabHost)
         tabWidget = findViewById(R.id.tabWidget)
         mTabHost?.setup(this, supportFragmentManager, R.id.tabContent)

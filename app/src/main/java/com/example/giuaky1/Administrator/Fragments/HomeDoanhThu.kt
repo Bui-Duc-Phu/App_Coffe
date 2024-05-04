@@ -80,8 +80,14 @@ class HomeDoanhThu : Fragment() {
                 listOrder
             ) { listDoanhThu ->
                 this.listDoanhThu = listDoanhThu
-                DoanhThuRecyclerView.adapter = ItemDoanhThuAdapter(listDoanhThu)
-                DoanhThuRecyclerView.adapter?.notifyDataSetChanged()
+                if(listDoanhThu.isEmpty()) {
+                    Toast.makeText(view.context,
+                        getString(R.string.kh_ng_c_d_li_u_hi_n_th), Toast.LENGTH_SHORT)
+                        .show()
+                }else {
+                    DoanhThuRecyclerView.adapter = ItemDoanhThuAdapter(listDoanhThu)
+                    DoanhThuRecyclerView.adapter?.notifyDataSetChanged()
+                }
             }
         }
         DoanhThuChartButton.setOnClickListener {
