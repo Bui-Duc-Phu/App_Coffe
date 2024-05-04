@@ -137,7 +137,6 @@ class ChatMain : AppCompatActivity() {
                     binding.recylerview.scrollToPosition(lastItemPosition)
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(applicationContext, error.message, Toast.LENGTH_SHORT).show()
             }

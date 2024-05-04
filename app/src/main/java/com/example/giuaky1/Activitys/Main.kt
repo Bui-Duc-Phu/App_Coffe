@@ -192,6 +192,7 @@ class Main : AppCompatActivity(){
               }
               R.id.notification -> loadNotification()
               R.id.nav_logout ->{
+                  val firebaseUser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
                   val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                       .requestIdToken(getString(R.string.default_web_client_id))
                       .requestEmail()
@@ -200,7 +201,7 @@ class Main : AppCompatActivity(){
                   googleSignInClient.revokeAccess().addOnCompleteListener(this) {}
                   googleSignInClient.signOut().addOnCompleteListener(this){}
                   auth.signOut()
-                  val firebaseUser : FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+
                   FirebaseUpdate.deleteDriver(firebaseUser.uid.toString()){
                       if(!it) Toast.makeText(applicationContext, "delete driver failse", Toast.LENGTH_SHORT).show()
                   }
