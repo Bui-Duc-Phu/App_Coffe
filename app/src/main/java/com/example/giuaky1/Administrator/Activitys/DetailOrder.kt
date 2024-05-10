@@ -93,7 +93,7 @@ class DetailOrder : AppCompatActivity() {
 
                     document.finishPage(page)
 
-                    val downloadsDir =
+                    val     downloadsDir =
                         Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
                     val sdf1 = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault())
                     val namePdf = sdf1.format(Date())
