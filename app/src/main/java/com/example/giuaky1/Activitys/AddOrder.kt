@@ -2,6 +2,7 @@ package com.example.giuaky1.Activitys
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -44,6 +45,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
 import com.example.giuaky1.Adapters.CartAdapter
+import com.example.giuaky1.Administrator.Activitys.MapsActivity
 import com.example.giuaky1.Firebase.DataHandler
 import com.example.giuaky1.Interfaces.OnTaskCompleted
 import com.example.giuaky1.Paid.GoogleSheetsTask
@@ -105,45 +107,24 @@ class AddOrder : AppCompatActivity(), OnTaskCompleted {
         setDataForOrder()
         setRecyclerViewOrder()
         setBack()
-        setEdit()
         DataHandler.getAddress { address1 -> address = address1
             edtAddress!!.setText(address)}
         DataHandler.getPhoneNumber { phone1 -> phone = phone1 }
-
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        ivUpdateAddress!!.setOnClickListener { updateAddressFromLocation() }
+        ivUpdateAddress!!.setOnClickListener { v->
+            val intent = Intent(this, MapsActivity::class.java)
+            startActivityForResult(intent, 1)
+            return@setOnClickListener
+        }
         ivEditAddress!!.setOnClickListener { setEdit() }
     }
-
-    private fun updateAddressFromLocation() {
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ),
-                100
-            )
-            return
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            val selectedAddress = data?.getStringExtra("selectedAddress")
+            edtAddress?.setText(selectedAddress)
+            address = selectedAddress.toString()
         }
-        fusedLocationClient!!.lastLocation
-            .addOnSuccessListener { location: Location? ->
-                location?.let {
-                    val geocoder = Geocoder(this@AddOrder, Locale.getDefault())
-                    val addresses: MutableList<Address>? = geocoder.getFromLocation(location.latitude, location.longitude, 1)
-                    edtAddress!!.setText( addresses?.get(0)?.getAddressLine(0) ?: "")
-                    address = addresses?.get(0)?.getAddressLine(0) ?: ""
-                }
-            }
     }
 
 

@@ -14,11 +14,26 @@
 
     <EditText
         android:id="@+id/etAddress"
+        android:enabled="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:drawableEnd="@drawable/locationadmin" />
 
+
+    <SearchView
+        android:id="@+id/searchAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:drawableEnd="@drawable/locationadmin" />
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        tools:context=".Administrator.Fragments.Setting" />
     <Button
         android:id="@+id/Save"
         android:layout_width="match_parent"
@@ -26,5 +41,4 @@
         android:layout_margin="10dp"
         android:text="Lưu địa chỉ"
         android:textColor="@android:color/white" />
-
 </LinearLayout>

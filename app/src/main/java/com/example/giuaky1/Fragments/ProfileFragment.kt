@@ -1,6 +1,7 @@
 package com.example.giuaky1.Fragments
 
 import android.Manifest
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
@@ -26,6 +27,7 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
+import com.example.giuaky1.Administrator.Activitys.MapsActivity
 import com.example.giuaky1.Firebase.FirebaseFunction
 import com.example.giuaky1.Firebase.FirebaseUpdate
 import com.example.giuaky1.R
@@ -92,10 +94,12 @@ class ProfileFragment : Fragment() {
             }
             binding.save.visibility = View.VISIBLE
         }
-        binding.editLocation.setOnClickListener {
+        binding.editLocation.setOnClickListener {   v->
             binding.locationEdt.isEnabled = true
-            updateAddressFromLocation()
             binding.save.visibility = View.VISIBLE
+            val intent = Intent(requireContext(), MapsActivity::class.java)
+            startActivityForResult(intent, 1)
+            return@setOnClickListener
         }
         binding.editdate.setOnClickListener {
             binding.dateEdt.isEnabled = true
@@ -129,6 +133,22 @@ class ProfileFragment : Fragment() {
             binding.save.visibility = View.VISIBLE
         }
         isNotEnableEditText()
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            val selectedAddress = data?.getStringExtra("selectedAddress")
+            binding.locationEdt.setText(selectedAddress)
+        } else if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
+            filePath = data?.data
+            try {
+                var bitmap: Bitmap =
+                    MediaStore.Images.Media.getBitmap(context?.contentResolver, filePath)
+                binding.profileImage.setImageBitmap(bitmap)
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
     }
     fun isNotEnableEditText() {
         binding.mainLayout.setOnTouchListener { v, event ->
@@ -253,19 +273,6 @@ class ProfileFragment : Fragment() {
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(Intent.createChooser(intent, "select Image..."), PICK_IMAGE_REQUEST)
-    }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_REQUEST && requestCode != null) {
-            filePath = data!!.data
-            try {
-                var bitmap: Bitmap =
-                    MediaStore.Images.Media.getBitmap(context?.contentResolver, filePath)
-                binding.profileImage.setImageBitmap(bitmap)
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-        }
     }
 
     private fun profile() {
